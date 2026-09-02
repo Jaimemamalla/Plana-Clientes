@@ -26,6 +26,10 @@ while ($listener.IsListening) {
     $rel = [System.Uri]::UnescapeDataString($ctx.Request.Url.AbsolutePath).TrimStart('/')
     if ([string]::IsNullOrWhiteSpace($rel)) { $rel = 'index.html' }
     $path = Join-Path $root $rel
+    # una carpeta sirve su index.html, como hace Netlify
+    if ((Test-Path $path) -and (Get-Item $path).PSIsContainer) {
+      $path = Join-Path $path 'index.html'
+    }
     if ((Test-Path $path) -and -not (Get-Item $path).PSIsContainer) {
       $ext = [System.IO.Path]::GetExtension($path).ToLower()
       if ($types.ContainsKey($ext)) { $ctx.Response.ContentType = $types[$ext] }
