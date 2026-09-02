@@ -127,10 +127,11 @@
   });
 
   /* ---- la timeline ---- */
+  var done = false;
   var tl = createTimeline({
     defaults: { ease: 'outQuad' },
     autoplay: false,
-    onComplete: function () { breathe.play(); }
+    onComplete: function () { done = true; breathe.play(); }
   });
 
   /* 1 · entrada */
@@ -206,11 +207,24 @@
   }, FLAT + 760);
 
   /* ---- disparo: cuando el hero entra en pantalla, una sola vez ---- */
+  /* Si la timeline arranca y se queda a medias (cambio de pestaña, rAF
+     estrangulado), la tarjeta se quedaría con las cifras a cero. Pasado el
+     tiempo total con margen, la dejamos en su estado final. Con la pestaña
+     oculta no tocamos nada: anime pausa sola y retoma al volver. */
+  var TOTAL_MS = 4240;
+  function watchdog() {
+    if (done) return;
+    if (document.visibilityState !== 'visible') { setTimeout(watchdog, 2000); return; }
+    settle();
+    breathe.play();
+  }
+
   var fired = false;
   function fire() {
     if (fired) return;
     fired = true;
     tl.play();
+    setTimeout(watchdog, TOTAL_MS + 2200);
   }
 
   if ('IntersectionObserver' in window) {
