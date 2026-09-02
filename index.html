@@ -137,43 +137,15 @@ header.nav.scrolled{border-bottom-color:var(--line);box-shadow:0 6px 24px -18px 
 .hero-sub b{font-weight:600;color:var(--tinta)}
 .hero-cta{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
 
-/* hero visual card */
+/* hero visual: el isotipo construido con láminas */
 .hero-visual{position:relative}
-.flatcard{
-  background:#fff;border-radius:var(--r-lg);box-shadow:var(--card-shadow-lg);
-  border:1px solid var(--line);padding:28px;position:relative;overflow:hidden;
-}
-.flatcard .fc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
-.fc-label{font-size:.8rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--bruma)}
-.fc-old{display:flex;align-items:baseline;gap:10px;color:var(--bruma)}
-.fc-old .v{font-family:var(--ff-head);font-weight:700;font-size:1.5rem;position:relative;display:inline-block}
-/* tachado animable: sustituye a text-decoration:line-through para poder barrerlo con anime.js */
-.fc-old .v .cut{
-  position:absolute;left:-4px;right:-4px;top:52%;height:3px;border-radius:2px;
-  background:#E15B5B;transform-origin:left;display:block;pointer-events:none;
-}
-.fc-new{font-family:var(--ff-head);font-weight:700;font-size:3.2rem;letter-spacing:-0.03em;line-height:1;margin-top:2px}
-.fc-new small{font-size:1rem;font-weight:500;color:var(--bruma);font-family:var(--ff-body)}
-.fc-save{display:inline-flex;align-items:center;gap:8px;margin-top:16px;background:var(--sol);color:var(--tinta);font-family:var(--ff-head);font-weight:700;font-size:1.05rem;padding:9px 16px;border-radius:100px;white-space:nowrap}
-/* EKG flatline inside hero card */
-.ekg{margin-top:24px;height:54px;width:100%;overflow:visible}
-.ekg path{fill:none;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
-.ekg .rail{stroke:var(--line);stroke-width:2}
-.ekg .beat{stroke:var(--cielo)}
-.ekg .flat{stroke:var(--sol);stroke-width:5}
-/* punto que cabalga la punta del trazo (dash de 1px recorriendo el path) */
-.ekg .head{stroke:var(--cielo);stroke-width:9;opacity:0}
-/* brillo que recorre la línea plana en bucle, ya en calma */
-.ekg .sheen{stroke:#fff;stroke-width:5;opacity:0;mix-blend-mode:overlay}
-
-/* botón de rebobinado de la animación del hero */
-.fc-replay{
-  position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;
-  display:grid;place-items:center;color:var(--bruma);background:transparent;
-  opacity:0;transition:opacity .25s, color .2s, background .2s;
-}
-.flatcard:hover .fc-replay,.fc-replay:focus-visible{opacity:1}
-.fc-replay:hover{color:var(--cielo);background:rgba(79,179,232,.1)}
+.isostack{position:relative;width:100%;max-width:440px;margin:0 auto}
+.isostack-svg{width:100%;height:auto;overflow:visible;display:block}
+/* cada lámina rota y se desplaza sobre su propio centro */
+.iso-slats rect{transform-box:fill-box;transform-origin:center;will-change:transform,opacity}
+.iso-bar{transform-box:fill-box;transform-origin:center}
+/* con JS montado, el isotipo plano de respaldo se retira */
+.isostack.js .iso-plain{display:none}
 
 /* social proof */
 .proof{position:relative;z-index:1;margin-top:clamp(44px,6vw,72px);border-top:1px solid var(--line);padding-top:26px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
@@ -449,8 +421,6 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;bac
 .reveal.rg{transform:translateX(44px);opacity:0}
 .reveal.rg.in{transform:none;opacity:1}
 
-/* glass hero card */
-.flatcard{background:rgba(255,255,255,.62);backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);border:1px solid rgba(255,255,255,.7)}
 
 /* living gradient on packs */
 #packs{background:linear-gradient(160deg,var(--nube),#EAF6FD,#E0F0FB,var(--nube));background-size:100% 320%;animation:gradShift 18s ease-in-out infinite}
@@ -656,30 +626,21 @@ footer{background:var(--tinta);color:#fff;padding:clamp(56px,7vw,84px) 0 36px}
         </div>
       </div>
       <div class="hero-visual reveal in d2">
-        <div class="flatcard" id="flatcard">
-          <div class="fc-top">
-            <span class="fc-label">Una vacante de <span data-count="45000" data-suffix=" €">45.000 €</span></span>
-          </div>
-          <div class="fc-old">
-            <span class="fc-label" style="text-transform:none;font-weight:500">Agencia</span>
-            <span class="v"><span data-count="9000" data-suffix=" €">9.000 €</span><i class="cut" aria-hidden="true"></i></span>
-          </div>
-          <div style="margin-top:14px">
-            <span class="fc-label" style="color:var(--cielo)">Con Plana</span>
-            <div class="fc-new"><span data-count="4900" data-suffix=" €">4.900 €</span><small> / vacante</small></div>
-          </div>
-          <span class="fc-save">Te ahorras <span data-count="4100" data-suffix=" €">4.100 €</span></span>
-          <svg class="ekg" viewBox="0 0 360 54" preserveAspectRatio="none" aria-hidden="true">
-            <path class="rail" d="M0,27 H360"/>
-            <path class="beat" d="M0,27 H36 L44,27 L52,9 L60,45 L68,27 H104 L112,27 L120,9 L128,45 L136,27 H172 L180,27 L188,4 L196,50 L204,27 H212"/>
-            <path class="head" d="M0,27 H36 L44,27 L52,9 L60,45 L68,27 H104 L112,27 L120,9 L128,45 L136,27 H172 L180,27 L188,4 L196,50 L204,27 H212"/>
-            <path class="flat" d="M212,27 H360"/>
-            <path class="sheen" d="M212,27 H360"/>
+        <!-- El isotipo construido con láminas. Se monta al cargar y se desmonta
+             con el scroll: las láminas azules se van y la barra amarilla se
+             queda quieta. Lo conduce js/hero-slats.js. -->
+        <div class="isostack" id="isostack">
+          <svg class="isostack-svg" viewBox="0 0 360 360" role="img"
+               aria-label="Isotipo de Plana: un círculo azul cruzado por una barra plana amarilla">
+            <!-- estado sin JS: el isotipo entero, tal cual -->
+            <g class="iso-plain">
+              <circle cx="180" cy="180" r="140" fill="#4FB3E8"/>
+              <rect x="98" y="170" width="164" height="20" rx="10" fill="#FFD75E"/>
+            </g>
+            <!-- aquí monta las láminas hero-slats.js -->
+            <g class="iso-slats" aria-hidden="true"></g>
+            <rect class="iso-bar" x="98" y="170" width="164" height="20" rx="10" fill="#FFD75E" opacity="0"/>
           </svg>
-          <!-- quitar si no se quiere el rebobinado manual -->
-          <button type="button" class="fc-replay" id="fcReplay" aria-label="Repetir la animación">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M20 12a8 8 0 11-2.3-5.6M20 3v5h-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
         </div>
       </div>
     </div>
@@ -1095,7 +1056,7 @@ footer{background:var(--tinta);color:#fff;padding:clamp(56px,7vw,84px) 0 36px}
   document.querySelectorAll('.reveal:not(.in)').forEach(function(el){ io.observe(el); });
 
   /* Los contadores y las barras del panel de Planax los conduce ahora
-     js/planax-live.js; el hero, js/hero-flatline.js. Ya no queda ningún
+     js/planax-live.js; el hero, js/hero-slats.js. Ya no queda ningún
      contador a mano en este archivo. */
 
   /* ---- savings calculator ---- */
@@ -1400,7 +1361,7 @@ onScroll();
 
 <!-- ===== anime.js + timelines ===== -->
 <script src="js/anime.iife.min.js"></script>
-<script src="js/hero-flatline.js"></script>
+<script src="js/hero-slats.js"></script>
 <script src="js/planax-live.js"></script>
 </body>
 </html>
