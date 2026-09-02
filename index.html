@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -138,43 +137,15 @@ header.nav.scrolled{border-bottom-color:var(--line);box-shadow:0 6px 24px -18px 
 .hero-sub b{font-weight:600;color:var(--tinta)}
 .hero-cta{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
 
-/* hero visual card */
+/* hero visual: el isotipo construido con láminas */
 .hero-visual{position:relative}
-.flatcard{
-  background:#fff;border-radius:var(--r-lg);box-shadow:var(--card-shadow-lg);
-  border:1px solid var(--line);padding:28px;position:relative;overflow:hidden;
-}
-.flatcard .fc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
-.fc-label{font-size:.8rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--bruma)}
-.fc-old{display:flex;align-items:baseline;gap:10px;color:var(--bruma)}
-.fc-old .v{font-family:var(--ff-head);font-weight:700;font-size:1.5rem;position:relative;display:inline-block}
-/* tachado animable: sustituye a text-decoration:line-through para poder barrerlo con anime.js */
-.fc-old .v .cut{
-  position:absolute;left:-4px;right:-4px;top:52%;height:3px;border-radius:2px;
-  background:#E15B5B;transform-origin:left;display:block;pointer-events:none;
-}
-.fc-new{font-family:var(--ff-head);font-weight:700;font-size:3.2rem;letter-spacing:-0.03em;line-height:1;margin-top:2px}
-.fc-new small{font-size:1rem;font-weight:500;color:var(--bruma);font-family:var(--ff-body)}
-.fc-save{display:inline-flex;align-items:center;gap:8px;margin-top:16px;background:var(--sol);color:var(--tinta);font-family:var(--ff-head);font-weight:700;font-size:1.05rem;padding:9px 16px;border-radius:100px;white-space:nowrap}
-/* EKG flatline inside hero card */
-.ekg{margin-top:24px;height:54px;width:100%;overflow:visible}
-.ekg path{fill:none;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
-.ekg .rail{stroke:var(--line);stroke-width:2}
-.ekg .beat{stroke:var(--cielo)}
-.ekg .flat{stroke:var(--sol);stroke-width:5}
-/* punto que cabalga la punta del trazo (dash de 1px recorriendo el path) */
-.ekg .head{stroke:var(--cielo);stroke-width:9;opacity:0}
-/* brillo que recorre la línea plana en bucle, ya en calma */
-.ekg .sheen{stroke:#fff;stroke-width:5;opacity:0;mix-blend-mode:overlay}
-
-/* botón de rebobinado de la animación del hero */
-.fc-replay{
-  position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;
-  display:grid;place-items:center;color:var(--bruma);background:transparent;
-  opacity:0;transition:opacity .25s, color .2s, background .2s;
-}
-.flatcard:hover .fc-replay,.fc-replay:focus-visible{opacity:1}
-.fc-replay:hover{color:var(--cielo);background:rgba(79,179,232,.1)}
+.isostack{position:relative;width:100%;max-width:440px;margin:0 auto}
+.isostack-svg{width:100%;height:auto;overflow:visible;display:block}
+/* cada lámina rota y se desplaza sobre su propio centro */
+.iso-slats rect{transform-box:fill-box;transform-origin:center;will-change:transform,opacity}
+.iso-bar{transform-box:fill-box;transform-origin:center}
+/* con JS montado, el isotipo plano de respaldo se retira */
+.isostack.js .iso-plain{display:none}
 
 /* social proof */
 .proof{position:relative;z-index:1;margin-top:clamp(44px,6vw,72px);border-top:1px solid var(--line);padding-top:26px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
@@ -347,14 +318,21 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;bac
 .pipe.f .num{color:var(--sol)}
 .pipe .lbl{font-size:.76rem;color:rgba(255,255,255,.55);margin-top:6px}
 .pipe .bar{height:4px;border-radius:3px;background:rgba(255,255,255,.1);margin-top:12px;overflow:hidden}
-.pipe .bar i{display:block;height:100%;border-radius:3px;background:var(--cielo);width:0;transition:width 1.1s cubic-bezier(.2,.8,.2,1)}
+/* sin transición: el ancho lo lleva anime.js frame a frame */
+.pipe .bar i{display:block;height:100%;border-radius:3px;background:var(--cielo);width:0}
 .pipe.f .bar i{background:var(--sol)}
+/* barrido de luz que cruza el panel cuando Planax se pone a cribar */
+.panel-scan{
+  position:absolute;top:0;bottom:0;left:0;width:34%;z-index:3;pointer-events:none;opacity:0;
+  background:linear-gradient(90deg,transparent,rgba(255,215,94,.16),rgba(255,255,255,.10),transparent);
+}
 /* panel pulse strip */
 .panel-pulse{height:42px;margin:4px 0 18px}
 .panel-pulse svg{width:100%;height:100%;overflow:visible}
 .panel-pulse .pl{fill:none;stroke:var(--sol);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 5px rgba(255,215,94,.7))}
 .panel-pulse .pb{fill:none;stroke:rgba(255,255,255,.1);stroke-width:1.5}
-.panel-pulse .dot{fill:var(--sol);filter:drop-shadow(0 0 7px rgba(255,215,94,.95))}
+/* .ph es el punto: un dash mínimo con punta redonda recorriendo el path */
+.panel-pulse .ph{fill:none;stroke:var(--sol);stroke-width:8;stroke-linecap:round;opacity:0;filter:drop-shadow(0 0 7px rgba(255,215,94,.95))}
 /* insight chips */
 .panel-ins{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
 .chip-i{display:inline-flex;align-items:center;gap:8px;background:rgba(79,179,232,.1);border:1px solid rgba(79,179,232,.28);border-radius:12px;padding:9px 13px;font-size:.82rem}
@@ -443,8 +421,6 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;bac
 .reveal.rg{transform:translateX(44px);opacity:0}
 .reveal.rg.in{transform:none;opacity:1}
 
-/* glass hero card */
-.flatcard{background:rgba(255,255,255,.62);backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);border:1px solid rgba(255,255,255,.7)}
 
 /* living gradient on packs */
 #packs{background:linear-gradient(160deg,var(--nube),#EAF6FD,#E0F0FB,var(--nube));background-size:100% 320%;animation:gradShift 18s ease-in-out infinite}
@@ -664,15 +640,12 @@ footer{background:var(--tinta);color:#fff;padding:clamp(56px,7vw,84px) 0 36px}
           </div>
           <span class="fc-save">Te ahorras <span data-count="4100" data-suffix=" €">4.100 €</span></span>
           <svg class="ekg" viewBox="0 0 360 54" preserveAspectRatio="none" aria-hidden="true">
+            <path class="rail" d="M0,27 H360"/>
             <path class="beat" d="M0,27 H36 L44,27 L52,9 L60,45 L68,27 H104 L112,27 L120,9 L128,45 L136,27 H172 L180,27 L188,4 L196,50 L204,27 H212"/>
             <path class="head" d="M0,27 H36 L44,27 L52,9 L60,45 L68,27 H104 L112,27 L120,9 L128,45 L136,27 H172 L180,27 L188,4 L196,50 L204,27 H212"/>
             <path class="flat" d="M212,27 H360"/>
             <path class="sheen" d="M212,27 H360"/>
           </svg>
-          <!-- quitar si no se quiere el rebobinado manual -->
-          <button type="button" class="fc-replay" id="fcReplay" aria-label="Repetir la animación">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M20 12a8 8 0 11-2.3-5.6M20 3v5h-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
         </div>
       </div>
     </div>
@@ -857,6 +830,7 @@ footer{background:var(--tinta);color:#fff;padding:clamp(56px,7vw,84px) 0 36px}
     <div class="px-stage">
       <!-- LIVE PANEL -->
       <div class="panel reveal d1" aria-label="Panel en tiempo real de Planax (ejemplo)">
+        <span class="panel-scan" aria-hidden="true"></span>
         <div class="panel-top">
           <div>
             <div class="role">Backend Engineer</div>
@@ -873,9 +847,9 @@ footer{background:var(--tinta);color:#fff;padding:clamp(56px,7vw,84px) 0 36px}
           <svg viewBox="0 0 520 42" preserveAspectRatio="none">
             <path class="pb" d="M0,21 L520,21"/>
             <path class="pl" d="M0,21 L150,21 L162,21 L172,5 L182,37 L192,14 L204,21 L330,21 L342,21 L352,7 L362,35 L372,21 L520,21"/>
-            <circle class="dot" r="4">
-              <animateMotion dur="3.5s" repeatCount="indefinite" path="M0,21 L150,21 L162,21 L172,5 L182,37 L192,14 L204,21 L330,21 L342,21 L352,7 L362,35 L372,21 L520,21"/>
-            </circle>
+            <!-- el punto es un dash de longitud casi cero recorriendo el mismo path,
+                 así va clavado a la línea y lo conduce anime.js, no SMIL -->
+            <path class="ph" d="M0,21 L150,21 L162,21 L172,5 L182,37 L192,14 L204,21 L330,21 L342,21 L352,7 L362,35 L372,21 L520,21"/>
           </svg>
         </div>
         <div class="panel-ins">
@@ -884,9 +858,9 @@ footer{background:var(--tinta);color:#fff;padding:clamp(56px,7vw,84px) 0 36px}
           <span class="chip-i"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="7" cy="8" r="3" stroke="#4FB3E8" stroke-width="2.2"/><circle cx="16" cy="15" r="3" stroke="#4FB3E8" stroke-width="2.2"/><path d="M9.4 9.4l4.2 4.2" stroke="#4FB3E8" stroke-width="2.2"/></svg><span>Match comunidad</span><b>87%</b></span>
         </div>
         <div class="panel-cands">
-          <div class="cand"><span class="av" style="background:#FFD75E">MC</span><div class="nm"><div class="n">M. Castro</div><div class="t">Senior · 6 años · disponible</div></div><span class="score">94</span></div>
-          <div class="cand"><span class="av" style="background:#BDE3F8">JR</span><div class="nm"><div class="n">J. Ruiz</div><div class="t">Mid-senior · 4 años · activo</div></div><span class="score">89</span></div>
-          <div class="cand"><span class="av" style="background:#6FE0A8">AL</span><div class="nm"><div class="n">A. León</div><div class="t">Senior · 7 años · pasivo</div></div><span class="score">86</span></div>
+          <div class="cand"><span class="av" style="background:#FFD75E">MC</span><div class="nm"><div class="n">M. Castro</div><div class="t">Senior · 6 años · disponible</div></div><span class="score" data-count="94">0</span></div>
+          <div class="cand"><span class="av" style="background:#BDE3F8">JR</span><div class="nm"><div class="n">J. Ruiz</div><div class="t">Mid-senior · 4 años · activo</div></div><span class="score" data-count="89">0</span></div>
+          <div class="cand"><span class="av" style="background:#6FE0A8">AL</span><div class="nm"><div class="n">A. León</div><div class="t">Senior · 7 años · pasivo</div></div><span class="score" data-count="86">0</span></div>
         </div>
       </div>
 
@@ -1086,33 +1060,9 @@ footer{background:var(--tinta);color:#fff;padding:clamp(56px,7vw,84px) 0 36px}
   }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
   document.querySelectorAll('.reveal:not(.in)').forEach(function(el){ io.observe(el); });
 
-  /* ---- animated counters + pipe bars (Planax panel) ---- */
-  /* useGrouping:'always': es-ES no agrupa los números de 4 cifras por defecto,
-     y al animar "9.000 €" se quedaba en "9000 €" */
-  var nfm; try { nfm = new Intl.NumberFormat('es-ES',{useGrouping:'always'}); } catch(e){ nfm = new Intl.NumberFormat('es-ES'); }
-  function runCount(el){
-    var target = parseFloat(el.getAttribute('data-count')) || 0;
-    var pre = el.getAttribute('data-prefix') || '';
-    var suf = el.getAttribute('data-suffix') || '';
-    var t0 = performance.now(), dur = 1100;
-    function frame(t){
-      var p = Math.min(1,(t-t0)/dur);
-      var e = 1 - Math.pow(1-p,3);
-      el.textContent = pre + nfm.format(Math.round(target*e)) + suf;
-      if(p<1) requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
-  }
-  var cio = new IntersectionObserver(function(entries){
-    entries.forEach(function(en){
-      if(!en.isIntersecting) return;
-      en.target.querySelectorAll('[data-count]').forEach(runCount);
-      en.target.querySelectorAll('.pipe .bar i').forEach(function(i){ i.style.width = i.getAttribute('data-w'); });
-      cio.unobserve(en.target);
-    });
-  }, {threshold:0.35});
-  /* .flatcard queda fuera: sus cifras las conduce la timeline de anime.js del hero */
-  document.querySelectorAll('.px-stage').forEach(function(el){ cio.observe(el); });
+  /* Los contadores y las barras del panel de Planax los conduce ahora
+     js/planax-live.js; el hero, js/hero-slats.js. Ya no queda ningún
+     contador a mano en este archivo. */
 
   /* ---- savings calculator ---- */
   var PLANA = 4900;
@@ -1414,9 +1364,9 @@ onScroll();
 
 </script>
 
-<!-- ===== anime.js + timeline del hero ===== -->
+<!-- ===== anime.js + timelines ===== -->
 <script src="js/anime.iife.min.js"></script>
-<script src="js/hero-flatline.js"></script>
+<script src="js/hero-slats.js"></script>
+<script src="js/planax-live.js"></script>
 </body>
 </html>
->>>>>>> af8b4fe6f82aac26dc53dd6215628de898a89e18
