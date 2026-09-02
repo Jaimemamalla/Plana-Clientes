@@ -406,69 +406,11 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;bac
   .crow .feat-label{font-size:.85rem}
 }
 
-/* ============ COMUNIDAD ============ */
-#comunidad{background:#EDF7FD}
-.com-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,5vw,72px);align-items:start}
-.com-copy .flag{margin:22px 0 28px;background:#fff;border:1px solid var(--line);border-left:5px solid var(--sol);border-radius:14px;padding:22px 24px;box-shadow:var(--card-shadow)}
-.com-copy .flag strong{font-family:var(--ff-head);font-weight:700;font-size:1.35rem;display:block;letter-spacing:-0.02em}
-.com-copy .flag span{color:var(--tinta-80);font-size:.98rem}
-.com-list{list-style:none;display:flex;flex-direction:column;gap:18px;margin-top:4px}
-.com-list li{display:flex;gap:14px;align-items:flex-start}
-.com-list .ci{flex:none;width:34px;height:34px;border-radius:10px;background:var(--cielo-claro);display:flex;align-items:center;justify-content:center;margin-top:1px}
-.com-list b{font-weight:600;color:var(--tinta)}
-.com-list p{color:var(--tinta-80);font-size:.99rem;line-height:1.45}
-/* form */
-.com-form{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(28px,4vw,40px);box-shadow:var(--card-shadow-lg)}
-.com-form h3{font-size:1.5rem;margin-bottom:6px}
-.com-form .sub{color:var(--bruma);font-size:.96rem;margin-bottom:26px}
-.fg{margin-bottom:18px}
-.fg label{display:block;font-weight:600;font-size:.9rem;margin-bottom:7px}
-.fg label .opt{color:var(--bruma);font-weight:400}
-.fg input{width:100%;padding:13px 16px;border:1.5px solid var(--line);border-radius:12px;font-size:1rem;color:var(--tinta);background:var(--nube);transition:border-color .2s, background .2s}
-.fg input:focus{outline:none;border-color:var(--cielo);background:#fff}
-.fg input[type=file]{padding:10px 12px;font-size:.9rem;color:var(--bruma)}
-.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.com-form .btn{width:100%;margin-top:8px}
-.com-form .legal{font-size:.78rem;color:var(--bruma);text-align:center;margin-top:14px;line-height:1.4}
-@media(max-width:860px){.com-grid{grid-template-columns:1fr}.fg-row{grid-template-columns:1fr}}
-
-/* ===== DROPZONE (glass) ===== */
-.dropzone{display:block;position:relative;cursor:pointer;border:2px dashed rgba(79,179,232,.5);border-radius:18px;background:rgba(189,227,248,.20);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:34px 24px;text-align:center;transition:border-color .25s,background .25s,transform .25s,box-shadow .25s;margin-bottom:18px}
-.dropzone:hover{border-color:var(--cielo);background:rgba(189,227,248,.34)}
-.dropzone.drag{border-color:var(--cielo);background:rgba(79,179,232,.20);transform:scale(1.015);box-shadow:0 0 0 4px rgba(79,179,232,.15)}
-.dz-state{display:flex;flex-direction:column;align-items:center;gap:7px}
-.dz-ico{width:54px;height:54px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:var(--card-shadow);margin-bottom:4px}
-.dz-ico.ok{background:rgba(31,138,91,.12);box-shadow:none}
-.dz-title{font-family:var(--ff-head);font-weight:600;font-size:1.08rem;color:var(--tinta)}
-.dz-sub{font-size:.85rem;color:var(--bruma)}
-.dz-sub a{color:var(--cielo);font-weight:600}
-.dz-spin{width:40px;height:40px;border-radius:50%;border:4px solid rgba(79,179,232,.25);border-top-color:var(--cielo);animation:spin .8s linear infinite;margin-bottom:6px}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-/* extracted fields */
-.extracted{margin-bottom:18px;animation:exIn .5s cubic-bezier(.2,.8,.2,1)}
-@keyframes exIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.ex-tag{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:600;color:var(--cielo);margin-bottom:12px;font-family:var(--ff-head);letter-spacing:.02em}
 .live-dot{width:8px;height:8px;border-radius:50%;background:var(--sol);box-shadow:0 0 0 0 rgba(255,215,94,.7);animation:live 1.8s ease-out infinite}
 @keyframes live{0%{box-shadow:0 0 0 0 rgba(255,215,94,.6)}70%{box-shadow:0 0 0 10px rgba(255,215,94,0)}100%{box-shadow:0 0 0 0 rgba(255,215,94,0)}}
-.ex-fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .ex-field label{display:block;font-weight:600;font-size:.82rem;margin-bottom:6px}
 .ex-field input{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;font-size:.98rem;color:var(--tinta);background:var(--nube);transition:border-color .2s,background .2s}
 .ex-field input:focus{outline:none;border-color:var(--cielo);background:#fff}
-@media(max-width:480px){.ex-fields{grid-template-columns:1fr}}
-
-/* privacy checkbox */
-.privacy{display:flex;align-items:flex-start;gap:11px;cursor:pointer;margin-bottom:20px;user-select:none}
-.privacy input{position:absolute;opacity:0;width:0;height:0}
-.pcheck{flex:none;width:22px;height:22px;border-radius:7px;border:2px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s;margin-top:1px}
-.pcheck svg{opacity:0;transform:scale(.5);transition:opacity .2s,transform .2s}
-.privacy input:checked+.pcheck{background:var(--cielo);border-color:var(--cielo)}
-.privacy input:checked+.pcheck svg{opacity:1;transform:scale(1)}
-.privacy input:focus-visible+.pcheck{outline:3px solid var(--cielo);outline-offset:2px}
-.ptext{font-size:.86rem;color:var(--tinta-80);line-height:1.45}
-.ptext a{color:var(--cielo);font-weight:600}
-.privacy.shake{animation:shake .4s}
-@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
 
 /* modal */
 .modal-overlay[hidden]{display:none !important}
@@ -515,13 +457,6 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;bac
 .crow{opacity:0;transform:translateX(-22px);transition:opacity .5s ease,transform .5s ease}
 .crow.in{opacity:1;transform:none}
 
-/* floating nebulous wisps (replaces geometric shapes) */
-.gshape{position:absolute;pointer-events:none;z-index:0;border-radius:50%;filter:blur(48px);opacity:.5;will-change:transform}
-@keyframes floatA{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(26px,-30px) scale(1.12)}}
-@keyframes floatB{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-32px,24px) scale(1.1)}}
-.gshape.fa{animation:floatA 19s ease-in-out infinite}
-.gshape.fb{animation:floatB 24s ease-in-out infinite}
-
 /* stronger button hover */
 .btn-sol:hover{transform:translateY(-3px) scale(1.035)}
 .btn-cielo:hover,.btn-ghost:hover,.btn-tinta:hover{transform:translateY(-3px) scale(1.03)}
@@ -531,48 +466,6 @@ input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;bac
 .px-bg .glow.c{animation:floatGlowC 21s ease-in-out infinite}
 @keyframes floatGlowY{0%,100%{transform:translate(-50%,0) scale(1)}50%{transform:translate(-50%,26px) scale(1.09)}}
 @keyframes floatGlowC{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-22px,-26px) scale(1.08)}}
-
-/* ============ MANIFIESTO ============ */
-#manifiesto{background:var(--tinta);color:#fff;overflow:hidden}
-.mani-inner{max-width:880px;margin:0 auto;position:relative;z-index:1}
-#manifiesto .eyebrow{color:var(--sol)}
-#manifiesto .eyebrow::before{background:var(--sol)}
-.mani-list{list-style:none;margin-top:40px;display:flex;flex-direction:column;gap:0}
-.mani-list li{
-  font-family:var(--ff-head);font-weight:600;font-size:clamp(1.5rem,3.6vw,2.5rem);
-  line-height:1.18;letter-spacing:-0.025em;color:#fff;padding:24px 0 24px 38px;position:relative;
-  border-top:1px solid rgba(255,255,255,.12);
-}
-.mani-list li:first-child{border-top:none}
-.mani-list li::before{content:"";position:absolute;left:0;top:34px;width:22px;height:4px;border-radius:3px;background:var(--sol)}
-.mani-list li.dim{color:rgba(255,255,255,.55)}
-.mani-close{margin-top:48px;font-family:var(--ff-head);font-weight:700;font-size:clamp(1.6rem,4vw,2.6rem);letter-spacing:-0.03em;line-height:1.15}
-.mani-close .y{color:var(--sol)}
-#manifiesto::before{content:"";position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(255,215,94,.14),transparent 68%);bottom:-220px;right:-120px}
-
-/* ============ FAQ ============ */
-.faq-wrap{max-width:840px;margin:0 auto}
-.faq-item{border-bottom:1px solid var(--line)}
-.faq-item:first-child{border-top:1px solid var(--line)}
-.faq-q{width:100%;display:flex;justify-content:space-between;align-items:center;gap:20px;text-align:left;padding:26px 4px;font-family:var(--ff-head);font-weight:600;font-size:clamp(1.08rem,2vw,1.3rem);letter-spacing:-0.02em;color:var(--tinta);transition:color .2s}
-.faq-q:hover{color:var(--cielo)}
-.faq-ico{flex:none;width:30px;height:30px;border-radius:9px;background:var(--cielo-claro);display:flex;align-items:center;justify-content:center;transition:background .25s, transform .35s}
-.faq-ico svg{transition:transform .35s}
-.faq-item.open .faq-ico{background:var(--sol)}
-.faq-item.open .faq-ico svg{transform:rotate(45deg)}
-.faq-a{overflow:hidden;max-height:0;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
-.faq-a-inner{padding:0 4px 28px;color:var(--tinta-80);font-size:1.04rem;line-height:1.6;max-width:68ch}
-.faq-a-inner b{color:var(--tinta);font-weight:600}
-
-/* ============ CTA FINAL ============ */
-#cta{background:var(--sol);overflow:hidden;position:relative}
-.cta-inner{text-align:center;max-width:760px;margin:0 auto;position:relative;z-index:1}
-#cta h2{font-size:clamp(2.6rem,7vw,5rem);color:var(--tinta);letter-spacing:-0.04em}
-#cta p{font-size:1.2rem;color:var(--tinta-80);margin:20px 0 34px;font-weight:500}
-#cta .btn{font-size:1.1rem;padding:18px 38px}
-#cta::before,#cta::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.28);filter:blur(8px)}
-#cta::before{width:240px;height:240px;top:-100px;left:-60px}
-#cta::after{width:200px;height:200px;bottom:-90px;right:-50px}
 
 /* ============ FOOTER ============ */
 footer{background:var(--tinta);color:#fff;padding:clamp(56px,7vw,84px) 0 36px}
@@ -685,7 +578,7 @@ footer{background:var(--tinta);color:#fff;padding:clamp(56px,7vw,84px) 0 36px}
 @keyframes edgeroll{to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion: reduce){.edgepulse svg{animation:none}}
 
-/* [hidden] manda: los estados del dropzone no se apilan */
+/* [hidden] manda, para que el modal de plan no se cuele con display:flex */
 [hidden]{display:none!important}
 
 /* logo limpio en la cabecera de la comparativa */
@@ -725,8 +618,9 @@ footer{background:var(--tinta);color:#fff;padding:clamp(56px,7vw,84px) 0 36px}
       <a href="#como">Cómo funciona</a>
       <a href="#packs">Precios</a>
       <a href="#planax">Planax</a>
-      <a href="#comunidad">Candidatos</a>
-      <a href="#faq">FAQ</a>
+      <a href="#comparativa">Comparativa</a>
+      <!-- TODO(web-comunidad): sustituir por la URL de la web de comunidad -->
+      <a href="#" data-todo="url-comunidad">Candidatos</a>
     </nav>
     <div class="nav-cta">
       <a href="#packs" class="btn btn-sol btn-sm">Ver precios</a>
@@ -750,7 +644,8 @@ footer{background:var(--tinta);color:#fff;padding:clamp(56px,7vw,84px) 0 36px}
         <p class="hero-sub reveal in d2">Selección de personal a precio fijo y público. <b>Pagas por el trabajo, no un porcentaje del sueldo.</b> Sin fees. Sin sorpresas.</p>
         <div class="hero-cta reveal in d3">
           <a href="#packs" class="btn btn-sol">Ver precios</a>
-          <a href="#comunidad" class="btn btn-ghost">Soy candidato/a</a>
+          <!-- TODO(web-comunidad): sustituir por la URL de la web de comunidad -->
+          <a href="#" data-todo="url-comunidad" class="btn btn-ghost">Soy candidato/a</a>
         </div>
       </div>
       <div class="hero-visual reveal in d2">
@@ -1088,97 +983,6 @@ footer{background:var(--tinta);color:#fff;padding:clamp(56px,7vw,84px) 0 36px}
   </div>
 </section>
 
-<!-- ============ COMUNIDAD PLANA ============ -->
-<section class="section-pad" id="comunidad" aria-labelledby="com-title">
-  <div class="wrap">
-    <div class="com-grid">
-      <div class="com-copy reveal">
-        <span class="eyebrow">Comunidad Plana</span>
-        <h2 id="com-title" style="font-size:clamp(2.1rem,4.6vw,3.4rem);margin-top:16px">Regístrate una vez. Te tenemos en cuenta siempre.</h2>
-        <div class="flag">
-          <strong>Aquí nadie se queda sin respuesta.</strong>
-          <span>Feedback siempre. Es nuestra bandera, no una promesa de marketing.</span>
-        </div>
-        <ul class="com-list">
-          <li>
-            <span class="ci"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#4FB3E8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <p><b>Sin reenviar tu CV cien veces.</b> Planax te tiene en cuenta para todas las vacantes compatibles.</p>
-          </li>
-          <li>
-            <span class="ci"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" stroke="#4FB3E8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <p><b>Transparencia salarial.</b> Todas las ofertas de Plana publican rango salarial. Siempre.</p>
-          </li>
-          <li>
-            <span class="ci"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" stroke="#4FB3E8" stroke-width="2.2" stroke-linejoin="round"/></svg></span>
-            <p><b>Acceso prioritario.</b> Conoces las vacantes antes de que se publiquen.</p>
-          </li>
-        </ul>
-      </div>
-
-      <div class="reveal d2">
-        <form class="com-form" id="comForm" action="https://formspree.io/f/TU_ENDPOINT" method="POST" enctype="multipart/form-data" novalidate>
-          <h3>Únete a la Comunidad Plana</h3>
-          <p class="sub">Sube tu CV. Planax extrae tus datos. Tú no rellenas nada.</p>
-
-          <label class="dropzone" id="dropzone" for="c-cv">
-            <input type="file" id="c-cv" name="cv" accept=".pdf,.doc,.docx,.txt" hidden />
-            <div class="dz-state dz-idle">
-              <span class="dz-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0l-4 4m4-4l4 4" stroke="#4FB3E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke="#4FB3E8" stroke-width="2" stroke-linecap="round"/></svg></span>
-              <span class="dz-title">Arrastra tu CV aquí</span>
-              <span class="dz-sub">o haz clic para elegir · PDF, DOC o TXT</span>
-            </div>
-            <div class="dz-state dz-busy" hidden>
-              <span class="dz-spin"></span>
-              <span class="dz-title">Planax está leyendo tu CV…</span>
-              <span class="dz-sub" id="dzFile">documento.pdf</span>
-            </div>
-            <div class="dz-state dz-done" hidden>
-              <span class="dz-ico ok"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#1F8A5B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              <span class="dz-title">CV recibido</span>
-              <span class="dz-sub" id="dzFileDone">documento.pdf · <a href="#" id="dzChange">cambiar</a></span>
-            </div>
-          </label>
-
-          <div class="extracted" id="extracted" hidden>
-            <div class="ex-tag"><span class="live-dot"></span>Datos extraídos por Planax</div>
-            <div class="ex-fields">
-              <div class="ex-field"><label for="f-name">Nombre</label><input type="text" id="f-name" name="nombre" placeholder="Tu nombre" /></div>
-              <div class="ex-field"><label for="f-email">Email</label><input type="email" id="f-email" name="email" placeholder="tu@email.com" /></div>
-            </div>
-          </div>
-
-          <label class="privacy">
-            <input type="checkbox" id="c-privacy" name="privacidad" required />
-            <span class="pcheck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <span class="ptext">Acepto la <a href="#privacidad">Política de Privacidad</a> y el tratamiento de mis datos para avisarme de vacantes compatibles.</span>
-          </label>
-
-          <button type="submit" class="btn btn-sol" id="comSubmit">Únete a la Comunidad Plana</button>
-          <p class="legal">Tus datos son tuyos. Aquí nadie se queda sin respuesta.</p>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- modal manual (fallback) -->
-<div class="modal-overlay" id="manualModal" hidden>
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mm-title">
-    <button class="modal-x" id="mmClose" aria-label="Cerrar">&times;</button>
-    <h3 id="mm-title">Casi listo</h3>
-    <p class="mm-sub">No hemos podido leer todo del CV. Déjanos solo esto y te tenemos en cuenta.</p>
-    <div class="ex-field"><label for="mm-name">Nombre</label><input type="text" id="mm-name" placeholder="Tu nombre" /></div>
-    <div class="ex-field"><label for="mm-email">Email</label><input type="email" id="mm-email" placeholder="tu@email.com" /></div>
-    <button class="btn btn-sol" id="mmConfirm" style="width:100%;margin-top:18px">Confirmar</button>
-  </div>
-</div>
-
-<!-- toast -->
-<div class="toast" id="toast" role="status" aria-live="polite">
-  <span class="toast-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-  <span class="toast-txt">¡Estás dentro de la Comunidad Plana!</span>
-</div>
-
 <!-- modal cliente (elegir plan) -->
 <div class="modal-overlay" id="planModal" hidden>
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="pm-title">
@@ -1204,81 +1008,6 @@ footer{background:var(--tinta);color:#fff;padding:clamp(56px,7vw,84px) 0 36px}
   <span class="toast-txt">Recibido. Te contactamos en menos de 24h.</span>
 </div>
 
-<!-- ============ MANIFIESTO ============ -->
-<section class="section-pad" id="manifiesto" aria-labelledby="mani-title">
-  <span class="gshape fb" style="width:360px;height:360px;background:rgba(255,215,94,.16);top:-6%;right:-4%"></span>
-  <span class="gshape fa" style="width:300px;height:300px;background:rgba(79,179,232,.20);bottom:-10%;left:-5%"></span>
-  <div class="wrap">
-    <div class="mani-inner reveal">
-      <span class="eyebrow">Por qué existe Plana</span>
-      <h2 id="mani-title" style="color:#fff;font-size:clamp(2.1rem,4.6vw,3.4rem);margin-top:16px">Un manifiesto, no un eslogan.</h2>
-      <ul class="mani-list">
-        <li>El precio de contratar a alguien no debería depender de su sueldo.</li>
-        <li class="dim">Las agencias cobran más por la misma llamada de teléfono. Nosotros no.</li>
-        <li>La transparencia no es una feature. Es lo mínimo.</li>
-        <li class="dim">Si un candidato no recibe respuesta, hemos fallado.</li>
-        <li>Seleccionar bien es un trabajo serio. Cobrarlo raro, no.</li>
-      </ul>
-      <p class="mani-close">Bienvenido a la selección a tarifa plana. <span class="y">Bienvenido a Plana.</span></p>
-    </div>
-  </div>
-</section>
-
-<!-- ============ FAQ ============ -->
-<section class="section-pad" id="faq" aria-labelledby="faq-title">
-  <div class="wrap">
-    <div class="sec-head center reveal">
-      <span class="eyebrow">Preguntas frecuentes</span>
-      <h2 id="faq-title">Sin letra pequeña. Pregunta.</h2>
-    </div>
-    <div class="faq-wrap reveal d1">
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">¿De verdad el precio no depende del salario?<span class="faq-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#10243A" stroke-width="2.4" stroke-linecap="round"/></svg></span></button>
-        <div class="faq-a"><div class="faq-a-inner">De verdad. El precio depende de la <b>complejidad del perfil</b>, no de lo que cobre. Buscar un perfil de soporte cuesta lo mismo gane 20.000 o 28.000. Un perfil de dirección entra en otro pack porque cuesta más encontrarlo, no porque cobre más. Lo que pagas es el trabajo de selección, y ese trabajo no sube porque suba la nómina.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">¿Qué pasa si no encontráis a nadie?<span class="faq-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#10243A" stroke-width="2.4" stroke-linecap="round"/></svg></span></button>
-        <div class="faq-a"><div class="faq-a-inner">Trabajamos cada vacante hasta cerrarla. Si tras el proceso acordado no llegamos a una contratación, ajustamos la estrategia contigo sin coste adicional. No cobramos por intentarlo: cobramos por el pack y respondemos por el resultado.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">¿Cómo funciona la garantía?<span class="faq-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#10243A" stroke-width="2.4" stroke-linecap="round"/></svg></span></button>
-        <div class="faq-a"><div class="faq-a-inner">Si la persona contratada no funciona dentro del periodo de garantía de tu pack (60, 90 o 120 días según el pack), <b>la reponemos gratis</b>. Reabrimos el proceso y buscamos a otra persona sin volver a cobrarte el pack. Sin discusiones.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">¿Qué es Planax y quién ve mis datos?<span class="faq-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#10243A" stroke-width="2.4" stroke-linecap="round"/></svg></span></button>
-        <div class="faq-a"><div class="faq-a-inner">Planax es nuestra IA propia: hace el cribado conversacional, el matching con la Comunidad Plana y el panel en tiempo real. <b>Tus datos son tuyos.</b> No los vendemos ni los usamos para entrenar modelos de terceros. Cumplimos el RGPD y tratamos cada candidatura con confidencialidad.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">¿Trabajáis fuera de España?<span class="faq-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#10243A" stroke-width="2.4" stroke-linecap="round"/></svg></span></button>
-        <div class="faq-a"><div class="faq-a-inner">Nuestro foco es España. Si tu empresa es española y tiene una posición internacional puntual, cuéntanoslo y vemos cómo encajarlo.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">¿Cómo se paga?<span class="faq-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#10243A" stroke-width="2.4" stroke-linecap="round"/></svg></span></button>
-        <div class="faq-a"><div class="faq-a-inner">Por pack, con un precio fijo que conoces desde el principio. Una parte al arrancar el proceso y el resto al cerrar la contratación. Si entras en Plana Ilimitada, es una suscripción mensual. Sin porcentajes, sin sorpresas en la factura.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">¿Qué pack necesito?<span class="faq-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#10243A" stroke-width="2.4" stroke-linecap="round"/></svg></span></button>
-        <div class="faq-a"><div class="faq-a-inner"><b>Despegue</b> para perfiles operativos y junior. <b>Altitud</b> para mandos intermedios y especialistas con escasez media. <b>Estratosfera</b> para dirección y perfiles muy escasos. Si dudas, dínoslo y te lo decimos en una frase, sin reunión de dos horas.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">¿Sois una ETT?<span class="faq-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#10243A" stroke-width="2.4" stroke-linecap="round"/></svg></span></button>
-        <div class="faq-a"><div class="faq-a-inner">No. No cedemos trabajadores ni los ponemos en nómina por ti. Hacemos selección directa: buscamos, evaluamos y te presentamos finalistas para que tú los contrates en tu plantilla. La persona trabaja para ti desde el día uno.</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ CTA FINAL ============ -->
-<section class="section-pad" id="cta">
-  <div class="wrap">
-    <div class="cta-inner reveal">
-      <h2>Únete a la nueva era del reclutamiento. Dile adiós al fee.</h2>
-      <p>Precio fijo, panel en tiempo real y reposición garantizada. El fee se queda fuera.</p>
-      <a href="#packs" class="btn btn-tinta">Ver precios</a>
-    </div>
-  </div>
-</section>
-
 <!-- ============ FOOTER ============ -->
 <footer>
   <div class="wrap">
@@ -1301,13 +1030,14 @@ footer{background:var(--tinta);color:#fff;padding:clamp(56px,7vw,84px) 0 36px}
           <li><a href="#packs">Precios</a></li>
           <li><a href="#calc">Calculadora</a></li>
           <li><a href="#planax">Planax</a></li>
-          <li><a href="#comunidad">Soy candidato/a</a></li>
+          <li><a href="#comparativa">Comparativa</a></li>
         </ul>
       </div>
       <div class="foot-col">
         <h4>Plana</h4>
         <ul>
-          <li><a href="#faq">FAQ</a></li>
+          <!-- TODO(web-comunidad): sustituir por la URL de la web de comunidad -->
+          <li><a href="#" data-todo="url-comunidad">Soy candidato/a</a></li>
           <li><a href="mailto:hello@beplana.com">hello@beplana.com</a></li>
           <li><a href="#aviso-legal">Aviso legal</a></li>
           <li><a href="#privacidad">Privacidad</a></li>
@@ -1443,21 +1173,6 @@ footer{background:var(--tinta);color:#fff;padding:clamp(56px,7vw,84px) 0 36px}
     fee.addEventListener('input', function(){ recalc(true); });
     recalc(false);
   }
-
-  /* ---- FAQ accordion ---- */
-  document.querySelectorAll('.faq-item').forEach(function(item){
-    var q = item.querySelector('.faq-q');
-    var a = item.querySelector('.faq-a');
-    q.addEventListener('click', function(){
-      var open = item.classList.contains('open');
-      document.querySelectorAll('.faq-item.open').forEach(function(o){
-        if(o !== item){ o.classList.remove('open'); o.querySelector('.faq-a').style.maxHeight = null; o.querySelector('.faq-q').setAttribute('aria-expanded','false'); }
-      });
-      if(open){ item.classList.remove('open'); a.style.maxHeight = null; q.setAttribute('aria-expanded','false'); }
-      else { item.classList.add('open'); a.style.maxHeight = a.scrollHeight + 'px'; q.setAttribute('aria-expanded','true'); }
-    });
-  });
-
   /* ---- comparativa: entrada fila por fila ---- */
   var compare = document.querySelector('.compare');
   if(compare){
@@ -1539,76 +1254,6 @@ footer{background:var(--tinta);color:#fff;padding:clamp(56px,7vw,84px) 0 36px}
       toastC._t=setTimeout(function(){ toastC.classList.remove('show'); },4600);
     });
   })();
-
-  /* ---- Comunidad: CV dropzone + extracción + modal + toast ---- */
-  (function(){
-    var form=document.getElementById('comForm'); if(!form) return;
-    var dz=document.getElementById('dropzone'),
-        cv=document.getElementById('c-cv'),
-        idleEl=dz.querySelector('.dz-idle'),
-        busyEl=dz.querySelector('.dz-busy'),
-        doneEl=dz.querySelector('.dz-done'),
-        dzFile=document.getElementById('dzFile'),
-        dzFileDone=document.getElementById('dzFileDone'),
-        extracted=document.getElementById('extracted'),
-        fName=document.getElementById('f-name'),
-        fEmail=document.getElementById('f-email'),
-        privacy=document.getElementById('c-privacy'),
-        modal=document.getElementById('manualModal'),
-        mmName=document.getElementById('mm-name'),
-        mmEmail=document.getElementById('mm-email'),
-        toast=document.getElementById('toast');
-
-    function setState(s){ idleEl.hidden=s!=='idle'; busyEl.hidden=s!=='busy'; doneEl.hidden=s!=='done'; }
-    function guessName(fn){
-      var b=fn.replace(/\.[^.]+$/,'').replace(/[_\-]+/g,' ').replace(/\b(cv|curriculum|vitae|resume|resumen)\b/gi,' ').replace(/\s+/g,' ').trim();
-      if(!b) return '';
-      return b.split(' ').map(function(w){return w.charAt(0).toUpperCase()+w.slice(1).toLowerCase();}).join(' ');
-    }
-    function openModal(){ modal.hidden=false; setTimeout(function(){mmName.focus();},60); }
-    function closeModal(){ modal.hidden=true; }
-    function toastUp(){ toast.classList.add('show'); clearTimeout(toast._t); toast._t=setTimeout(function(){toast.classList.remove('show');},4200); }
-
-    function processFile(file){
-      if(!file) return;
-      dzFile.textContent=file.name; setState('busy'); extracted.hidden=true;
-      var minD=new Promise(function(r){setTimeout(r,1300);});
-      var readP=new Promise(function(res){ var rd=new FileReader(); rd.onload=function(){res(String(rd.result||''));}; rd.onerror=function(){res('');}; try{rd.readAsText(file);}catch(e){res('');} });
-      Promise.all([readP,minD]).then(function(a){
-        var text=a[0];
-        var em=(text.match(/[A-Z0-9._%+\-]+@[A-Z0-9.\-]+\.[A-Z]{2,}/i)||[])[0]||'';
-        var nm=guessName(file.name);
-        dzFileDone.innerHTML=file.name+' · <a href="#" id="dzChange">cambiar</a>';
-        setState('done');
-        if(em){ fName.value=nm; fEmail.value=em; extracted.hidden=false; }
-        else { mmName.value=nm; mmEmail.value=''; openModal(); }
-      });
-    }
-
-    ['dragenter','dragover'].forEach(function(ev){ dz.addEventListener(ev,function(e){e.preventDefault();dz.classList.add('drag');}); });
-    ['dragleave','drop'].forEach(function(ev){ dz.addEventListener(ev,function(e){e.preventDefault();dz.classList.remove('drag');}); });
-    dz.addEventListener('drop',function(e){ var f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0]; if(f){ try{var dt=new DataTransfer();dt.items.add(f);cv.files=dt.files;}catch(_){} processFile(f);} });
-    cv.addEventListener('change',function(){ if(cv.files&&cv.files[0]) processFile(cv.files[0]); });
-    dz.addEventListener('click',function(e){ if(e.target&&e.target.id==='dzChange'){ e.preventDefault(); } });
-
-    document.getElementById('mmClose').addEventListener('click',closeModal);
-    modal.addEventListener('click',function(e){ if(e.target===modal) closeModal(); });
-    document.addEventListener('keydown',function(e){ if(e.key==='Escape' && !modal.hidden) closeModal(); });
-    document.getElementById('mmConfirm').addEventListener('click',function(){
-      var em=mmEmail.value.trim();
-      if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ mmEmail.style.borderColor='#C0606A'; mmEmail.focus(); return; }
-      fName.value=mmName.value.trim(); fEmail.value=em; extracted.hidden=false; closeModal();
-    });
-
-    form.addEventListener('submit',function(e){
-      e.preventDefault();
-      if(!(cv.files&&cv.files.length)){ dz.classList.add('drag'); setTimeout(function(){dz.classList.remove('drag');},650); return; }
-      if(!privacy.checked){ var p=form.querySelector('.privacy'); p.classList.add('shake'); setTimeout(function(){p.classList.remove('shake');},500); return; }
-      if(!fEmail.value){ openModal(); return; }
-      toastUp();
-      form.reset(); setState('idle'); extracted.hidden=true;
-    });
-  })();
 })();
 </script>
 
@@ -1639,7 +1284,8 @@ function band(frases, sol, ref, pos){
   ref.parentNode.insertBefore(b, pos==='before'?ref:ref.nextSibling);
 }
 band(['el fee ha muerto','sin fees','sin sorpresas','precio fijo y público','be smart, be plana'], false, document.getElementById('como'), 'before');
-band(['pagas por el trabajo','no por el sueldo','la transparencia es el producto'], true, document.getElementById('comunidad'), 'before');
+/* iba antes de Comunidad Plana, que se fue a la web de comunidad: ahora abre la comparativa */
+band(['pagas por el trabajo','no por el sueldo','la transparencia es el producto'], true, document.getElementById('comparativa'), 'before');
 
 /* pulso que recorre el borde superior de Planax */
 (function(){
@@ -1670,7 +1316,7 @@ function kinetize(el){
   el.classList.add('kin');
   el.querySelectorAll('.w i').forEach(function(i,k){ i.style.transitionDelay = (k*0.055).toFixed(3)+'s'; });
 }
-var heads = document.querySelectorAll('.sec-head h2, #cta h2, .escala-head h3, .px-head h2');
+var heads = document.querySelectorAll('.sec-head h2, .escala-head h3, .px-head h2');
 heads.forEach(kinetize);
 if(reduce){
   heads.forEach(function(h){ h.classList.add('kin-in'); });
@@ -1744,7 +1390,9 @@ if(!reduce){
 })();
 
 /* scroll maestro */
-var cta = document.getElementById('cta');
+/* el dock se retira al llegar al final. Antes se anclaba al CTA final, que se
+   fue a la web de comunidad; ahora al footer, que es el nuevo cierre. */
+var cta = document.querySelector('footer');
 var hero = document.querySelector('.hero');
 var raf=false;
 function onScroll(){
