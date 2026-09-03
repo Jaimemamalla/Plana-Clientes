@@ -9,16 +9,20 @@
   var utils          = anime.utils;
 
   var group = stack.querySelector('.iso-slats');
+  var disc  = stack.querySelector('.iso-disc');
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---- geometría del círculo por láminas ---- */
+  if (reduce) return;
+
+  /* ---- geometría del círculo por láminas ----
+     Sin separación y sin esquinas redondeadas: así las láminas embaldosan el
+     círculo en vez de leerse como una persiana. Aun así, el estado montado no
+     son las láminas, es el <circle> real: se cambia una cosa por la otra. */
   var CX = 180;
   var CY = 180;
   var R = 140;
-  var SLATS = 15;
-  var GAP = 2.2;
+  var SLATS = 18;
   var pitch = (R * 2) / SLATS;
-  var h = pitch - GAP;
   var mid = (SLATS - 1) / 2;
 
   var NS = 'http://www.w3.org/2000/svg';
@@ -29,27 +33,19 @@
     var half = Math.sqrt(Math.max(0, R * R - (yc - CY) * (yc - CY)));
     var rect = document.createElementNS(NS, 'rect');
     rect.setAttribute('x', (CX - half).toFixed(2));
-    rect.setAttribute('y', (yc - h / 2).toFixed(2));
+    rect.setAttribute('y', (yc - pitch / 2).toFixed(2));
     rect.setAttribute('width', (half * 2).toFixed(2));
-    rect.setAttribute('height', h.toFixed(2));
-    rect.setAttribute('rx', Math.min(h / 2, 9).toFixed(2));
+    rect.setAttribute('height', pitch.toFixed(2));
     rect.setAttribute('fill', '#4FB3E8');
     group.appendChild(rect);
     slats.push(rect);
   }
-
-  stack.classList.add('js');
-
-  if (reduce) return;
 
   function noise(i, salt) {
     var x = Math.sin((i + 1) * 12.9898 + salt * 78.233) * 43758.5453;
     return x - Math.floor(x);
   }
 
-  /* Dirección y magnitud por separado: con signed() puro salían láminas casi
-     quietas, porque el ruido daba valores cerca de cero. Así todas se van de
-     verdad, unas más que otras. */
   function dir(i, salt) {
     return noise(i, salt) < 0.5 ? -1 : 1;
   }
@@ -70,47 +66,84 @@
     return {
       translateX: dir(i, 1) * mag(i, 11, 150, 230),
       translateY: (i - mid) * 46,
-      rotate: signed(i, 2) * 42,
+      rotate: signed(i, 2) * 30,
       opacity: 0,
-      scaleX: 0.5
+      scaleX: 0.6
     };
   }
 
-  /* ---- el recorrido ----
-     0    a 450: las piezas llegan dispersas y se montan
-     450  a 600: el isotipo, quieto
-     600  a 1000: se desmonta y las piezas se van
-     La barra amarilla no entra en la timeline: no se mueve nunca. */
-  /* estado de partida, para que en progreso 0 ya estén dispersas */
   slats.forEach(function (el, i) {
     utils.set(el, scatterIn(i));
   });
+  utils.set(disc, { opacity: 0 });
 
+  /* ---- el recorrido ----
+       0 a 380    las piezas llegan dispersas y se montan
+       420 a 470  relevo: las láminas se apagan y aparece el círculo limpio
+       470 a 600  el isotipo, quieto y sin costuras
+       600 a 650  relevo a la inversa
+       650 a 1000 se desmonta y las piezas se van
+     La barra amarilla no entra aquí: no se mueve nunca. */
   var tl = createTimeline({ autoplay: false });
 
   slats.forEach(function (el, i) {
     var e = edge(i);
     var from = scatterIn(i);
+    var at = Math.round(e * 70);
 
     tl.add(el, {
       translateX: [from.translateX, 0],
       translateY: [from.translateY, 0],
       rotate: [from.rotate, 0],
-      opacity: [0, 1],
-      scaleX: [0.5, 1],
+      scaleX: [0.6, 1],
       duration: 380,
       ease: 'out(3)'
-    }, Math.round(e * 70));
+    }, at);
+
+    tl.add(el, {
+      opacity: [0, 1],
+      duration: 240,
+      ease: 'linear'
+    }, at);
+
+    tl.add(el, {
+      opacity: [1, 0],
+      duration: 50,
+      ease: 'linear'
+    }, 420);
+
+    tl.add(el, {
+      opacity: [0, 1],
+      duration: 50,
+      ease: 'linear'
+    }, 600);
 
     tl.add(el, {
       translateX: [0, dir(i, 3) * mag(i, 13, 120 + e * 140, 200)],
       translateY: [0, (i - mid) * 38 + signed(i, 4) * 34],
       rotate: [0, signed(i, 5) * (16 + e * 36)],
-      opacity: [1, 0],
-      duration: 340,
+      duration: 350,
       ease: 'in(2)'
-    }, 600 + Math.round((1 - e) * 60));
+    }, 650 + Math.round((1 - e) * 60));
+
+    tl.add(el, {
+      opacity: [1, 0],
+      duration: 300,
+      ease: 'linear'
+    }, 690 + Math.round((1 - e) * 60));
   });
+
+  tl.add(disc, {
+    opacity: [0, 1],
+    duration: 50,
+    ease: 'linear'
+  }, 420);
+
+  tl.add(disc, {
+    opacity: [1, 0],
+    duration: 50,
+    ease: 'linear'
+  }, 600);
 
   /* progreso 0 al entrar la sección, 1 al terminar su recorrido */
   function measure() {

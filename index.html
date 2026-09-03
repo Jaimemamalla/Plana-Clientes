@@ -833,10 +833,11 @@ header.nav.scrolled {
   transform-box: fill-box;
   transform-origin: center;
   will-change: transform,opacity;
+  shape-rendering: crispEdges;
 }
 
-.isostack.js .iso-plain {
-  display: none;
+.iso-disc {
+  will-change: opacity;
 }
 
 @media(max-width:900px) {
@@ -2983,9 +2984,7 @@ footer {
       <div class="isostack" id="isostack">
         <svg class="isostack-svg" viewBox="0 0 360 360" role="img"
              aria-label="El isotipo de Plana: un círculo azul cruzado por una barra plana amarilla">
-          <g class="iso-plain">
-            <circle cx="180" cy="180" r="140" fill="#4FB3E8"/>
-          </g>
+          <circle class="iso-disc" cx="180" cy="180" r="140" fill="#4FB3E8"/>
           <g class="iso-slats" aria-hidden="true"></g>
           <rect class="iso-bar" x="98" y="170" width="164" height="20" rx="10" fill="#FFD75E"/>
         </svg>
