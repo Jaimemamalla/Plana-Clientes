@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Fuente de og.png</title>
+<!--
+  Fuente de la imagen que se ve al compartir la web en LinkedIn y similares.
+  No se sirve: se renderiza a og.png de 1200x630. Para regenerarla:
+
+  chrome --headless --disable-gpu --hide-scrollbars \
+    --screenshot=og.png --window-size=1200,630 \
+    file:///ruta/og.source.html
+
+  El texto es el claim que ya está en el footer de la web, no es copy nuevo.
+-->
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@500&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+  }
+
+  body {
+    background: #F8FCFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 96px;
+    position: relative;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+  }
+
+  .b1 {
+    width: 620px;
+    height: 620px;
+    background: #BDE3F8;
+    top: -220px;
+    right: -140px;
+    opacity: .75;
+  }
+
+  .b2 {
+    width: 420px;
+    height: 420px;
+    background: rgba(255,215,94,.5);
+    bottom: -200px;
+    left: 40%;
+  }
+
+  .mark {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    margin-bottom: 44px;
+  }
+
+  .mark svg {
+    width: 76px;
+    height: 76px;
+    display: block;
+  }
+
+  .mark span {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 68px;
+    letter-spacing: -.04em;
+    color: #10243A;
+    line-height: 1;
+  }
+
+  h1 {
+    position: relative;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 104px;
+    line-height: .96;
+    letter-spacing: -.045em;
+    color: #10243A;
+  }
+
+  h1 em {
+    font-style: normal;
+    position: relative;
+  }
+
+  h1 em::after {
+    content: "";
+    position: absolute;
+    left: -2%;
+    right: -2%;
+    bottom: .07em;
+    height: .16em;
+    border-radius: 8px;
+    background: #FFD75E;
+    z-index: -1;
+  }
+
+  p {
+    position: relative;
+    margin-top: 34px;
+    font-size: 32px;
+    font-weight: 500;
+    color: rgba(16,36,58,.78);
+  }
+</style>
+</head>
+<body>
+  <span class="blob b1"></span>
+  <span class="blob b2"></span>
+
+  <div class="mark">
+    <svg viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="50" r="48" fill="#4FB3E8"/>
+      <rect x="22" y="46.5" width="56" height="7" rx="3.5" fill="#FFD75E"/>
+    </svg>
+    <span>plana</span>
+  </div>
+
+  <h1>El <em>fee</em> ha muerto.</h1>
+  <p>Selección a tarifa plana. Sin fees. Sin sorpresas.</p>
+</body>
+</html>
