@@ -446,33 +446,130 @@ header.nav.scrolled {
   position: relative;
 }
 
-.isostack {
+.flatcard {
+  background: #fff;
+  border-radius: var(--r-lg);
+  box-shadow: var(--card-shadow-lg);
+  border: 1px solid var(--line);
+  padding: 28px;
   position: relative;
-  width: 100%;
-  max-width: 440px;
-  margin: 0 auto;
+  overflow: hidden;
 }
 
-.isostack-svg {
-  width: 100%;
-  height: auto;
-  overflow: visible;
+.flatcard .fc-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 6px;
+}
+
+.fc-label {
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--bruma);
+}
+
+.fc-old {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  color: var(--bruma);
+}
+
+.fc-old .v {
+  font-family: var(--ff-head);
+  font-weight: 700;
+  font-size: 1.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+.fc-old .v .cut {
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  top: 52%;
+  height: 3px;
+  border-radius: 2px;
+  background: #E15B5B;
+  transform-origin: left;
   display: block;
+  pointer-events: none;
 }
 
-.iso-slats rect {
-  transform-box: fill-box;
-  transform-origin: center;
-  will-change: transform,opacity;
+.fc-new {
+  font-family: var(--ff-head);
+  font-weight: 700;
+  font-size: 3.2rem;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-top: 2px;
 }
 
-.iso-bar {
-  transform-box: fill-box;
-  transform-origin: center;
+.fc-new small {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--bruma);
+  font-family: var(--ff-body);
 }
 
-.isostack.js .iso-plain {
-  display: none;
+.fc-save {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  background: var(--sol);
+  color: var(--tinta);
+  font-family: var(--ff-head);
+  font-weight: 700;
+  font-size: 1.05rem;
+  padding: 9px 16px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+/* electro del hero */
+.ekg {
+  margin-top: 24px;
+  height: 54px;
+  width: 100%;
+  overflow: visible;
+}
+
+.ekg path {
+  fill: none;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ekg .rail {
+  stroke: var(--line);
+  stroke-width: 2;
+}
+
+.ekg .beat {
+  stroke: var(--cielo);
+}
+
+.ekg .flat {
+  stroke: var(--sol);
+  stroke-width: 5;
+}
+
+.ekg .head {
+  stroke: var(--cielo);
+  stroke-width: 9;
+  opacity: 0;
+}
+
+.ekg .sheen {
+  stroke: #fff;
+  stroke-width: 5;
+  opacity: 0;
+  mix-blend-mode: overlay;
 }
 
 /* social proof */
@@ -1997,6 +2094,15 @@ input[type=range]::-moz-range-thumb {
 .reveal.rg.in {
   transform: none;
   opacity: 1;
+}
+
+/* glass hero card */
+
+.flatcard {
+  background: rgba(255,255,255,.62);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(255,255,255,.7);
 }
 
 /* living gradient on packs */
@@ -3602,7 +3708,7 @@ onScroll();
 
 <!-- ===== anime.js + timelines ===== -->
 <script src="js/anime.iife.min.js"></script>
-<script src="js/hero-slats.js"></script>
+<script src="js/hero-flatline.js"></script>
 <script src="js/planax-live.js"></script>
 </body>
 </html>
