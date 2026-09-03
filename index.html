@@ -2326,63 +2326,6 @@ input[type=range]::-moz-range-thumb {
   }
 }
 
-/* ============ PRUEBA ============ */
-
-#prueba {
-  background: #fff;
-  border-top: 1px solid var(--line);
-}
-
-.proofgrid {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 24px;
-}
-
-.proofnum {
-  background: var(--nube);
-  border: 1px solid var(--line);
-  border-radius: var(--r-lg);
-  padding: 34px 30px;
-  text-align: center;
-}
-
-.pn-v {
-  font-family: var(--ff-head);
-  font-weight: 700;
-  font-size: clamp(2.4rem,5vw,3.6rem);
-  letter-spacing: -0.03em;
-  line-height: 1;
-  color: var(--tinta);
-}
-
-.pn-k {
-  color: var(--tinta-80);
-  font-size: .98rem;
-  margin-top: 12px;
-  line-height: 1.45;
-}
-
-.prooflogos {
-  margin-top: 28px;
-  text-align: center;
-}
-
-/* los huecos por rellenar chillan a propósito */
-.todo-dato {
-  background: var(--sol);
-  color: var(--tinta);
-  font-weight: 700;
-  padding: 2px 10px;
-  border-radius: 6px;
-}
-
-@media(max-width:820px) {
-  .proofgrid {
-    grid-template-columns: 1fr;
-  }
-}
-
 /* ============ CTA FINAL ============ */
 
 #cierre {
@@ -3454,37 +3397,6 @@ footer {
   <span class="toast-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
   <span class="toast-txt">Recibido. Te contactamos en menos de 24h.</span>
 </div>
-
-<!-- ============ PRUEBA ============ -->
-<!-- TODO(plana): esto está sin contenido real. Hacen falta tres cifras que
-     podáis defender y, si los hay, logos de clientes que os hayan dado
-     permiso. Mientras esté así, esta sección NO debe publicarse: borradla o
-     rellenadla, pero no la dejéis con los interrogantes. -->
-<section class="section-pad" id="prueba" aria-labelledby="prueba-title">
-  <div class="wrap">
-    <div class="sec-head center reveal">
-      <span class="eyebrow">Con datos</span>
-      <h2 id="prueba-title">Lo que llevamos hecho.</h2>
-    </div>
-
-    <div class="proofgrid">
-      <div class="proofnum reveal d1">
-        <div class="pn-v"><span class="todo-dato">00</span></div>
-        <div class="pn-k">Contrataciones cerradas</div>
-      </div>
-      <div class="proofnum reveal d2">
-        <div class="pn-v"><span class="todo-dato">00</span> días</div>
-        <div class="pn-k">Media hasta la shortlist</div>
-      </div>
-      <div class="proofnum reveal d3">
-        <div class="pn-v"><span class="todo-dato">00</span> %</div>
-        <div class="pn-k">Contrataciones que siguen en la empresa al año</div>
-      </div>
-    </div>
-
-    <p class="prooflogos reveal d2"><span class="todo-dato">Aquí van los logos de clientes que os hayan dado permiso, o se quita la fila</span></p>
-  </div>
-</section>
 
 <!-- ============ CTA FINAL ============ -->
 <section class="section-pad" id="cierre">
