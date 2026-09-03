@@ -762,6 +762,107 @@ header.nav.scrolled {
   }
 }
 
+/* ============ MOTOR ============ */
+
+#motor {
+  position: relative;
+  background: var(--tinta);
+  color: #fff;
+  height: 240vh;
+}
+
+#motor .eyebrow {
+  color: var(--sol);
+}
+
+#motor .eyebrow::before {
+  background: var(--sol);
+}
+
+.motor-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.motor-grid {
+  display: grid;
+  grid-template-columns: 1fr .9fr;
+  gap: clamp(32px,5vw,72px);
+  align-items: center;
+  width: 100%;
+}
+
+.motor-copy h2 {
+  color: #fff;
+  font-size: clamp(2.2rem,5vw,3.8rem);
+  letter-spacing: -0.04em;
+  margin-top: 18px;
+}
+
+.motor-copy h2 .y {
+  color: var(--sol);
+}
+
+.motor-copy p {
+  color: rgba(255,255,255,.72);
+  font-size: clamp(1.02rem,1.8vw,1.2rem);
+  margin-top: 20px;
+  max-width: 46ch;
+  line-height: 1.55;
+}
+
+.isostack {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.isostack-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  display: block;
+}
+
+.iso-slats rect {
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform,opacity;
+}
+
+.isostack.js .iso-plain {
+  display: none;
+}
+
+@media(max-width:900px) {
+  #motor {
+    height: 200vh;
+  }
+  .motor-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .isostack {
+    max-width: 300px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #motor {
+    height: auto;
+    padding: clamp(72px,11vw,140px) 0;
+  }
+  .motor-stage {
+    position: static;
+    height: auto;
+  }
+}
+
 /* ============ PACKS ============ */
 
 #packs {
@@ -2829,7 +2930,6 @@ footer {
           </div>
           <span class="fc-save">Te ahorras <span data-count="4100" data-suffix=" €">4.100 €</span></span>
           <svg class="ekg" viewBox="0 0 360 54" preserveAspectRatio="none" aria-hidden="true">
-            <path class="rail" d="M0,27 H360"/>
             <path class="beat" d="M0,27 H36 L44,27 L52,9 L60,45 L68,27 H104 L112,27 L120,9 L128,45 L136,27 H172 L180,27 L188,4 L196,50 L204,27 H212"/>
             <path class="head" d="M0,27 H36 L44,27 L52,9 L60,45 L68,27 H104 L112,27 L120,9 L128,45 L136,27 H172 L180,27 L188,4 L196,50 L204,27 H212"/>
             <path class="flat" d="M212,27 H360"/>
@@ -2866,6 +2966,30 @@ footer {
         <p>Shortlist de finalistas, tú decides, nosotros cerramos. Si la persona no funciona, la reponemos gratis.</p>
         <span class="underbar"></span>
       </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MOTOR ============ -->
+<section id="motor" aria-labelledby="motor-title">
+  <div class="motor-stage">
+    <div class="wrap motor-grid">
+      <div class="motor-copy">
+        <span class="eyebrow">Tarifa plana</span>
+        <h2 id="motor-title">Todo se desmonta. <span class="y">La tarifa no.</span></h2>
+        <p>El fee sube con el sueldo, baja si negocias y cambia según quién pregunte. Nuestro precio no se mueve: está en la web, es el mismo para todos y no depende de lo que cobre la persona que contratas.</p>
+      </div>
+
+      <div class="isostack" id="isostack">
+        <svg class="isostack-svg" viewBox="0 0 360 360" role="img"
+             aria-label="El isotipo de Plana: un círculo azul cruzado por una barra plana amarilla">
+          <g class="iso-plain">
+            <circle cx="180" cy="180" r="140" fill="#4FB3E8"/>
+          </g>
+          <g class="iso-slats" aria-hidden="true"></g>
+          <rect class="iso-bar" x="98" y="170" width="164" height="20" rx="10" fill="#FFD75E"/>
+        </svg>
+      </div>
     </div>
   </div>
 </section>
@@ -3709,6 +3833,7 @@ onScroll();
 <!-- ===== anime.js + timelines ===== -->
 <script src="js/anime.iife.min.js"></script>
 <script src="js/hero-flatline.js"></script>
+<script src="js/motor-slats.js"></script>
 <script src="js/planax-live.js"></script>
 </body>
 </html>

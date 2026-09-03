@@ -87,7 +87,9 @@
       strokeDashoffset: 54,
       opacity: 0
     });
-    utils.set(rail,  { opacity: 0 });
+    if (rail) {
+      utils.set(rail, { opacity: 0 });
+    }
     utils.set(cutEl, { scaleX: 0, opacity: 0 });
     utils.set(agencyEl, { opacity: 0 });
     utils.set(underline, { scaleX: 0 });
@@ -126,7 +128,9 @@
   }, 0);
 
   tl.add(card, { opacity: 1, y: 0, scale: 1, duration: 820, ease: 'out(3)' }, 120);
-  tl.add(rail, { opacity: 1, duration: 400 }, 420);
+  if (rail) {
+    tl.add(rail, { opacity: 1, duration: 400 }, 420);
+  }
 
   /* 2 · el fee está vivo */
   tl.add(n, {
