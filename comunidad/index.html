@@ -3061,6 +3061,26 @@ footer {
 
 /* banda ticker */
 
+.langbtn {
+  font-family: var(--ff-head);
+  font-weight: 700;
+  font-size: .82rem;
+  letter-spacing: .06em;
+  color: var(--tinta-80);
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.6);
+  padding: 7px 12px;
+  border-radius: 100px;
+  line-height: 1;
+  transition: color .2s, border-color .2s, background .2s;
+}
+
+.langbtn:hover {
+  color: var(--tinta);
+  border-color: var(--cielo);
+  background: #fff;
+}
+
 .form-error {
   margin-top: 14px;
   padding: 12px 14px;
@@ -3660,6 +3680,8 @@ footer {
   </div>
 </footer>
 
+<script src="js/dict-comunidad.js"></script>
+<script src="../js/i18n.js"></script>
 <script>
 (function(){
   /* ---- dynamic favicon (isotype) ---- */
@@ -4029,6 +4051,15 @@ if(reduce){
   },{threshold:.25});
   heads.forEach(function(h){ kio.observe(h); });
 }
+
+/* al cambiar de idioma el titular se reescribe entero, así que hay que
+   volver a trocearlo en palabras */
+addEventListener('plana:lang', function(){
+  heads.forEach(function(h){
+    kinetize(h);
+    h.classList.add('kin-in');
+  });
+});
 
 if(!reduce){
   /* botones magnéticos */
