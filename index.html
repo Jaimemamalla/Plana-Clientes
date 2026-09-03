@@ -14,6 +14,10 @@
 <meta property="og:description" content="Sin fees. Sin sorpresas. Packs de precio fijo y público, no un porcentaje del salario. El fee ha muerto." />
 <meta property="og:locale" content="es_ES" />
 <meta property="og:url" content="https://beplana.com" />
+<meta property="og:image" content="https://beplana.com/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<link rel="canonical" href="https://beplana.com/" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Plana — Selección de personal a tarifa plana" />
 <meta name="twitter:description" content="Sin fees. Sin sorpresas. El fee ha muerto." />
@@ -2322,6 +2326,139 @@ input[type=range]::-moz-range-thumb {
   }
 }
 
+/* ============ PRUEBA ============ */
+
+#prueba {
+  background: #fff;
+  border-top: 1px solid var(--line);
+}
+
+.proofgrid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 24px;
+}
+
+.proofnum {
+  background: var(--nube);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 34px 30px;
+  text-align: center;
+}
+
+.pn-v {
+  font-family: var(--ff-head);
+  font-weight: 700;
+  font-size: clamp(2.4rem,5vw,3.6rem);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--tinta);
+}
+
+.pn-k {
+  color: var(--tinta-80);
+  font-size: .98rem;
+  margin-top: 12px;
+  line-height: 1.45;
+}
+
+.prooflogos {
+  margin-top: 28px;
+  text-align: center;
+}
+
+/* los huecos por rellenar chillan a propósito */
+.todo-dato {
+  background: var(--sol);
+  color: var(--tinta);
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 6px;
+}
+
+@media(max-width:820px) {
+  .proofgrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============ CTA FINAL ============ */
+
+#cierre {
+  background: var(--sol);
+  overflow: hidden;
+  position: relative;
+}
+
+.cierre-inner {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+#cierre h2 {
+  font-size: clamp(2.2rem,6vw,4rem);
+  color: var(--tinta);
+  letter-spacing: -0.04em;
+}
+
+#cierre p {
+  font-size: 1.18rem;
+  color: var(--tinta-80);
+  margin: 20px 0 34px;
+  font-weight: 500;
+}
+
+.cierre-cta {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#cierre .btn {
+  font-size: 1.06rem;
+  padding: 17px 34px;
+}
+
+.btn-ghost-tinta {
+  background: transparent;
+  color: var(--tinta);
+  box-shadow: inset 0 0 0 2px rgba(16,36,58,.35);
+}
+
+.btn-ghost-tinta:hover {
+  background: var(--tinta);
+  color: var(--sol);
+  transform: translateY(-2px);
+}
+
+#cierre::before,
+#cierre::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,.28);
+  filter: blur(8px);
+}
+
+#cierre::before {
+  width: 240px;
+  height: 240px;
+  top: -100px;
+  left: -60px;
+}
+
+#cierre::after {
+  width: 200px;
+  height: 200px;
+  bottom: -90px;
+  right: -50px;
+}
+
 /* ============ FOOTER ============ */
 
 footer {
@@ -2599,33 +2736,6 @@ footer {
   background: var(--tinta);
 }
 
-
-
-/* packs apilados al deslizar */
-
-@media(min-width:1000px) {
-  .packs-grid.stacked {
-    display: block;
-    max-width: 860px;
-    margin: 0 auto;
-    padding-bottom: 8vh;
-  }
-  .packs-grid.stacked .stk {
-    position: sticky;
-    top: 104px;
-    will-change: transform;
-    margin-bottom: 38px;
-  }
-  .packs-grid.stacked .stk:last-child {
-    margin-bottom: 0;
-  }
-  .packs-grid.stacked .pack {
-    margin: 0;
-  }
-  .packs-grid.stacked .pack.feat {
-    transform: none;
-  }
-}
 
 /* foco de luz siguiendo el cursor */
 
@@ -3023,6 +3133,107 @@ footer {
   </div>
 </section>
 
+<!-- ============ PLANAX ============ -->
+<section class="section-pad" id="planax" aria-labelledby="planax-title">
+  <div class="px-bg" aria-hidden="true">
+    <div class="grid"></div>
+    <span class="glow y"></span>
+    <span class="glow c"></span>
+  </div>
+  <div class="wrap">
+    <div class="px-head reveal">
+      <span class="px-badge"><span class="live"></span>Motor de IA propio · en directo</span>
+      <h2 id="planax-title">Planax. El motor que lo <span class="y">mueve todo</span>.</h2>
+      <p>Ni robots ni cerebros con circuitos. Planax es una línea de luz que cruza cada proceso: criba, hace match, predice y te lo enseña en vivo. Para que las personas decidan antes y mejor.</p>
+    </div>
+
+    <div class="px-stage">
+      <!-- LIVE PANEL -->
+      <div class="panel reveal d1" aria-label="Panel en tiempo real de Planax (ejemplo)">
+        <span class="panel-scan" aria-hidden="true"></span>
+        <div class="panel-top">
+          <div>
+            <div class="role">Backend Engineer</div>
+            <div class="loc">Madrid · Híbrido · Pack Altitud</div>
+          </div>
+          <span class="status"><span class="d"></span>En proceso</span>
+        </div>
+        <div class="panel-pipe">
+          <div class="pipe"><div class="num" data-count="124">0</div><div class="lbl">Cribados por Planax</div><div class="bar"><i data-w="100%"></i></div></div>
+          <div class="pipe"><div class="num" data-count="18">0</div><div class="lbl">En entrevista</div><div class="bar"><i data-w="62%"></i></div></div>
+          <div class="pipe f"><div class="num" data-count="4">0</div><div class="lbl">Finalistas</div><div class="bar"><i data-w="34%"></i></div></div>
+        </div>
+        <div class="panel-pulse" aria-hidden="true">
+          <svg viewBox="0 0 520 42" preserveAspectRatio="none">
+            <path class="pl" d="M0,21 L150,21 L162,21 L172,5 L182,37 L192,14 L204,21 L330,21 L342,21 L352,7 L362,35 L372,21 L520,21"/>
+            <!-- el punto es un dash de longitud casi cero recorriendo el mismo path,
+                 así va clavado a la línea y lo conduce anime.js, no SMIL -->
+            <path class="ph" d="M0,21 L150,21 L162,21 L172,5 L182,37 L192,14 L204,21 L330,21 L342,21 L352,7 L362,35 L372,21 L520,21"/>
+          </svg>
+        </div>
+        <div class="panel-ins">
+          <span class="chip-i"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 3v9l6 3" stroke="#4FB3E8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#4FB3E8" stroke-width="2.4"/></svg><span>Cierre estimado</span><b>14 días</b></span>
+          <span class="chip-i"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 17l5-5 4 3 8-8" stroke="#4FB3E8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Tensión salarial</span><b>Media</b></span>
+          <span class="chip-i"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="7" cy="8" r="3" stroke="#4FB3E8" stroke-width="2.2"/><circle cx="16" cy="15" r="3" stroke="#4FB3E8" stroke-width="2.2"/><path d="M9.4 9.4l4.2 4.2" stroke="#4FB3E8" stroke-width="2.2"/></svg><span>Match comunidad</span><b>87%</b></span>
+        </div>
+        <div class="panel-cands">
+          <div class="cand"><span class="av" style="background:#FFD75E">MC</span><div class="nm"><div class="n">M. Castro</div><div class="t">Senior · 6 años · disponible</div></div><span class="score" data-count="94">0</span></div>
+          <div class="cand"><span class="av" style="background:#BDE3F8">JR</span><div class="nm"><div class="n">J. Ruiz</div><div class="t">Mid-senior · 4 años · activo</div></div><span class="score" data-count="89">0</span></div>
+          <div class="cand"><span class="av" style="background:#6FE0A8">AL</span><div class="nm"><div class="n">A. León</div><div class="t">Senior · 7 años · pasivo</div></div><span class="score" data-count="86">0</span></div>
+        </div>
+      </div>
+
+      <!-- SIDE -->
+      <div class="px-side reveal d2">
+        <p class="anchor">"Planax no sustituye a las personas que seleccionan. <span class="y">Las hace imparables."</span></p>
+        <div class="hl">
+          <div>
+            <div class="v" data-count="24" data-suffix="/7">0/7</div>
+            <div class="k">Cribando candidatos a cualquier hora</div>
+          </div>
+          <div class="hldiv"></div>
+          <div>
+            <div class="v" data-count="3" data-prefix="−" data-suffix="x">0x</div>
+            <div class="k">Menos tiempo hasta la shortlist</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="planax-feats">
+      <article class="pf reveal d1">
+        <div class="pf-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M8 10h8M8 14h5" stroke="#FFD75E" stroke-width="2" stroke-linecap="round"/><path d="M21 12a9 9 0 11-3.6-7.2L21 4v5h-5" stroke="#FFD75E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+        <h3>Cribado conversacional</h3>
+        <p>Entrevista inicial a cada candidato, a cualquier hora y en su idioma. Nadie espera tres días a que le llamen.</p>
+      </article>
+      <article class="pf reveal d2">
+        <div class="pf-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="7" cy="8" r="3" stroke="#FFD75E" stroke-width="2"/><circle cx="17" cy="16" r="3" stroke="#FFD75E" stroke-width="2"/><path d="M9.5 9.5l5 5" stroke="#FFD75E" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <h3>Matching con la Comunidad Plana</h3>
+        <p>Cruza cada vacante con miles de candidatos ya validados antes de salir a buscar fuera.</p>
+      </article>
+      <article class="pf reveal d3">
+        <div class="pf-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="2" stroke="#FFD75E" stroke-width="2"/><path d="M7 13l3-3 2 2 4-4" stroke="#FFD75E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Panel en tiempo real</h3>
+        <p>Ves candidatos, fases y feedback al momento. Sin pedir updates por email.</p>
+      </article>
+      <article class="pf reveal d1">
+        <div class="pf-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3v9l6 3" stroke="#FFD75E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#FFD75E" stroke-width="2"/></svg></div>
+        <h3>Predicción de cierre</h3>
+        <p>Estima los días hasta contratación y la tensión salarial del mercado para esa vacante concreta.</p>
+      </article>
+      <article class="pf reveal d2">
+        <div class="pf-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8l-5-5z" stroke="#FFD75E" stroke-width="2" stroke-linejoin="round"/><path d="M14 3v5h5M9 13h6M9 16h4" stroke="#FFD75E" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <h3>Informes automáticos</h3>
+        <p>Resumen semanal del proceso generado solo. Te llega hecho, no lo pides.</p>
+      </article>
+      <article class="pf reveal d3" style="display:flex;flex-direction:column;justify-content:center;background:rgba(255,215,94,.1);border-color:rgba(255,215,94,.35)">
+        <h3 style="font-size:1.3rem;margin-bottom:6px">IA para la velocidad.</h3>
+        <p style="color:rgba(255,255,255,.82)">Personas para acertar. Esa es toda la magia.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
 <!-- ============ PACKS ============ -->
 <section class="section-pad" id="packs" aria-labelledby="packs-title">
   <div class="wrap">
@@ -3155,107 +3366,6 @@ footer {
   </div>
 </section>
 
-<!-- ============ PLANAX ============ -->
-<section class="section-pad" id="planax" aria-labelledby="planax-title">
-  <div class="px-bg" aria-hidden="true">
-    <div class="grid"></div>
-    <span class="glow y"></span>
-    <span class="glow c"></span>
-  </div>
-  <div class="wrap">
-    <div class="px-head reveal">
-      <span class="px-badge"><span class="live"></span>Motor de IA propio · en directo</span>
-      <h2 id="planax-title">Planax. El motor que lo <span class="y">mueve todo</span>.</h2>
-      <p>Ni robots ni cerebros con circuitos. Planax es una línea de luz que cruza cada proceso: criba, hace match, predice y te lo enseña en vivo. Para que las personas decidan antes y mejor.</p>
-    </div>
-
-    <div class="px-stage">
-      <!-- LIVE PANEL -->
-      <div class="panel reveal d1" aria-label="Panel en tiempo real de Planax (ejemplo)">
-        <span class="panel-scan" aria-hidden="true"></span>
-        <div class="panel-top">
-          <div>
-            <div class="role">Backend Engineer</div>
-            <div class="loc">Madrid · Híbrido · Pack Altitud</div>
-          </div>
-          <span class="status"><span class="d"></span>En proceso</span>
-        </div>
-        <div class="panel-pipe">
-          <div class="pipe"><div class="num" data-count="124">0</div><div class="lbl">Cribados por Planax</div><div class="bar"><i data-w="100%"></i></div></div>
-          <div class="pipe"><div class="num" data-count="18">0</div><div class="lbl">En entrevista</div><div class="bar"><i data-w="62%"></i></div></div>
-          <div class="pipe f"><div class="num" data-count="4">0</div><div class="lbl">Finalistas</div><div class="bar"><i data-w="34%"></i></div></div>
-        </div>
-        <div class="panel-pulse" aria-hidden="true">
-          <svg viewBox="0 0 520 42" preserveAspectRatio="none">
-            <path class="pl" d="M0,21 L150,21 L162,21 L172,5 L182,37 L192,14 L204,21 L330,21 L342,21 L352,7 L362,35 L372,21 L520,21"/>
-            <!-- el punto es un dash de longitud casi cero recorriendo el mismo path,
-                 así va clavado a la línea y lo conduce anime.js, no SMIL -->
-            <path class="ph" d="M0,21 L150,21 L162,21 L172,5 L182,37 L192,14 L204,21 L330,21 L342,21 L352,7 L362,35 L372,21 L520,21"/>
-          </svg>
-        </div>
-        <div class="panel-ins">
-          <span class="chip-i"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 3v9l6 3" stroke="#4FB3E8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#4FB3E8" stroke-width="2.4"/></svg><span>Cierre estimado</span><b>14 días</b></span>
-          <span class="chip-i"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 17l5-5 4 3 8-8" stroke="#4FB3E8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Tensión salarial</span><b>Media</b></span>
-          <span class="chip-i"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="7" cy="8" r="3" stroke="#4FB3E8" stroke-width="2.2"/><circle cx="16" cy="15" r="3" stroke="#4FB3E8" stroke-width="2.2"/><path d="M9.4 9.4l4.2 4.2" stroke="#4FB3E8" stroke-width="2.2"/></svg><span>Match comunidad</span><b>87%</b></span>
-        </div>
-        <div class="panel-cands">
-          <div class="cand"><span class="av" style="background:#FFD75E">MC</span><div class="nm"><div class="n">M. Castro</div><div class="t">Senior · 6 años · disponible</div></div><span class="score" data-count="94">0</span></div>
-          <div class="cand"><span class="av" style="background:#BDE3F8">JR</span><div class="nm"><div class="n">J. Ruiz</div><div class="t">Mid-senior · 4 años · activo</div></div><span class="score" data-count="89">0</span></div>
-          <div class="cand"><span class="av" style="background:#6FE0A8">AL</span><div class="nm"><div class="n">A. León</div><div class="t">Senior · 7 años · pasivo</div></div><span class="score" data-count="86">0</span></div>
-        </div>
-      </div>
-
-      <!-- SIDE -->
-      <div class="px-side reveal d2">
-        <p class="anchor">"Planax no sustituye a las personas que seleccionan. <span class="y">Las hace imparables."</span></p>
-        <div class="hl">
-          <div>
-            <div class="v" data-count="24" data-suffix="/7">0/7</div>
-            <div class="k">Cribando candidatos a cualquier hora</div>
-          </div>
-          <div class="hldiv"></div>
-          <div>
-            <div class="v" data-count="3" data-prefix="−" data-suffix="x">0x</div>
-            <div class="k">Menos tiempo hasta la shortlist</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="planax-feats">
-      <article class="pf reveal d1">
-        <div class="pf-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M8 10h8M8 14h5" stroke="#FFD75E" stroke-width="2" stroke-linecap="round"/><path d="M21 12a9 9 0 11-3.6-7.2L21 4v5h-5" stroke="#FFD75E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
-        <h3>Cribado conversacional</h3>
-        <p>Entrevista inicial a cada candidato, a cualquier hora y en su idioma. Nadie espera tres días a que le llamen.</p>
-      </article>
-      <article class="pf reveal d2">
-        <div class="pf-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="7" cy="8" r="3" stroke="#FFD75E" stroke-width="2"/><circle cx="17" cy="16" r="3" stroke="#FFD75E" stroke-width="2"/><path d="M9.5 9.5l5 5" stroke="#FFD75E" stroke-width="2" stroke-linecap="round"/></svg></div>
-        <h3>Matching con la Comunidad Plana</h3>
-        <p>Cruza cada vacante con miles de candidatos ya validados antes de salir a buscar fuera.</p>
-      </article>
-      <article class="pf reveal d3">
-        <div class="pf-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="2" stroke="#FFD75E" stroke-width="2"/><path d="M7 13l3-3 2 2 4-4" stroke="#FFD75E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <h3>Panel en tiempo real</h3>
-        <p>Ves candidatos, fases y feedback al momento. Sin pedir updates por email.</p>
-      </article>
-      <article class="pf reveal d1">
-        <div class="pf-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3v9l6 3" stroke="#FFD75E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#FFD75E" stroke-width="2"/></svg></div>
-        <h3>Predicción de cierre</h3>
-        <p>Estima los días hasta contratación y la tensión salarial del mercado para esa vacante concreta.</p>
-      </article>
-      <article class="pf reveal d2">
-        <div class="pf-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8l-5-5z" stroke="#FFD75E" stroke-width="2" stroke-linejoin="round"/><path d="M14 3v5h5M9 13h6M9 16h4" stroke="#FFD75E" stroke-width="2" stroke-linecap="round"/></svg></div>
-        <h3>Informes automáticos</h3>
-        <p>Resumen semanal del proceso generado solo. Te llega hecho, no lo pides.</p>
-      </article>
-      <article class="pf reveal d3" style="display:flex;flex-direction:column;justify-content:center;background:rgba(255,215,94,.1);border-color:rgba(255,215,94,.35)">
-        <h3 style="font-size:1.3rem;margin-bottom:6px">IA para la velocidad.</h3>
-        <p style="color:rgba(255,255,255,.82)">Personas para acertar. Esa es toda la magia.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
 <!-- ============ COMPARATIVA ============ -->
 <section class="section-pad" id="comparativa" aria-labelledby="comp-title">
   <div class="wrap">
@@ -3323,6 +3433,51 @@ footer {
   <span class="toast-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
   <span class="toast-txt">Recibido. Te contactamos en menos de 24h.</span>
 </div>
+
+<!-- ============ PRUEBA ============ -->
+<!-- TODO(plana): esto está sin contenido real. Hacen falta tres cifras que
+     podáis defender y, si los hay, logos de clientes que os hayan dado
+     permiso. Mientras esté así, esta sección NO debe publicarse: borradla o
+     rellenadla, pero no la dejéis con los interrogantes. -->
+<section class="section-pad" id="prueba" aria-labelledby="prueba-title">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">Con datos</span>
+      <h2 id="prueba-title">Lo que llevamos hecho.</h2>
+    </div>
+
+    <div class="proofgrid">
+      <div class="proofnum reveal d1">
+        <div class="pn-v"><span class="todo-dato">00</span></div>
+        <div class="pn-k">Contrataciones cerradas</div>
+      </div>
+      <div class="proofnum reveal d2">
+        <div class="pn-v"><span class="todo-dato">00</span> días</div>
+        <div class="pn-k">Media hasta la shortlist</div>
+      </div>
+      <div class="proofnum reveal d3">
+        <div class="pn-v"><span class="todo-dato">00</span> %</div>
+        <div class="pn-k">Contrataciones que siguen en la empresa al año</div>
+      </div>
+    </div>
+
+    <p class="prooflogos reveal d2"><span class="todo-dato">Aquí van los logos de clientes que os hayan dado permiso, o se quita la fila</span></p>
+  </div>
+</section>
+
+<!-- ============ CTA FINAL ============ -->
+<section class="section-pad" id="cierre">
+  <div class="wrap">
+    <div class="cierre-inner reveal">
+      <h2>Mira los precios. Están todos en la web.</h2>
+      <p>Sin llamada previa, sin "consultar precio" y sin un porcentaje de lo que cobre la persona que contratas.</p>
+      <div class="cierre-cta">
+        <a href="#packs" class="btn btn-tinta">Ver precios</a>
+        <a href="mailto:hello@beplana.com" class="btn btn-ghost-tinta">Escríbenos</a>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ============ FOOTER ============ -->
 <footer>
@@ -3775,40 +3930,10 @@ addEventListener('plana:lang', function(){
   });
 });
 
-/* packs: apilado al deslizar */
-var pg = document.querySelector('.packs-grid');
-var stacks = [];
-if(pg && !reduce){
-  Array.prototype.slice.call(pg.querySelectorAll('.pack')).forEach(function(p){
-    var w = document.createElement('div');
-    w.className = 'stk';
-    p.parentNode.insertBefore(w, p);
-    w.appendChild(p);
-    stacks.push(w);
-  });
-  pg.classList.add('stacked');
-}
-function stackFrame(){
-  if(!stacks.length || innerWidth < 1000) return;
-  var top = 104;
-  stacks.forEach(function(w,i){
-    if(i === stacks.length - 1){
-      w.style.transform = '';
-      w.style.opacity = '';
-      return;
-    }
-    var r = w.getBoundingClientRect();
-    var travel = 300;
-    var p = Math.min(1, Math.max(0, (top - r.top) / travel));
-    var next = stacks[i+1].getBoundingClientRect();
-    var overlap = Math.min(1, Math.max(0, (r.bottom - next.top) / (r.height * 0.9)));
-    var k = Math.max(p, overlap);
-    w.style.transform =
-      'scale(' + (1 - k * 0.06).toFixed(4) + ')' +
-      ' translateY(' + (-k * 18).toFixed(1) + 'px)';
-    w.style.opacity = (1 - k * 0.35).toFixed(3);
-  });
-}
+/* Los packs ya no se apilan con sticky: eran 4,8 pantallas de las 14 del
+   sitio y llegaban justo después del scroll fijo de la sección Motor. Dos
+   secuestros de scroll seguidos cansan. Ahora es una rejilla normal. */
+function stackFrame(){}
 
 /* foco de luz en tarjetas */
 if(!reduce){

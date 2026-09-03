@@ -175,6 +175,17 @@
     'Al enviar aceptas nuestra Política de Privacidad.': 'By submitting you accept our Privacy Policy.',
     'Recibido. Te contactamos en menos de 24h.': 'Got it. We will be in touch within 24h.',
 
+    /* prueba y cierre */
+    'Con datos': 'By the numbers',
+    'Contrataciones cerradas': 'Hires closed',
+    'Media hasta la shortlist': 'Average time to shortlist',
+    'Contrataciones que siguen en la empresa al año': 'Hires still with the company after a year',
+    'Aquí van los logos de clientes que os hayan dado permiso, o se quita la fila':
+      'Client logos go here, only those who have given permission, or drop the row',
+    'Sin llamada previa, sin "consultar precio" y sin un porcentaje de lo que cobre la persona que contratas.':
+      'No call first, no "price on request" and no cut of what the person you hire earns.',
+    'Escríbenos': 'Write to us',
+
     /* footer */
     'Selección a tarifa plana. Sin fees. Sin sorpresas.': 'Flat-rate recruitment. No fees. No surprises.',
     'Producto': 'Product',
@@ -195,6 +206,8 @@
     '¿Cuánto te ahorras con Plana?': 'How much do you save with Plana?',
     'Planax. El motor que lo <span class="y">mueve todo</span>.': 'Planax. The engine behind <span class="y">all of it</span>.',
     'La misma llamada de teléfono. Otro precio.': 'The same phone call. A different price.',
+    'Lo que llevamos hecho.': 'What we have done so far.',
+    'Mira los precios. Están todos en la web.': 'Look at the pricing. It is all on the website.',
     'El fee sube y baja. <span class="y">La tarifa es plana.</span>': 'The fee goes up and down. <span class="y">The rate stays flat.</span>'
   };
 
@@ -248,7 +261,7 @@
       if (!t || !EN[t]) continue;
       nodes.push({ node: n, es: n.textContent, en: n.textContent.replace(t, EN[t]) });
     }
-    document.querySelectorAll('.sec-head h2, .escala-head h3, .px-head h2, #motor-title, .calc-controls h3').forEach(function (el) {
+    document.querySelectorAll('.sec-head h2, .escala-head h3, .px-head h2, #motor-title, .calc-controls h3, #cierre h2').forEach(function (el) {
       var es = el.innerHTML.trim();
       if (HEADS[es]) heads.push({ el: el, es: es, en: HEADS[es] });
     });
