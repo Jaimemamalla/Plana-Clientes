@@ -2326,82 +2326,6 @@ input[type=range]::-moz-range-thumb {
   }
 }
 
-/* ============ CTA FINAL ============ */
-
-#cierre {
-  background: var(--sol);
-  overflow: hidden;
-  position: relative;
-}
-
-.cierre-inner {
-  text-align: center;
-  max-width: 760px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
-}
-
-#cierre h2 {
-  font-size: clamp(2.2rem,6vw,4rem);
-  color: var(--tinta);
-  letter-spacing: -0.04em;
-}
-
-#cierre p {
-  font-size: 1.18rem;
-  color: var(--tinta-80);
-  margin: 20px 0 34px;
-  font-weight: 500;
-}
-
-.cierre-cta {
-  display: flex;
-  gap: 14px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-#cierre .btn {
-  font-size: 1.06rem;
-  padding: 17px 34px;
-}
-
-.btn-ghost-tinta {
-  background: transparent;
-  color: var(--tinta);
-  box-shadow: inset 0 0 0 2px rgba(16,36,58,.35);
-}
-
-.btn-ghost-tinta:hover {
-  background: var(--tinta);
-  color: var(--sol);
-  transform: translateY(-2px);
-}
-
-#cierre::before,
-#cierre::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(255,255,255,.28);
-  filter: blur(8px);
-}
-
-#cierre::before {
-  width: 240px;
-  height: 240px;
-  top: -100px;
-  left: -60px;
-}
-
-#cierre::after {
-  width: 200px;
-  height: 200px;
-  bottom: -90px;
-  right: -50px;
-}
-
 /* ============ FOOTER ============ */
 
 footer {
@@ -3397,20 +3321,6 @@ footer {
   <span class="toast-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
   <span class="toast-txt">Recibido. Te contactamos en menos de 24h.</span>
 </div>
-
-<!-- ============ CTA FINAL ============ -->
-<section class="section-pad" id="cierre">
-  <div class="wrap">
-    <div class="cierre-inner reveal">
-      <h2>Mira los precios. Están todos en la web.</h2>
-      <p>Sin llamada previa, sin "consultar precio" y sin un porcentaje de lo que cobre la persona que contratas.</p>
-      <div class="cierre-cta">
-        <a href="#packs" class="btn btn-tinta">Ver precios</a>
-        <a href="mailto:hello@beplana.com" class="btn btn-ghost-tinta">Escríbenos</a>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ============ FOOTER ============ -->
 <footer>
