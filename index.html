@@ -2535,7 +2535,6 @@ footer {
 .tkband .row {
   display: flex;
   width: max-content;
-  animation: tkroll 34s linear infinite;
 }
 
 .tkband em {
@@ -2569,15 +2568,7 @@ footer {
   background: var(--tinta);
 }
 
-.tkband:hover .row {
-  animation-play-state: paused;
-}
 
-@keyframes tkroll {
-  to {
-    transform: translateX(-50%);
-  }
-}
 
 /* packs apilados al deslizar */
 
@@ -2710,9 +2701,6 @@ footer {
 @media (prefers-reduced-motion: reduce) {
   .kin .w i {
     transform: none;
-  }
-  .tkband .row {
-    animation: none;
   }
   .reveal {
     filter: none;
@@ -3623,35 +3611,6 @@ dock.innerHTML =
   '<a href="#packs" class="btn btn-sol btn-sm">Ver precios</a>';
 document.body.appendChild(dock);
 
-/* bandas ticker */
-function band(frases, sol, ref, pos){
-  if(!ref) return;
-  var b = document.createElement('div');
-  b.className = 'tkband' + (sol?' sol':'');
-  b.setAttribute('aria-hidden','true');
-  var row = document.createElement('div');
-  row.className = 'row';
-  var html = frases.map(function(f){
-    return '<em>' + f + '</em>';
-  }).join('');
-  row.innerHTML = html + html;
-  b.appendChild(row);
-  ref.parentNode.insertBefore(b, pos === 'before' ? ref : ref.nextSibling);
-}
-
-band(
-  ['el fee ha muerto','sin fees','sin sorpresas','precio fijo y público','be smart, be plana'],
-  false,
-  document.getElementById('como'),
-  'before'
-);
-
-band(
-  ['pagas por el trabajo','no por el sueldo','la transparencia es el producto'],
-  true,
-  document.getElementById('comparativa'),
-  'before'
-);
 
 /* titulares cinéticos */
 function kinetize(el){
@@ -3829,6 +3788,7 @@ onScroll();
 <script src="js/hero-flatline.js"></script>
 <script src="js/motor-wave.js"></script>
 <script src="js/edge-pulse.js"></script>
+<script src="js/tickers.js"></script>
 <script src="js/planax-live.js"></script>
 </body>
 </html>
