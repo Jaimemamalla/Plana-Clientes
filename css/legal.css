@@ -1,0 +1,166 @@
+:root {
+  --cielo: #4FB3E8;
+  --sol: #FFD75E;
+  --tinta: #10243A;
+  --nube: #F8FCFF;
+  --bruma: #6B7C8C;
+  --tinta-80: rgba(16,36,58,.80);
+  --line: rgba(16,36,58,.10);
+  --ff-head: 'Space Grotesk', system-ui, sans-serif;
+  --ff-body: 'Inter', system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--ff-body);
+  background: var(--nube);
+  color: var(--tinta);
+  line-height: 1.6;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--cielo);
+  font-weight: 600;
+}
+
+.wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+header.legal-nav {
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+}
+
+.legal-nav .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+  max-width: 1180px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  text-decoration: none;
+}
+
+.logo .iso {
+  width: 30px;
+  height: 30px;
+  flex: none;
+  display: block;
+}
+
+.logo .word {
+  font-family: var(--ff-head);
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: -0.04em;
+  color: var(--tinta);
+  line-height: 1;
+}
+
+main {
+  padding: clamp(48px,7vw,88px) 0 clamp(64px,9vw,120px);
+}
+
+h1 {
+  font-family: var(--ff-head);
+  font-weight: 700;
+  font-size: clamp(2rem,5vw,3rem);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: 10px;
+}
+
+.updated {
+  color: var(--bruma);
+  font-size: .92rem;
+  margin-bottom: 40px;
+}
+
+h2 {
+  font-family: var(--ff-head);
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: -0.02em;
+  margin: 38px 0 12px;
+}
+
+p,
+li {
+  color: var(--tinta-80);
+  margin-bottom: 12px;
+}
+
+ul {
+  padding-left: 22px;
+  margin-bottom: 12px;
+}
+
+dl {
+  margin-bottom: 12px;
+}
+
+dt {
+  font-weight: 600;
+  color: var(--tinta);
+  margin-top: 12px;
+}
+
+dd {
+  color: var(--tinta-80);
+  margin-left: 0;
+}
+
+/* Todo lo que falta por rellenar. Chilla a propósito: si esta página se
+   publica con algo en amarillo, se ve a la primera. */
+.todo {
+  background: var(--sol);
+  color: var(--tinta);
+  font-weight: 600;
+  padding: 1px 7px;
+  border-radius: 5px;
+  box-decoration-break: clone;
+}
+
+.aviso {
+  background: #FFF6D9;
+  border: 1px solid rgba(243,197,58,.5);
+  border-left: 5px solid var(--sol);
+  border-radius: 12px;
+  padding: 20px 22px;
+  margin-bottom: 40px;
+}
+
+.aviso p:last-child {
+  margin-bottom: 0;
+}
+
+footer.legal-foot {
+  border-top: 1px solid var(--line);
+  padding: 28px 0;
+  font-size: .9rem;
+  color: var(--bruma);
+}
+
+footer.legal-foot .wrap {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  max-width: 1180px;
+}

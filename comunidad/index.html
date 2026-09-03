@@ -3061,6 +3061,17 @@ footer {
 
 /* banda ticker */
 
+.form-error {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(192,96,106,.10);
+  border: 1px solid rgba(192,96,106,.35);
+  color: #97404A;
+  font-size: .9rem;
+  line-height: 1.45;
+}
+
 .tkband {
   background: var(--tinta);
   overflow: hidden;
@@ -3500,10 +3511,11 @@ footer {
           <label class="privacy">
             <input type="checkbox" id="c-privacy" name="privacidad" required />
             <span class="pcheck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <span class="ptext">Acepto la <a href="#privacidad">Política de Privacidad</a> y el tratamiento de mis datos para avisarme de vacantes compatibles.</span>
+            <span class="ptext">Acepto la <a href="../legal/privacidad.html">Política de Privacidad</a> y el tratamiento de mis datos para avisarme de vacantes compatibles.</span>
           </label>
 
           <button type="submit" class="btn btn-sol" id="comSubmit">Únete a la Comunidad Plana</button>
+          <p class="form-error" id="comError" role="alert" hidden></p>
           <p class="legal">Tus datos son tuyos. Aquí nadie se queda sin respuesta.</p>
         </form>
       </div>
@@ -3635,9 +3647,9 @@ footer {
           <!-- TODO(web-clientes): sustituir por la URL de la web de clientes -->
           <li><a href="#" data-todo="url-clientes">Soy empresa</a></li>
           <li><a href="mailto:hello@beplana.com">hello@beplana.com</a></li>
-          <li><a href="#aviso-legal">Aviso legal</a></li>
-          <li><a href="#privacidad">Privacidad</a></li>
-          <li><a href="#cookies">Cookies</a></li>
+          <li><a href="../legal/aviso-legal.html">Aviso legal</a></li>
+          <li><a href="../legal/privacidad.html">Privacidad</a></li>
+          <li><a href="../legal/cookies.html">Cookies</a></li>
         </ul>
       </div>
     </div>
@@ -3766,7 +3778,24 @@ footer {
       modal.hidden = true;
     }
 
+    var comError = document.getElementById('comError');
+    var ENDPOINT = form.getAttribute('action') || '';
+    var LISTO    = ENDPOINT && ENDPOINT.indexOf('TU_ENDPOINT') === -1;
+
+    if(!LISTO){
+      console.error(
+        '[Plana] El formulario de candidatura no tiene endpoint configurado (' + ENDPOINT + '). ' +
+        'Hasta que se ponga uno real, no se envía nada y se avisa al candidato.'
+      );
+    }
+
+    function fallo(msg){
+      comError.textContent = msg;
+      comError.hidden = false;
+    }
+
     function toastUp(){
+      comError.hidden = true;
       toast.classList.add('show');
       clearTimeout(toast._t);
       toast._t = setTimeout(function(){
@@ -3894,8 +3923,37 @@ footer {
         return;
       }
       if(!fEmail.value){ openModal(); return; }
-      toastUp();
-      form.reset(); setState('idle'); extracted.hidden=true;
+
+      /* Sin endpoint no se finge que ha llegado. Antes esto enseñaba
+         "¡Estás dentro de la Comunidad Plana!" sin enviar el CV a ninguna
+         parte, que en un formulario de candidatura es especialmente feo. */
+      if(!LISTO){
+        fallo('El formulario todavía no está conectado. Mándanos tu CV a hello@beplana.com y te tenemos en cuenta igual.');
+        return;
+      }
+
+      var boton = document.getElementById('comSubmit');
+      var textoBoton = boton.textContent;
+      boton.disabled = true;
+      boton.textContent = 'Enviando…';
+
+      fetch(ENDPOINT, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      }).then(function(r){
+        if(!r.ok) throw new Error('HTTP ' + r.status);
+        toastUp();
+        form.reset();
+        setState('idle');
+        extracted.hidden = true;
+      }).catch(function(err){
+        console.error('[Plana] No se pudo enviar la candidatura:', err);
+        fallo('No hemos podido enviarlo. Mándanos tu CV a hello@beplana.com.');
+      }).then(function(){
+        boton.disabled = false;
+        boton.textContent = textoBoton;
+      });
     });
   })();
 })();

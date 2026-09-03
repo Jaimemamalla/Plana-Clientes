@@ -268,6 +268,17 @@ header.nav.scrolled {
   color: var(--tinta);
 }
 
+.form-error {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(192,96,106,.10);
+  border: 1px solid rgba(192,96,106,.35);
+  color: #97404A;
+  font-size: .9rem;
+  line-height: 1.45;
+}
+
 .langbtn {
   font-family: var(--ff-head);
   font-weight: 700;
@@ -3300,8 +3311,9 @@ footer {
       <div class="ex-field" style="margin-bottom:14px"><label for="pm-company">Empresa</label><input type="text" id="pm-company" name="empresa" placeholder="Nombre de tu empresa" /></div>
       <div class="ex-field" style="margin-bottom:14px"><label for="pm-email">Email de trabajo</label><input type="email" id="pm-email" name="email" placeholder="tu@empresa.com" /></div>
       <div class="ex-field"><label for="pm-phone">Teléfono <span style="color:var(--bruma);font-weight:400">(opcional)</span></label><input type="tel" id="pm-phone" name="telefono" placeholder="+34 ..." /></div>
-      <button type="submit" class="btn btn-sol" style="width:100%;margin-top:20px">Solicitar — te contactamos en 24h</button>
-      <p class="legal" style="text-align:center;font-size:.78rem;color:var(--bruma);margin-top:12px">Al enviar aceptas nuestra Política de Privacidad.</p>
+      <button type="submit" class="btn btn-sol" id="pmSubmit" style="width:100%;margin-top:20px">Solicitar — te contactamos en 24h</button>
+      <p class="form-error" id="pmError" role="alert" hidden></p>
+      <p class="legal" style="text-align:center;font-size:.78rem;color:var(--bruma);margin-top:12px">Al enviar aceptas nuestra <a href="legal/privacidad.html">Política de Privacidad</a>.</p>
     </form>
   </div>
 </div>
@@ -3343,9 +3355,9 @@ footer {
           <!-- TODO(web-comunidad): sustituir por la URL de la web de comunidad -->
           <li><a href="#" data-todo="url-comunidad">Soy candidato/a</a></li>
           <li><a href="mailto:hello@beplana.com">hello@beplana.com</a></li>
-          <li><a href="#aviso-legal">Aviso legal</a></li>
-          <li><a href="#privacidad">Privacidad</a></li>
-          <li><a href="#cookies">Cookies</a></li>
+          <li><a href="legal/aviso-legal.html">Aviso legal</a></li>
+          <li><a href="legal/privacidad.html">Privacidad</a></li>
+          <li><a href="legal/cookies.html">Cookies</a></li>
         </ul>
       </div>
     </div>
@@ -3608,8 +3620,38 @@ footer {
       if(e.key === 'Escape' && !planModal.hidden) closePlan();
     });
 
+    var pmError  = document.getElementById('pmError');
+    var pmSubmit = document.getElementById('pmSubmit');
+    var ENDPOINT = planForm.getAttribute('action') || '';
+    var LISTO    = ENDPOINT && ENDPOINT.indexOf('TU_ENDPOINT') === -1;
+
+    if(!LISTO){
+      console.error(
+        '[Plana] El formulario de contacto no tiene endpoint configurado (' + ENDPOINT + '). ' +
+        'Hasta que se ponga uno real, no se envía nada y se avisa al visitante.'
+      );
+    }
+
+    function fallo(msg){
+      pmError.textContent = msg;
+      pmError.hidden = false;
+    }
+
+    function exito(){
+      closePlan();
+      planForm.reset();
+      toastC.classList.add('show');
+      clearTimeout(toastC._t);
+      toastC._t = setTimeout(function(){
+        toastC.classList.remove('show');
+      }, 4600);
+    }
+
     planForm.addEventListener('submit', function(e){
       e.preventDefault();
+      pmError.hidden = true;
+
+      var en = document.documentElement.lang === 'en';
       var nm = pmName.value.trim();
       if(!nm){
         pmName.style.borderColor = '#C0606A';
@@ -3621,13 +3663,36 @@ footer {
         pmEmail.focus();
         return;
       }
-      closePlan();
-      planForm.reset();
-      toastC.classList.add('show');
-      clearTimeout(toastC._t);
-      toastC._t = setTimeout(function(){
-        toastC.classList.remove('show');
-      }, 4600);
+
+      /* Sin endpoint no se finge que ha llegado: antes esto enseñaba el aviso
+         de "te contactamos en 24h" sin enviar nada a ninguna parte. */
+      if(!LISTO){
+        fallo(en
+          ? 'The form is not connected yet. Please write to hello@beplana.com and we will get back to you.'
+          : 'El formulario todavía no está conectado. Escríbenos a hello@beplana.com y te contestamos.');
+        return;
+      }
+
+      pmSubmit.disabled = true;
+      var textoBoton = pmSubmit.textContent;
+      pmSubmit.textContent = en ? 'Sending…' : 'Enviando…';
+
+      fetch(ENDPOINT, {
+        method: 'POST',
+        body: new FormData(planForm),
+        headers: { 'Accept': 'application/json' }
+      }).then(function(r){
+        if(!r.ok) throw new Error('HTTP ' + r.status);
+        exito();
+      }).catch(function(err){
+        console.error('[Plana] No se pudo enviar el formulario:', err);
+        fallo(en
+          ? 'We could not send it. Please write to hello@beplana.com.'
+          : 'No hemos podido enviarlo. Escríbenos a hello@beplana.com.');
+      }).then(function(){
+        pmSubmit.disabled = false;
+        pmSubmit.textContent = textoBoton;
+      });
     });
   })();
 })();
