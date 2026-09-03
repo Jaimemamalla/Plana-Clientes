@@ -2753,31 +2753,35 @@ footer {
 }
 
 .edgepulse svg {
-  width: 200%;
-  max-width: none;
+  width: 100%;
   height: 100%;
-  animation: edgeroll 9s linear infinite;
+  display: block;
+  overflow: visible;
 }
 
 .edgepulse path {
   fill: none;
-  stroke: var(--sol);
-  stroke-width: 5;
   stroke-linecap: round;
   stroke-linejoin: round;
-  opacity: .85;
 }
 
-@keyframes edgeroll {
-  to {
-    transform: translateX(-50%);
-  }
+.edgepulse .base {
+  stroke: var(--sol);
+  stroke-width: 3;
+  opacity: .22;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .edgepulse svg {
-    animation: none;
-  }
+/* el pulso: un tramo brillante que recorre la línea */
+.edgepulse .glow {
+  stroke: var(--sol);
+  stroke-width: 4;
+  filter: drop-shadow(0 0 6px rgba(255,215,94,.75));
+}
+
+.edgepulse .dot {
+  stroke: var(--sol);
+  stroke-width: 9;
+  filter: drop-shadow(0 0 8px rgba(255,215,94,.95));
 }
 
 [hidden] {
@@ -3164,7 +3168,6 @@ footer {
         </div>
         <div class="panel-pulse" aria-hidden="true">
           <svg viewBox="0 0 520 42" preserveAspectRatio="none">
-            <path class="pb" d="M0,21 L520,21"/>
             <path class="pl" d="M0,21 L150,21 L162,21 L172,5 L182,37 L192,14 L204,21 L330,21 L342,21 L352,7 L362,35 L372,21 L520,21"/>
             <!-- el punto es un dash de longitud casi cero recorriendo el mismo path,
                  así va clavado a la línea y lo conduce anime.js, no SMIL -->
@@ -3650,21 +3653,6 @@ band(
   'before'
 );
 
-/* pulso del borde de Planax */
-(function(){
-  var px = document.getElementById('planax');
-  if(!px) return;
-  var e = document.createElement('div');
-  e.className = 'edgepulse';
-  e.setAttribute('aria-hidden','true');
-  var seg = 'M0,32 H300 L318,32 L332,8 L346,56 L360,32 H700';
-  e.innerHTML =
-    '<svg viewBox="0 0 1400 64" preserveAspectRatio="none">' +
-    '<path d="' + seg + ' M700,32 H1000 L1018,32 L1032,8 L1046,56 L1060,32 H1400"></path>' +
-    '</svg>';
-  px.insertBefore(e, px.firstChild);
-})();
-
 /* titulares cinéticos */
 function kinetize(el){
   if(el.dataset.kin) return;
@@ -3840,6 +3828,7 @@ onScroll();
 <script src="js/anime.iife.min.js"></script>
 <script src="js/hero-flatline.js"></script>
 <script src="js/motor-wave.js"></script>
+<script src="js/edge-pulse.js"></script>
 <script src="js/planax-live.js"></script>
 </body>
 </html>
