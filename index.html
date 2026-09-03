@@ -268,6 +268,26 @@ header.nav.scrolled {
   color: var(--tinta);
 }
 
+.langbtn {
+  font-family: var(--ff-head);
+  font-weight: 700;
+  font-size: .82rem;
+  letter-spacing: .06em;
+  color: var(--tinta-80);
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.6);
+  padding: 7px 12px;
+  border-radius: 100px;
+  line-height: 1;
+  transition: color .2s, border-color .2s, background .2s;
+}
+
+.langbtn:hover {
+  color: var(--tinta);
+  border-color: var(--cielo);
+  background: #fff;
+}
+
 .nav-cta {
   display: flex;
   align-items: center;
@@ -3336,6 +3356,7 @@ footer {
   </div>
 </footer>
 
+<script src="js/i18n.js"></script>
 <script>
 (function(){
   /* ---- dynamic favicon (isotype) ---- */
@@ -3438,13 +3459,18 @@ footer {
       rAgency.textContent = eur(agency);
       rSave.textContent = eur(Math.max(0, save));
     }
+    var en = document.documentElement.lang === 'en';
     if(save > 0){
       var pct = Math.round(save / agency * 100);
-      rPct.textContent = 'un ' + pct + '% menos por vacante';
+      rPct.textContent = en
+        ? pct + '% less per role'
+        : 'un ' + pct + '% menos por vacante';
       rPct.style.color = '#FFD75E';
       rSave.style.color = '#FFD75E';
     } else {
-      rPct.textContent = 'Con Plana ganas en transparencia';
+      rPct.textContent = en
+        ? 'With Plana you gain in transparency'
+        : 'Con Plana ganas en transparencia';
       rSave.textContent = eur(0);
     }
   }
@@ -3456,6 +3482,9 @@ footer {
       recalc(true);
     });
     recalc(false);
+    addEventListener('plana:lang', function(){
+      recalc(false);
+    });
   }
 
   /* ---- comparativa: entrada fila por fila ---- */
@@ -3534,10 +3563,23 @@ footer {
     var planForm = document.getElementById('planForm');
     var toastC   = document.getElementById('toastClient');
 
+    var EN_PACK = {
+      'Despegue': 'Takeoff',
+      'Altitud': 'Altitude',
+      'Estratosfera': 'Stratosphere',
+      'Plana Ilimitada': 'Plana Unlimited'
+    };
+
+    function packLabel(pack){
+      var en = document.documentElement.lang === 'en';
+      var name = en ? (EN_PACK[pack] || pack) : pack;
+      if(pack === 'Plana Ilimitada') return name;
+      return en ? name + ' pack' : 'Pack ' + name;
+    }
+
     function openPlan(pack){
       pmPack.innerHTML =
-        '<span class="live-dot"></span>' +
-        (pack === 'Plana Ilimitada' ? pack : 'Pack ' + pack);
+        '<span class="live-dot"></span>' + packLabel(pack);
       pmField.value = pack;
       planModal.hidden = false;
       setTimeout(function(){
@@ -3658,6 +3700,15 @@ if(reduce){
     kio.observe(h);
   });
 }
+
+/* al cambiar de idioma el titular se reescribe entero, así que hay que
+   volver a trocearlo en palabras */
+addEventListener('plana:lang', function(){
+  heads.forEach(function(h){
+    kinetize(h);
+    h.classList.add('kin-in');
+  });
+});
 
 /* packs: apilado al deslizar */
 var pg = document.querySelector('.packs-grid');

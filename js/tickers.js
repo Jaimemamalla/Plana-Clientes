@@ -87,6 +87,11 @@
     resizeT = setTimeout(function () { startAll(true); }, 200);
   });
 
+  /* el inglés no ocupa lo mismo que el español */
+  addEventListener('plana:lang', function () {
+    setTimeout(function () { startAll(false); }, 0);
+  });
+
   /* al pasar el ratón frena, no se corta en seco */
   bands.forEach(function (b) {
     function ramp(to) {
