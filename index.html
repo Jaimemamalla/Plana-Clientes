@@ -550,26 +550,16 @@ header.nav.scrolled {
   stroke-width: 2;
 }
 
-.ekg .beat {
-  stroke: var(--cielo);
-}
-
-.ekg .flat {
-  stroke: var(--sol);
-  stroke-width: 5;
+/* una sola línea: el degradado la pasa de azul a amarillo justo donde deja
+   de tener picos, así el amarillo es la misma línea y no algo encima */
+.ekg .line {
+  stroke: url(#ekgGrad);
 }
 
 .ekg .head {
   stroke: var(--cielo);
   stroke-width: 9;
   opacity: 0;
-}
-
-.ekg .sheen {
-  stroke: #fff;
-  stroke-width: 5;
-  opacity: 0;
-  mix-blend-mode: overlay;
 }
 
 /* social proof */
@@ -2942,10 +2932,16 @@ footer {
           </div>
           <span class="fc-save">Te ahorras <span data-count="4100" data-suffix=" €">4.100 €</span></span>
           <svg class="ekg" viewBox="0 0 360 54" preserveAspectRatio="none" aria-hidden="true">
-            <path class="beat" d="M0,27 H36 L44,27 L52,9 L60,45 L68,27 H104 L112,27 L120,9 L128,45 L136,27 H172 L180,27 L188,4 L196,50 L204,27 H212"/>
-            <path class="head" d="M0,27 H36 L44,27 L52,9 L60,45 L68,27 H104 L112,27 L120,9 L128,45 L136,27 H172 L180,27 L188,4 L196,50 L204,27 H212"/>
-            <path class="flat" d="M212,27 H360"/>
-            <path class="sheen" d="M212,27 H360"/>
+            <defs>
+              <linearGradient id="ekgGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#4FB3E8"/>
+                <stop offset="0.567" stop-color="#4FB3E8"/>
+                <stop offset="0.638" stop-color="#FFD75E"/>
+                <stop offset="1" stop-color="#FFD75E"/>
+              </linearGradient>
+            </defs>
+            <path class="line" d="M0,27 H36 L44,27 L52,9 L60,45 L68,27 H104 L112,27 L120,9 L128,45 L136,27 H172 L180,27 L188,4 L196,50 L204,27 H360"/>
+            <path class="head" d="M0,27 H36 L44,27 L52,9 L60,45 L68,27 H104 L112,27 L120,9 L128,45 L136,27 H172 L180,27 L188,4 L196,50 L204,27 H360"/>
           </svg>
         </div>
       </div>
