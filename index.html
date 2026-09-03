@@ -829,15 +829,26 @@ header.nav.scrolled {
   display: block;
 }
 
-.iso-slats rect {
+.iso-disc {
   transform-box: fill-box;
   transform-origin: center;
   will-change: transform,opacity;
-  shape-rendering: crispEdges;
 }
 
-.iso-disc {
-  will-change: opacity;
+.iso-wave {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  display: none;
+}
+
+/* con JS la línea sustituye a la barra, que solo es el estado de respaldo */
+.isostack.js .iso-wave {
+  display: block;
+}
+
+.isostack.js .iso-bar {
+  display: none;
 }
 
 @media(max-width:900px) {
@@ -2977,7 +2988,7 @@ footer {
     <div class="wrap motor-grid">
       <div class="motor-copy">
         <span class="eyebrow">Tarifa plana</span>
-        <h2 id="motor-title">Todo se desmonta. <span class="y">La tarifa no.</span></h2>
+        <h2 id="motor-title">El fee sube y baja. <span class="y">La tarifa es plana.</span></h2>
         <p>El fee sube con el sueldo, baja si negocias y cambia según quién pregunte. Nuestro precio no se mueve: está en la web, es el mismo para todos y no depende de lo que cobre la persona que contratas.</p>
       </div>
 
@@ -2985,8 +2996,8 @@ footer {
         <svg class="isostack-svg" viewBox="0 0 360 360" role="img"
              aria-label="El isotipo de Plana: un círculo azul cruzado por una barra plana amarilla">
           <circle class="iso-disc" cx="180" cy="180" r="140" fill="#4FB3E8"/>
-          <g class="iso-slats" aria-hidden="true"></g>
           <rect class="iso-bar" x="98" y="170" width="164" height="20" rx="10" fill="#FFD75E"/>
+          <path class="iso-wave" d="M108,180 L252,180" aria-hidden="true"/>
         </svg>
       </div>
     </div>
@@ -3832,7 +3843,7 @@ onScroll();
 <!-- ===== anime.js + timelines ===== -->
 <script src="js/anime.iife.min.js"></script>
 <script src="js/hero-flatline.js"></script>
-<script src="js/motor-slats.js"></script>
+<script src="js/motor-wave.js"></script>
 <script src="js/planax-live.js"></script>
 </body>
 </html>
