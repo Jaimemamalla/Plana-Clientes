@@ -1006,9 +1006,12 @@ header.nav.scrolled {
   flex: 1;
 }
 
+/* El tick va absoluto, no en flex: con display:flex cada <b> se convertia
+   en un item propio y "Headhunting directo" quedaba en una columna y "a
+   candidatos pasivos" en otra, con el gap de 11px en medio. */
 .pack-feats li {
-  display: flex;
-  gap: 11px;
+  position: relative;
+  padding-left: 29px;
   font-size: .98rem;
   line-height: 1.4;
   color: var(--tinta-80);
@@ -1020,8 +1023,9 @@ header.nav.scrolled {
 }
 
 .pack-feats .tick {
-  flex: none;
-  margin-top: 2px;
+  position: absolute;
+  left: 0;
+  top: 2px;
 }
 
 .pack-feats .inc {
@@ -1087,6 +1091,84 @@ header.nav.scrolled {
   display: grid;
   grid-template-columns: repeat(4,1fr);
   gap: 18px;
+}
+
+/* ============ SELECTOR DE TRAMO ============ */
+
+.tier-switch {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin: 0 auto 40px;
+  padding: 6px;
+  width: max-content;
+  max-width: 100%;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  box-shadow: var(--card-shadow);
+  flex-wrap: wrap;
+}
+
+.tier-switch button {
+  border-radius: 999px;
+  padding: 11px 20px;
+  font-family: var(--ff-body);
+  font-weight: 600;
+  font-size: .92rem;
+  color: var(--bruma);
+  white-space: nowrap;
+  transition: background .22s, color .22s;
+}
+
+.tier-switch button:hover {
+  color: var(--tinta);
+}
+
+.tier-switch button[aria-pressed="true"] {
+  background: var(--tinta);
+  color: #fff;
+}
+
+.tier-switch .off {
+  font-weight: 700;
+  color: var(--cielo);
+  margin-left: 7px;
+}
+
+.tier-switch button[aria-pressed="true"] .off {
+  color: var(--sol);
+}
+
+.pack-price s {
+  display: block;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--bruma);
+  text-decoration-thickness: 2px;
+  margin-bottom: 6px;
+}
+
+.pack-price s:empty {
+  display: none;
+}
+
+.tier.on {
+  border-color: var(--tinta);
+  box-shadow: 0 0 0 2px var(--tinta) inset, var(--card-shadow);
+}
+
+@media(max-width:640px) {
+  .tier-switch {
+    width: 100%;
+    border-radius: var(--r);
+  }
+  .tier-switch button {
+    flex: 1 1 auto;
+    padding: 11px 12px;
+    font-size: .84rem;
+  }
 }
 
 .tier {
@@ -3370,12 +3452,21 @@ footer {
       <p>El precio depende del perfil que buscas, no de lo que cobra. Está aquí escrito, sin "desde" ni asteriscos. La transparencia es el producto.</p>
     </div>
 
+    <!-- Selector de tramo: aplica a los precios de abajo el descuento por
+         volumen que la Escala Plana ya publica. Las etiquetas son las mismas
+         de la escala, no hay copy nuevo. -->
+    <div class="tier-switch reveal" role="group" aria-label="Vacantes al año">
+      <button type="button" data-disc="0" aria-pressed="true">1 a 2 vacantes / año</button>
+      <button type="button" data-disc="10" aria-pressed="false">3 a 5 vacantes / año<span class="off">−10%</span></button>
+      <button type="button" data-disc="20" aria-pressed="false">6 a 9 vacantes / año<span class="off">−20%</span></button>
+    </div>
+
     <div class="packs-grid">
       <!-- DESPEGUE -->
       <article class="pack reveal d1">
         <div class="pack-name">Despegue</div>
         <p class="pack-for">Perfiles operativos y junior: administración, soporte, customer service, ventas junior, oficina y operaciones.</p>
-        <div class="pack-price">2.900 €<small>por vacante</small></div>
+        <div class="pack-price" data-base="2900"><s aria-hidden="true"></s><span class="amt">2.900 €</span><small>por vacante</small></div>
         <hr />
         <ul class="pack-feats">
           <li><svg class="tick" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#4FB3E8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Publicación multicanal y búsqueda activa</li>
@@ -3391,7 +3482,7 @@ footer {
         <span class="pack-badge">⭐ Más popular</span>
         <div class="pack-name">Altitud</div>
         <p class="pack-for">Mandos intermedios y especialistas: tech, finanzas, marketing, ingeniería y perfiles con escasez media.</p>
-        <div class="pack-price">4.900 €<small>por vacante</small></div>
+        <div class="pack-price" data-base="4900"><s aria-hidden="true"></s><span class="amt">4.900 €</span><small>por vacante</small></div>
         <hr />
         <ul class="pack-feats">
           <li><svg class="tick" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#4FB3E8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="inc">Todo lo del Pack Despegue</span></li>
@@ -3407,7 +3498,7 @@ footer {
       <article class="pack reveal d3">
         <div class="pack-name">Estratosfera</div>
         <p class="pack-for">Dirección y perfiles muy escasos: C-level, heads y perfiles nicho de alta competencia.</p>
-        <div class="pack-price">7.900 €<small>por vacante</small></div>
+        <div class="pack-price" data-base="7900"><s aria-hidden="true"></s><span class="amt">7.900 €</span><small>por vacante</small></div>
         <hr />
         <ul class="pack-feats">
           <li><svg class="tick" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#4FB3E8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="inc">Todo lo del Pack Altitud</span></li>
@@ -3780,6 +3871,57 @@ footer {
     });
   });
 
+  /* ---- selector de tramo de la Escala Plana ---- */
+  (function(){
+    var sw = document.querySelector('.tier-switch');
+    if(!sw) return;
+
+    var precios = [].slice.call(document.querySelectorAll('.pack-price[data-base]'));
+    var tramos  = [].slice.call(document.querySelectorAll('.escala-grid .tier:not(.unl)'));
+    var euros;
+    try {
+      euros = new Intl.NumberFormat('es-ES', {useGrouping:'always'});
+    } catch(e) {
+      euros = new Intl.NumberFormat('es-ES');
+    }
+
+    /* El descuento se guarda para que el formulario sepa con que tramo
+       llego el lead, no solo que pack. */
+    var descuento = 0;
+
+    function aplicar(pct){
+      descuento = pct;
+      precios.forEach(function(el){
+        var base  = parseInt(el.getAttribute('data-base'), 10);
+        var final = Math.round(base * (100 - pct) / 100);
+        el.querySelector('.amt').textContent = euros.format(final) + ' €';
+        el.querySelector('s').textContent = pct ? euros.format(base) + ' €' : '';
+      });
+      [].forEach.call(sw.children, function(b){
+        b.setAttribute('aria-pressed', String(+b.getAttribute('data-disc') === pct));
+      });
+      tramos.forEach(function(t, i){
+        t.classList.toggle('on', [0,10,20][i] === pct);
+      });
+    }
+
+    sw.addEventListener('click', function(e){
+      var b = e.target.closest('button[data-disc]');
+      if(b) aplicar(+b.getAttribute('data-disc'));
+    });
+
+    /* Los cuadros de la Escala Plana mueven el selector: estan mas abajo y
+       explican el descuento, asi que tambien tienen que poder activarlo. */
+    tramos.forEach(function(t, i){
+      t.style.cursor = 'pointer';
+      t.addEventListener('click', function(){ aplicar([0,10,20][i]); });
+    });
+
+    window.planaDescuento = function(){ return descuento; };
+
+    aplicar(0);
+  })();
+
   /* ---- savings calculator ---- */
   var PLANA = 4900;
   var salary = document.getElementById('salary');
@@ -3954,7 +4096,10 @@ footer {
     function openPlan(pack){
       pmPack.innerHTML =
         '<span class="live-dot"></span>' + packLabel(pack);
-      pmField.value = pack;
+      /* El tramo elegido viaja con el lead: sin el, un 'Altitud' no dice si
+         venia con descuento por volumen. */
+      var d = window.planaDescuento ? window.planaDescuento() : 0;
+      pmField.value = d ? pack + ' (-' + d + '%)' : pack;
       planModal.hidden = false;
       setTimeout(function(){
         pmName.focus();
