@@ -2327,6 +2327,265 @@ input[type=range]::-moz-range-thumb {
   }
 }
 
+.gshape {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(48px);
+  opacity: .5;
+  will-change: transform;
+}
+
+@keyframes floatA {
+  0%,
+  100% {
+    transform: translate(0,0) scale(1);
+  }
+  50% {
+    transform: translate(26px,-30px) scale(1.12);
+  }
+}
+
+@keyframes floatB {
+  0%,
+  100% {
+    transform: translate(0,0) scale(1);
+  }
+  50% {
+    transform: translate(-32px,24px) scale(1.1);
+  }
+}
+
+.gshape.fa {
+  animation: floatA 19s ease-in-out infinite;
+}
+
+.gshape.fb {
+  animation: floatB 24s ease-in-out infinite;
+}
+
+/* ============ MANIFIESTO ============ */
+
+#manifiesto {
+  background: var(--tinta);
+  color: #fff;
+  overflow: hidden;
+}
+
+.mani-inner {
+  max-width: 880px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+#manifiesto .eyebrow {
+  color: var(--sol);
+}
+
+#manifiesto .eyebrow::before {
+  background: var(--sol);
+}
+
+.mani-list {
+  list-style: none;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.mani-list li {
+  font-family: var(--ff-head);
+  font-weight: 600;
+  font-size: clamp(1.5rem,3.6vw,2.5rem);
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+  color: #fff;
+  padding: 24px 0 24px 38px;
+  position: relative;
+  border-top: 1px solid rgba(255,255,255,.12);
+}
+
+.mani-list li:first-child {
+  border-top: none;
+}
+
+.mani-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 34px;
+  width: 22px;
+  height: 4px;
+  border-radius: 3px;
+  background: var(--sol);
+}
+
+.mani-list li.dim {
+  color: rgba(255,255,255,.55);
+}
+
+.mani-close {
+  margin-top: 48px;
+  font-family: var(--ff-head);
+  font-weight: 700;
+  font-size: clamp(1.6rem,4vw,2.6rem);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.mani-close .y {
+  color: var(--sol);
+}
+
+#manifiesto::before {
+  content: "";
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  background: radial-gradient(circle,rgba(255,215,94,.14),transparent 68%);
+  bottom: -220px;
+  right: -120px;
+}
+
+/* ============ FAQ ============ */
+
+.faq-wrap {
+  max-width: 840px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--line);
+}
+
+.faq-item:first-child {
+  border-top: 1px solid var(--line);
+}
+
+.faq-q {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  text-align: left;
+  padding: 26px 4px;
+  font-family: var(--ff-head);
+  font-weight: 600;
+  font-size: clamp(1.08rem,2vw,1.3rem);
+  letter-spacing: -0.02em;
+  color: var(--tinta);
+  transition: color .2s;
+}
+
+.faq-q:hover {
+  color: var(--cielo);
+}
+
+.faq-ico {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: var(--cielo-claro);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .25s, transform .35s;
+}
+
+.faq-ico svg {
+  transition: transform .35s;
+}
+
+.faq-item.open .faq-ico {
+  background: var(--sol);
+}
+
+.faq-item.open .faq-ico svg {
+  transform: rotate(45deg);
+}
+
+.faq-a {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .4s cubic-bezier(.4,0,.2,1);
+}
+
+.faq-a-inner {
+  padding: 0 4px 28px;
+  color: var(--tinta-80);
+  font-size: 1.04rem;
+  line-height: 1.6;
+  max-width: 68ch;
+}
+
+.faq-a-inner b {
+  color: var(--tinta);
+  font-weight: 600;
+}
+
+/* ============ CTA FINAL ============ */
+
+#cta {
+  background: var(--sol);
+  overflow: hidden;
+  position: relative;
+}
+
+.cta-inner {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+#cta h2 {
+  font-size: clamp(2.6rem,7vw,5rem);
+  color: var(--tinta);
+  letter-spacing: -0.04em;
+}
+
+#cta p {
+  font-size: 1.2rem;
+  color: var(--tinta-80);
+  margin: 20px 0 34px;
+  font-weight: 500;
+}
+
+#cta .btn {
+  font-size: 1.1rem;
+  padding: 18px 38px;
+}
+
+#cta::before,
+#cta::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,.28);
+  filter: blur(8px);
+}
+
+#cta::before {
+  width: 240px;
+  height: 240px;
+  top: -100px;
+  left: -60px;
+}
+
+#cta::after {
+  width: 200px;
+  height: 200px;
+  bottom: -90px;
+  right: -50px;
+}
+
 /* ============ FOOTER ============ */
 
 footer {
@@ -2910,6 +3169,7 @@ footer {
       <a href="#packs">Precios</a>
       <a href="#planax">Planax</a>
       <a href="#comparativa">Comparativa</a>
+      <a href="#faq">FAQ</a>
       <!-- TODO(web-comunidad): sustituir por la URL de la web de comunidad -->
       <a href="#" data-todo="url-comunidad">Candidatos</a>
     </nav>
@@ -3297,6 +3557,81 @@ footer {
   </div>
 </section>
 
+<!-- ============ MANIFIESTO ============ -->
+<section class="section-pad" id="manifiesto" aria-labelledby="mani-title">
+  <span class="gshape fb" style="width:360px;height:360px;background:rgba(255,215,94,.16);top:-6%;right:-4%"></span>
+  <span class="gshape fa" style="width:300px;height:300px;background:rgba(79,179,232,.20);bottom:-10%;left:-5%"></span>
+  <div class="wrap">
+    <div class="mani-inner reveal">
+      <span class="eyebrow">Por qué existe Plana</span>
+      <h2 id="mani-title" style="color:#fff;font-size:clamp(2.1rem,4.6vw,3.4rem);margin-top:16px">Un manifiesto, no un eslogan.</h2>
+      <ul class="mani-list">
+        <li>El precio de contratar a alguien no debería depender de su sueldo.</li>
+        <li class="dim">Las agencias cobran más por la misma llamada de teléfono. Nosotros no.</li>
+        <li>La transparencia no es una feature. Es lo mínimo.</li>
+        <li class="dim">Si un candidato no recibe respuesta, hemos fallado.</li>
+        <li>Seleccionar bien es un trabajo serio. Cobrarlo raro, no.</li>
+      </ul>
+      <p class="mani-close">Bienvenido a la selección a tarifa plana. <span class="y">Bienvenido a Plana.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section-pad" id="faq" aria-labelledby="faq-title">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">Preguntas frecuentes</span>
+      <h2 id="faq-title">Sin letra pequeña. Pregunta.</h2>
+    </div>
+    <div class="faq-wrap reveal d1">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿De verdad el precio no depende del salario?<span class="faq-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#10243A" stroke-width="2.4" stroke-linecap="round"/></svg></span></button>
+        <div class="faq-a"><div class="faq-a-inner">De verdad. El precio depende de la <b>complejidad del perfil</b>, no de lo que cobre. Buscar un perfil de soporte cuesta lo mismo gane 20.000 o 28.000. Un perfil de dirección entra en otro pack porque cuesta más encontrarlo, no porque cobre más. Lo que pagas es el trabajo de selección, y ese trabajo no sube porque suba la nómina.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Qué pasa si no encontráis a nadie?<span class="faq-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#10243A" stroke-width="2.4" stroke-linecap="round"/></svg></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Trabajamos cada vacante hasta cerrarla. Si tras el proceso acordado no llegamos a una contratación, ajustamos la estrategia contigo sin coste adicional. No cobramos por intentarlo: cobramos por el pack y respondemos por el resultado.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Cómo funciona la garantía?<span class="faq-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#10243A" stroke-width="2.4" stroke-linecap="round"/></svg></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Si la persona contratada no funciona dentro del periodo de garantía de tu pack (60, 90 o 120 días según el pack), <b>la reponemos gratis</b>. Reabrimos el proceso y buscamos a otra persona sin volver a cobrarte el pack. Sin discusiones.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Qué es Planax y quién ve mis datos?<span class="faq-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#10243A" stroke-width="2.4" stroke-linecap="round"/></svg></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Planax es nuestra IA propia: hace el cribado conversacional, el matching con la Comunidad Plana y el panel en tiempo real. <b>Tus datos son tuyos.</b> No los vendemos ni los usamos para entrenar modelos de terceros. Cumplimos el RGPD y tratamos cada candidatura con confidencialidad.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Trabajáis fuera de España?<span class="faq-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#10243A" stroke-width="2.4" stroke-linecap="round"/></svg></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Nuestro foco es España. Si tu empresa es española y tiene una posición internacional puntual, cuéntanoslo y vemos cómo encajarlo.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Cómo se paga?<span class="faq-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#10243A" stroke-width="2.4" stroke-linecap="round"/></svg></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Por pack, con un precio fijo que conoces desde el principio. Una parte al arrancar el proceso y el resto al cerrar la contratación. Si entras en Plana Ilimitada, es una suscripción mensual. Sin porcentajes, sin sorpresas en la factura.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Qué pack necesito?<span class="faq-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#10243A" stroke-width="2.4" stroke-linecap="round"/></svg></span></button>
+        <div class="faq-a"><div class="faq-a-inner"><b>Despegue</b> para perfiles operativos y junior. <b>Altitud</b> para mandos intermedios y especialistas con escasez media. <b>Estratosfera</b> para dirección y perfiles muy escasos. Si dudas, dínoslo y te lo decimos en una frase, sin reunión de dos horas.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Sois una ETT?<span class="faq-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#10243A" stroke-width="2.4" stroke-linecap="round"/></svg></span></button>
+        <div class="faq-a"><div class="faq-a-inner">No. No cedemos trabajadores ni los ponemos en nómina por ti. Hacemos selección directa: buscamos, evaluamos y te presentamos finalistas para que tú los contrates en tu plantilla. La persona trabaja para ti desde el día uno.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA FINAL ============ -->
+<section class="section-pad" id="cta">
+  <div class="wrap">
+    <div class="cta-inner reveal">
+      <h2>Únete a la nueva era del reclutamiento. Dile adiós al fee.</h2>
+      <p>Precio fijo, panel en tiempo real y reposición garantizada. El fee se queda fuera.</p>
+      <a href="#packs" class="btn btn-tinta">Ver precios</a>
+    </div>
+  </div>
+</section>
+
 <!-- modal cliente (elegir plan) -->
 <div class="modal-overlay" id="planModal" hidden>
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="pm-title">
@@ -3346,6 +3681,8 @@ footer {
           <li><a href="#calc">Calculadora</a></li>
           <li><a href="#planax">Planax</a></li>
           <li><a href="#comparativa">Comparativa</a></li>
+          <li><a href="#manifiesto">Por qué existe Plana</a></li>
+          <li><a href="#faq">FAQ</a></li>
         </ul>
       </div>
       <div class="foot-col">
@@ -3416,6 +3753,31 @@ footer {
   }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
   document.querySelectorAll('.reveal:not(.in)').forEach(function(el){
     io.observe(el);
+  });
+
+  /* ---- FAQ accordion ---- */
+  document.querySelectorAll('.faq-item').forEach(function(item){
+    var q = item.querySelector('.faq-q');
+    var a = item.querySelector('.faq-a');
+    q.addEventListener('click', function(){
+      var open = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(o){
+        if(o !== item){
+          o.classList.remove('open');
+          o.querySelector('.faq-a').style.maxHeight = null;
+          o.querySelector('.faq-q').setAttribute('aria-expanded','false');
+        }
+      });
+      if(open){
+        item.classList.remove('open');
+        a.style.maxHeight = null;
+        q.setAttribute('aria-expanded','false');
+      } else {
+        item.classList.add('open');
+        a.style.maxHeight = a.scrollHeight + 'px';
+        q.setAttribute('aria-expanded','true');
+      }
+    });
   });
 
   /* ---- savings calculator ---- */
@@ -3745,7 +4107,7 @@ function kinetize(el){
   });
 }
 
-var heads = document.querySelectorAll('.sec-head h2, .escala-head h3, .px-head h2');
+var heads = document.querySelectorAll('.sec-head h2, .escala-head h3, .px-head h2, #cta h2');
 heads.forEach(kinetize);
 
 if(reduce){
