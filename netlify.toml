@@ -1,0 +1,30 @@
+# Sitio estático, sin build. Netlify publica la raíz tal cual.
+# Ojo: al conectar este repo a un sitio de Netlify que ya existía, el
+# contenido anterior se reemplaza por el de aquí.
+[build]
+  publish = "."
+  command = ""
+
+# No se tocan las cabeceras de caché a propósito: los nombres de js/ y css/
+# no llevan hash, así que una caché larga serviría código viejo tras un
+# despliegue. Los valores por defecto de Netlify, con ETag, son los correctos
+# mientras los archivos se llamen igual.
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# Las páginas legales y la fuente de la imagen no deben indexarse.
+[[headers]]
+  for = "/legal/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"
+
+[[headers]]
+  for = "/og.source.html"
+  [headers.values]
+    X-Robots-Tag = "noindex"
