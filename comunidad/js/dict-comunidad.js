@@ -6,7 +6,7 @@ window.PLANA_I18N = {
     /* nav */
     'Comparativa': 'Compare',
     'La comunidad': 'The community',
-    'Soy empresa': 'I am a company',
+    'Empresa': 'Company',
     'Únete': 'Join',
 
     /* comunidad */
