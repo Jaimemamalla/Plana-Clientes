@@ -52,8 +52,11 @@
   var SEG = 260;
   var SWEEP = 4200;
 
+  /* la bolita tiene que envolver en el mismo periodo que el brillo
+     (SEG + len), no solo en len: si no, remata la vuelta antes y
+     reaparece al principio mientras el brillo aún sale por el final */
   utils.set(glow, { strokeDasharray: SEG + ' ' + len });
-  utils.set(dot,  { strokeDasharray: '0.1 ' + len });
+  utils.set(dot,  { strokeDasharray: '0.1 ' + (len + SEG - 0.1) });
 
   animate(glow, {
     strokeDashoffset: [SEG, -len],
