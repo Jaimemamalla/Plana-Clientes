@@ -31,6 +31,7 @@ window.PLANA_I18N = {
     'o haz clic para elegir · PDF, DOC o TXT': 'or click to choose · PDF, DOC or TXT',
     'Planax está leyendo tu CV…': 'Planax is reading your CV…',
     'CV recibido': 'CV received',
+    'Tu candidatura': 'Your application',
     'cambiar': 'change',
     'Datos extraídos por Planax': 'Details pulled out by Planax',
     'Nombre': 'Name',

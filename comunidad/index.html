@@ -315,7 +315,6 @@ header.nav.scrolled {
   position: relative;
   overflow: hidden;
   padding: clamp(56px,9vw,104px) 0 clamp(56px,8vw,96px);
-  background: linear-gradient(135deg,var(--nube) 0%,var(--cielo-claro) 55%,var(--sol) 100%);
 }
 
 .sky {
@@ -1920,56 +1919,177 @@ input[type=range]::-moz-range-thumb {
 
 /* ============ COMUNIDAD ============ */
 
-.hero-solo {
-  position: relative;
-  z-index: 1;
-  max-width: 880px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.hero-solo .eyebrow {
-  justify-content: center;
-}
-
-/* Mas especifico que el .hero h1 del bloque de abajo, que va a 124px:
-   ese titular es para "El fee ha muerto.", este tiene 48 caracteres. */
-.hero .hero-solo h1 {
-  font-size: clamp(2.4rem,5.2vw,4.1rem);
-  line-height: 1.04;
-}
-
-.hero-solo .hero-sub {
-  max-width: 46ch;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.hero-solo .hero-cta {
-  justify-content: center;
-}
-
-/* letras del titular: cada una entra desde su distancia al centro de su
-   propia línea, así que hace falta perspectiva en el contenedor */
-.hero-solo h1 {
+#com-title {
+  font-size: clamp(2.5rem,4.4vw,4rem);
+  line-height: 1.02;
   perspective: 560px;
 }
 
-.hero-solo h1 .hw {
+#com-title .hw {
   display: inline-block;
   white-space: nowrap;
 }
 
-.hero-solo h1 .hc {
+#com-title .hc {
   display: inline-block;
   opacity: 0;
   transform: translateX(var(--hx,0)) rotateX(var(--hr,0));
   transition: transform 1.1s cubic-bezier(.16,1,.3,1), opacity .7s ease;
 }
 
-.hero-solo h1.hin .hc {
+#com-title.hin .hc {
   opacity: 1;
   transform: none;
+}
+
+#hero .hero-grid {
+  grid-template-columns: 1.12fr .88fr;
+}
+
+/* Tarjeta "Tu candidatura", la pareja de la tarjeta de precios de la web
+   de empresas. Cada tramo del raíl arranca a media altura de su icono y
+   mide el 100% del li, padding-bottom incluido, así que acaba justo en el
+   centro del icono siguiente sin medir nada por JS. */
+
+.cand-card {
+  padding: 30px 30px 28px;
+}
+
+.cand-card .fc-label {
+  display: block;
+  margin-bottom: 24px;
+}
+
+.cand-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cs {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding-bottom: 24px;
+}
+
+.cs:last-child {
+  padding-bottom: 0;
+}
+
+.cs::before,
+.cs::after {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 16px;
+  width: 2px;
+  height: 100%;
+  border-radius: 2px;
+}
+
+.cs::before {
+  background: var(--line);
+}
+
+.cs::after {
+  background: var(--cielo);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform .55s cubic-bezier(.65,0,.35,1);
+}
+
+.cs:last-child::before,
+.cs:last-child::after {
+  display: none;
+}
+
+.cs.link::after {
+  transform: scaleY(1);
+}
+
+.cs-ico {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .35s, border-color .35s;
+}
+
+.cs-ico .ck {
+  opacity: 0;
+  transform: scale(.4);
+  transition: opacity .25s, transform .5s cubic-bezier(.34,1.56,.64,1);
+}
+
+.cs-ico .dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--sol);
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity .3s, transform .5s cubic-bezier(.34,1.56,.64,1);
+}
+
+.cs-txt {
+  padding-top: 5px;
+  font-size: 1.02rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--bruma);
+  transition: color .35s;
+}
+
+.cs.done .cs-ico {
+  background: var(--cielo);
+  border-color: var(--cielo);
+}
+
+.cs.done .ck {
+  opacity: 1;
+  transform: none;
+}
+
+.cs.done .cs-txt {
+  color: var(--tinta);
+}
+
+.cs.now .cs-ico {
+  border-color: var(--sol);
+}
+
+.cs.now .dot {
+  opacity: 1;
+  transform: none;
+  animation: live 1.8s ease-out infinite;
+}
+
+.cs.now .cs-txt {
+  color: var(--tinta);
+  font-weight: 600;
+}
+
+@media(max-width:900px) {
+  #hero .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+  #com-title {
+    font-size: clamp(2.5rem,6.6vw,3.6rem);
+  }
+  #hero .hero-visual {
+    max-width: 460px;
+  }
 }
 
 /* La bandera: el titular de #ventajas, en su propia banda oscura para
@@ -3476,13 +3596,26 @@ footer {
     <span class="blob b3"></span>
   </div>
   <div class="wrap">
-    <div class="hero-solo">
-      <span class="eyebrow reveal in">Comunidad Plana</span>
-      <h1 id="com-title" class="reveal in d1">Regístrate una vez. Te tenemos en cuenta <span class="mark">siempre<i class="ul" aria-hidden="true"></i></span>.</h1>
-      <p class="hero-sub reveal in d2">Feedback siempre. Es nuestra bandera, no una promesa de marketing.</p>
-      <div class="hero-cta reveal in d3">
-        <a href="#unete" class="btn btn-sol">Únete a la Comunidad Plana</a>
-        <a href="../" class="btn btn-ghost">Empresa</a>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow reveal in">Comunidad Plana</span>
+        <h1 id="com-title" class="reveal in d1">Regístrate una vez. Te tenemos en cuenta <span class="mark">siempre<i class="ul" aria-hidden="true"></i></span>.</h1>
+        <p class="hero-sub reveal in d2">Feedback siempre. Es nuestra bandera, no una promesa de marketing.</p>
+        <div class="hero-cta reveal in d3">
+          <a href="#unete" class="btn btn-sol">Únete a la Comunidad Plana</a>
+        </div>
+      </div>
+      <div class="hero-visual reveal in d2">
+        <!-- Decorativa: repite los pasos de #como, así que no se lee dos veces -->
+        <div class="flatcard cand-card" id="candcard" aria-hidden="true">
+          <span class="fc-label">Tu candidatura</span>
+          <ol class="cand-steps">
+            <li class="cs"><span class="cs-ico"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><i class="dot"></i></span><span class="cs-txt">CV recibido</span></li>
+            <li class="cs"><span class="cs-ico"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><i class="dot"></i></span><span class="cs-txt">Planax lo cruza con cada vacante</span></li>
+            <li class="cs"><span class="cs-ico"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><i class="dot"></i></span><span class="cs-txt">Te escribimos nosotros</span></li>
+            <li class="cs"><span class="cs-ico"><svg class="ck" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><i class="dot"></i></span><span class="cs-txt">Sabes en qué punto estás</span></li>
+          </ol>
+        </div>
       </div>
     </div>
   </div>
@@ -4272,5 +4405,6 @@ onScroll();
 
 <script src="js/anime.iife.min.js"></script>
 <script src="js/tickers.js"></script>
+<script src="js/hero-candidatura.js"></script>
 </body>
 </html>
