@@ -314,7 +314,14 @@ header.nav.scrolled {
 .hero {
   position: relative;
   overflow: hidden;
+  min-height: calc(100vh - 72px);
+  display: flex;
+  align-items: center;
   padding: clamp(56px,9vw,104px) 0 clamp(56px,8vw,96px);
+}
+
+.hero .wrap {
+  width: 100%;
 }
 
 .sky {
@@ -3237,6 +3244,19 @@ footer {
 
 .tkband.sol em {
   color: var(--tinta);
+}
+
+.tkband em::after {
+  content: "";
+  width: 60px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--sol);
+  flex: none;
+}
+
+.tkband.sol em::after {
+  background: var(--tinta);
 }
 
 .tkband:hover .row {
