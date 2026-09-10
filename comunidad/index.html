@@ -406,7 +406,10 @@ header.nav.scrolled {
   width: clamp(150px,17vw,250px);
   height: clamp(150px,17vw,250px);
   pointer-events: none;
-  animation: heroMark 9s ease-in-out infinite;
+  transform-origin: 50% 100%;
+  animation:
+    heroDrop 1.1s cubic-bezier(.4,0,.2,1) forwards,
+    heroMark 9s ease-in-out infinite 1.1s;
 }
 
 .hero-mark svg {
@@ -414,6 +417,55 @@ header.nav.scrolled {
   height: 100%;
   display: block;
   filter: drop-shadow(0 24px 48px rgba(16,36,58,.16));
+}
+
+.hero-mark .hm-ripple {
+  fill: none;
+  stroke: #4FB3E8;
+  stroke-width: 3;
+  opacity: 0;
+  transform-origin: 50% 50%;
+  animation: heroRipple .7s ease-out .62s forwards;
+}
+
+/* como una gota: cae larga y fina, aplasta al tocar, abre y se asienta */
+@keyframes heroDrop {
+  0% {
+    transform: translateY(-380%) scale(.7,1.4);
+    opacity: 0;
+  }
+  6% {
+    opacity: 1;
+  }
+  48% {
+    transform: translateY(-16%) scale(.85,1.18);
+  }
+  58% {
+    transform: translateY(0) scale(1.22,.74);
+  }
+  70% {
+    transform: translateY(0) scale(.92,1.08);
+  }
+  82% {
+    transform: translateY(0) scale(1.05,.97);
+  }
+  92% {
+    transform: translateY(0) scale(.99,1.01);
+  }
+  100% {
+    transform: translateY(0) scale(1,1);
+  }
+}
+
+@keyframes heroRipple {
+  0% {
+    transform: scale(.85);
+    opacity: .8;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
 }
 
 @keyframes heroMark {
@@ -435,69 +487,6 @@ header.nav.scrolled {
 @media(max-width:980px) {
   .hero-mark {
     display: none;
-  }
-}
-
-/* ============ LOGO DEL NAV: CAE AL CARGAR ============ */
-/* Solo el icono del nav, no el del footer ni el de la comparativa, que
-   comparten la misma marca .iso/.logo. Animación CSS pura: sin JS, así
-   que ya respeta prefers-reduced-motion por la regla global de arriba
-   y no bloquea nada si algo del JS de la página falla. */
-
-#top .logo .iso circle {
-  transform-origin: 50% 50%;
-  transform: translateY(-420%);
-  animation: navLogoDrop .7s cubic-bezier(.17,.84,.44,1) forwards;
-}
-
-#top .logo .iso rect {
-  transform-origin: 50% 50%;
-  transform: scaleX(0);
-  opacity: 0;
-  animation: navLogoBeat .5s cubic-bezier(.4,0,.2,1) .38s forwards;
-}
-
-@keyframes navLogoDrop {
-  0% {
-    transform: translateY(-420%);
-  }
-  50% {
-    transform: translateY(0);
-  }
-  63% {
-    transform: translateY(-55%);
-  }
-  76% {
-    transform: translateY(0);
-  }
-  86% {
-    transform: translateY(-22%);
-  }
-  94% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-@keyframes navLogoBeat {
-  0% {
-    transform: scaleX(0);
-    opacity: 0;
-  }
-  40% {
-    transform: scaleX(1.1);
-    opacity: 1;
-  }
-  60% {
-    transform: scaleX(.92);
-  }
-  80% {
-    transform: scaleX(1.03);
-  }
-  100% {
-    transform: scaleX(1);
   }
 }
 
@@ -3594,6 +3583,7 @@ footer {
   </div>
   <div class="hero-mark" aria-hidden="true">
     <svg viewBox="0 0 100 100">
+      <circle class="hm-ripple" cx="50" cy="50" r="48"/>
       <circle cx="50" cy="50" r="48" fill="#4FB3E8"/>
       <rect x="22" y="46.5" width="56" height="7" rx="3.5" fill="#FFD75E"/>
     </svg>
