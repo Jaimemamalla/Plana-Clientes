@@ -400,16 +400,13 @@ header.nav.scrolled {
 
 .hero-mark {
   position: absolute;
-  z-index: 0;
+  z-index: 401;
   bottom: clamp(-30px,-3vw,10px);
   right: clamp(-20px,1vw,50px);
   width: clamp(150px,17vw,250px);
   height: clamp(150px,17vw,250px);
   pointer-events: none;
-  transform-origin: 50% 100%;
-  animation:
-    heroDrop 1.1s cubic-bezier(.4,0,.2,1) .8s forwards,
-    heroMark 9s ease-in-out infinite 1.9s;
+  transform-origin: 50% 50%;
 }
 
 .hero-mark svg {
@@ -425,36 +422,10 @@ header.nav.scrolled {
   stroke-width: 3;
   opacity: 0;
   transform-origin: 50% 50%;
-  animation: heroRipple .7s ease-out 1.44s forwards;
 }
 
-/* como una gota: cae larga y fina, aplasta al tocar, abre y se asienta */
-@keyframes heroDrop {
-  0% {
-    transform: translateY(-380%) scale(.7,1.4);
-    opacity: 0;
-  }
-  6% {
-    opacity: 1;
-  }
-  48% {
-    transform: translateY(-16%) scale(.85,1.18);
-  }
-  58% {
-    transform: translateY(0) scale(1.22,.74);
-  }
-  70% {
-    transform: translateY(0) scale(.92,1.08);
-  }
-  82% {
-    transform: translateY(0) scale(1.05,.97);
-  }
-  92% {
-    transform: translateY(0) scale(.99,1.01);
-  }
-  100% {
-    transform: translateY(0) scale(1,1);
-  }
+.hero-mark .hm-ripple.go {
+  animation: heroRipple .7s ease-out forwards;
 }
 
 @keyframes heroRipple {
@@ -466,6 +437,10 @@ header.nav.scrolled {
     transform: scale(1.9);
     opacity: 0;
   }
+}
+
+.hero-mark.floating {
+  animation: heroMark 9s ease-in-out infinite;
 }
 
 @keyframes heroMark {
@@ -490,66 +465,24 @@ header.nav.scrolled {
   }
 }
 
-/* ============ LOGO DEL NAV: EL PRINCIPIO DE LA CAÍDA ============ */
-/* Cae y asienta aquí primero; el círculo del hero recoge el
-   movimiento justo después (su animation-delay empieza cuando este
-   termina), como si fuera la misma caída continuando más abajo. */
+/* ============ EL LOGO VUELA DEL SPLASH AL HERO ============ */
+/* #intro-bg tapa la web un instante; .hero-mark es el mismo elemento
+   todo el rato, no uno distinto: el script de más abajo lo coloca con
+   un transform que lo hace *parecer* grande y centrado, y luego anima
+   ese transform a nada, así que vuela hasta su sitio real sin haber
+   cambiado nunca de elemento ni de posición en el layout. */
 
-#top .logo .iso circle {
-  transform-origin: 50% 50%;
-  transform: translateY(-420%);
-  animation: navLogoDrop .7s cubic-bezier(.17,.84,.44,1) forwards;
+#intro-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  background: var(--nube);
+  pointer-events: none;
+  transition: opacity .6s ease;
 }
 
-#top .logo .iso rect {
-  transform-origin: 50% 50%;
-  transform: scaleX(0);
+#intro-bg.leaving {
   opacity: 0;
-  animation: navLogoBeat .5s cubic-bezier(.4,0,.2,1) .38s forwards;
-}
-
-@keyframes navLogoDrop {
-  0% {
-    transform: translateY(-420%);
-  }
-  50% {
-    transform: translateY(0);
-  }
-  63% {
-    transform: translateY(-55%);
-  }
-  76% {
-    transform: translateY(0);
-  }
-  86% {
-    transform: translateY(-22%);
-  }
-  94% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-@keyframes navLogoBeat {
-  0% {
-    transform: scaleX(0);
-    opacity: 0;
-  }
-  40% {
-    transform: scaleX(1.1);
-    opacity: 1;
-  }
-  60% {
-    transform: scaleX(.92);
-  }
-  80% {
-    transform: scaleX(1.03);
-  }
-  100% {
-    transform: scaleX(1);
-  }
 }
 
 .hero-grid {
@@ -3612,6 +3545,9 @@ footer {
 </head>
 <body>
 
+<div id="intro-bg" aria-hidden="true"></div>
+<noscript><style>#intro-bg{display:none}</style></noscript>
+
 <!-- ============ NAV ============ -->
 <header class="nav" id="top">
   <div class="nav-inner">
@@ -3662,6 +3598,61 @@ footer {
     </div>
   </div>
 </section>
+<script>
+/* corre justo después de cerrar .hero, no antes: si mide su altura
+   antes de que .wrap (el texto) esté en el DOM, sale solo el relleno
+   vertical y el centro calculado queda mal */
+(function(){
+  var mark = document.querySelector('.hero-mark');
+  var bg = document.getElementById('intro-bg');
+  var hero = document.querySelector('.hero');
+  if(!mark || !bg || !hero) return;
+
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+    bg.remove();
+    mark.classList.add('floating');
+    return;
+  }
+
+  /* el mismo elemento .hero-mark hace de logo del splash: se coloca
+     con un transform que lo hace parecer grande y centrado sobre el
+     hero, y luego ese transform se anima a nada, así que "vuela"
+     hasta su sitio real sin ser nunca un elemento distinto */
+  var heroRect = hero.getBoundingClientRect();
+  var endRect = mark.getBoundingClientRect();
+  if(!endRect.width){
+    /* .hero-mark está en display:none a este ancho (móvil): no hay
+       nada que hacer volar, así que se retira el fondo sin más */
+    bg.remove();
+    return;
+  }
+  var endCx = endRect.left + endRect.width / 2;
+  var endCy = endRect.top + endRect.height / 2;
+  var startCx = heroRect.left + heroRect.width / 2;
+  var startCy = heroRect.top + heroRect.height / 2;
+  var startSize = Math.min(160, heroRect.width * .24, heroRect.height * .34);
+  var scale = startSize / endRect.width;
+
+  mark.style.transition = 'none';
+  mark.style.transform =
+    'translate(' + (startCx - endCx).toFixed(1) + 'px,' + (startCy - endCy).toFixed(1) + 'px) scale(' + scale.toFixed(3) + ')';
+
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      mark.style.transition = 'transform 1.3s cubic-bezier(.32,1.5,.5,1)';
+      bg.classList.add('leaving');
+      mark.style.transform = '';
+      setTimeout(function(){
+        mark.querySelector('.hm-ripple').classList.add('go');
+      }, 1150);
+      setTimeout(function(){
+        bg.remove();
+        mark.classList.add('floating');
+      }, 1350);
+    });
+  });
+})();
+</script>
 
 <!-- ============ CÓMO FUNCIONA ============ -->
 <section class="section-pad" id="como" aria-labelledby="como-title">
