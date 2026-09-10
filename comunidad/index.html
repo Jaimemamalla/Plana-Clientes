@@ -438,6 +438,79 @@ header.nav.scrolled {
   }
 }
 
+/* ============ INTRO ============ */
+
+body.intro-lock {
+  overflow: hidden;
+}
+
+#intro {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--nube);
+  transition: opacity .5s ease, transform .5s cubic-bezier(.4,0,.2,1);
+}
+
+#intro.leaving {
+  opacity: 0;
+  transform: scale(1.06);
+  pointer-events: none;
+}
+
+.intro-mark {
+  width: clamp(72px,14vw,120px);
+  height: clamp(72px,14vw,120px);
+}
+
+.intro-c {
+  transform-origin: 50% 50%;
+  transform: scale(0);
+  animation: introCircle .5s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+
+.intro-b {
+  transform-origin: 50% 50%;
+  transform: scaleX(0);
+  opacity: 0;
+  animation: introBeat .9s cubic-bezier(.4,0,.2,1) .45s forwards;
+}
+
+@keyframes introCircle {
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes introBeat {
+  0% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  30% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  42% {
+    transform: scaleX(.82);
+  }
+  54% {
+    transform: scaleX(1.12);
+  }
+  66% {
+    transform: scaleX(.94);
+  }
+  78% {
+    transform: scaleX(1.04);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
 .hero-grid {
   position: relative;
   z-index: 1;
@@ -3498,6 +3571,54 @@ footer {
 </head>
 <body>
 
+<!-- ============ INTRO ============ -->
+<!-- Solo la primera vez por sesión: si ya se vio, o hay reduced-motion,
+     se retira al instante sin animar nada. -->
+<div id="intro" aria-hidden="true">
+  <svg class="intro-mark" viewBox="0 0 100 100">
+    <circle class="intro-c" cx="50" cy="50" r="48" fill="#4FB3E8"/>
+    <rect class="intro-b" x="22" y="46.5" width="56" height="7" rx="3.5" fill="#FFD75E"/>
+  </svg>
+</div>
+<noscript><style>#intro{display:none}</style></noscript>
+<script>
+(function(){
+  var el = document.getElementById('intro');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var seen = false;
+  try{ seen = sessionStorage.getItem('plana-intro-seen') === '1'; }catch(e){}
+
+  function finish(){
+    window.__planaIntroDone = true;
+    dispatchEvent(new Event('plana:introdone'));
+  }
+
+  if(reduce || seen){
+    el.remove();
+    finish();
+    return;
+  }
+
+  try{ sessionStorage.setItem('plana-intro-seen', '1'); }catch(e){}
+  document.body.classList.add('intro-lock');
+
+  var left = false;
+  function leave(){
+    if(left) return;
+    left = true;
+    el.classList.add('leaving');
+    setTimeout(function(){
+      el.remove();
+      document.body.classList.remove('intro-lock');
+      finish();
+    }, 520);
+  }
+  el.addEventListener('click', leave);
+  addEventListener('keydown', leave, {once: true});
+  setTimeout(leave, 1650);
+})();
+</script>
+
 <!-- ============ NAV ============ -->
 <header class="nav" id="top">
   <div class="nav-inner">
@@ -4264,11 +4385,17 @@ if(!reduce){
   if(heroTitle){
     splitLetters(heroTitle);
     placeLetters(heroTitle);
-    requestAnimationFrame(function(){
+    /* la intro tapa el hero un instante; el titular no se ensambla
+       hasta que se retira, para que se vea entrar */
+    function revealTitle(){
       requestAnimationFrame(function(){
-        heroTitle.classList.add('hin');
+        requestAnimationFrame(function(){
+          heroTitle.classList.add('hin');
+        });
       });
-    });
+    }
+    if(window.__planaIntroDone) revealTitle();
+    else addEventListener('plana:introdone', revealTitle, {once: true});
     addEventListener('plana:lang', function(){
       heroTitle.classList.remove('hin');
       splitLetters(heroTitle);
