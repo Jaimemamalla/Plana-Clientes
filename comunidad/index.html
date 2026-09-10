@@ -438,62 +438,40 @@ header.nav.scrolled {
   }
 }
 
-/* ============ INTRO ============ */
+/* ============ LOGO DEL NAV: CAE AL CARGAR ============ */
+/* Solo el icono del nav, no el del footer ni el de la comparativa, que
+   comparten la misma marca .iso/.logo. Animación CSS pura: sin JS, así
+   que ya respeta prefers-reduced-motion por la regla global de arriba
+   y no bloquea nada si algo del JS de la página falla. */
 
-body.intro-lock {
-  overflow: hidden;
-}
-
-#intro {
-  position: fixed;
-  inset: 0;
-  z-index: 500;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--nube);
-  transition: opacity .5s ease, transform .5s cubic-bezier(.4,0,.2,1);
-}
-
-#intro.leaving {
-  opacity: 0;
-  transform: scale(1.06);
-  pointer-events: none;
-}
-
-.intro-mark {
-  width: clamp(72px,14vw,120px);
-  height: clamp(72px,14vw,120px);
-}
-
-.intro-c {
+#top .logo .iso circle {
   transform-origin: 50% 50%;
-  transform: translateY(-220%);
-  animation: introDrop .9s cubic-bezier(.17,.84,.44,1) forwards;
+  transform: translateY(-420%);
+  animation: navLogoDrop .7s cubic-bezier(.17,.84,.44,1) forwards;
 }
 
-.intro-b {
+#top .logo .iso rect {
   transform-origin: 50% 50%;
   transform: scaleX(0);
   opacity: 0;
-  animation: introBeat .6s cubic-bezier(.4,0,.2,1) .5s forwards;
+  animation: navLogoBeat .5s cubic-bezier(.4,0,.2,1) .38s forwards;
 }
 
-@keyframes introDrop {
+@keyframes navLogoDrop {
   0% {
-    transform: translateY(-220%);
+    transform: translateY(-420%);
   }
   50% {
     transform: translateY(0);
   }
   63% {
-    transform: translateY(-30%);
+    transform: translateY(-55%);
   }
   76% {
     transform: translateY(0);
   }
   86% {
-    transform: translateY(-12%);
+    transform: translateY(-22%);
   }
   94% {
     transform: translateY(0);
@@ -503,7 +481,7 @@ body.intro-lock {
   }
 }
 
-@keyframes introBeat {
+@keyframes navLogoBeat {
   0% {
     transform: scaleX(0);
     opacity: 0;
@@ -3583,54 +3561,6 @@ footer {
 </head>
 <body>
 
-<!-- ============ INTRO ============ -->
-<!-- Se reproduce en cada entrada a la web, no solo la primera. Con
-     reduced-motion se retira al instante sin animar nada. -->
-<div id="intro" aria-hidden="true">
-  <svg class="intro-mark" viewBox="0 0 100 100">
-    <circle class="intro-c" cx="50" cy="50" r="48" fill="#4FB3E8"/>
-    <rect class="intro-b" x="22" y="46.5" width="56" height="7" rx="3.5" fill="#FFD75E"/>
-  </svg>
-</div>
-<noscript><style>#intro{display:none}</style></noscript>
-<script>
-(function(){
-  var el = document.getElementById('intro');
-  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function finish(){
-    window.__planaIntroDone = true;
-    dispatchEvent(new Event('plana:introdone'));
-  }
-
-  if(reduce){
-    el.remove();
-    finish();
-    return;
-  }
-
-  document.body.classList.add('intro-lock');
-
-  var left = false;
-  function leave(){
-    if(left) return;
-    left = true;
-    el.classList.add('leaving');
-    setTimeout(function(){
-      el.remove();
-      document.body.classList.remove('intro-lock');
-      finish();
-    }, 520);
-  }
-  el.addEventListener('click', leave);
-  addEventListener('keydown', leave, {once: true});
-  /* se abre justo cuando termina el latido de la barra, que es lo
-     último en asentarse; el timeout es solo red de seguridad */
-  el.querySelector('.intro-b').addEventListener('animationend', leave, {once: true});
-  setTimeout(leave, 2500);
-})();
-</script>
-
 <!-- ============ NAV ============ -->
 <header class="nav" id="top">
   <div class="nav-inner">
@@ -4397,17 +4327,11 @@ if(!reduce){
   if(heroTitle){
     splitLetters(heroTitle);
     placeLetters(heroTitle);
-    /* la intro tapa el hero un instante; el titular no se ensambla
-       hasta que se retira, para que se vea entrar */
-    function revealTitle(){
+    requestAnimationFrame(function(){
       requestAnimationFrame(function(){
-        requestAnimationFrame(function(){
-          heroTitle.classList.add('hin');
-        });
+        heroTitle.classList.add('hin');
       });
-    }
-    if(window.__planaIntroDone) revealTitle();
-    else addEventListener('plana:introdone', revealTitle, {once: true});
+    });
     addEventListener('plana:lang', function(){
       heroTitle.classList.remove('hin');
       splitLetters(heroTitle);
