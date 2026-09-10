@@ -465,24 +465,32 @@ header.nav.scrolled {
   }
 }
 
-/* ============ EL LOGO VUELA DEL SPLASH AL HERO ============ */
-/* #intro-bg tapa la web un instante; .hero-mark es el mismo elemento
-   todo el rato, no uno distinto: el script de más abajo lo coloca con
-   un transform que lo hace *parecer* grande y centrado, y luego anima
-   ese transform a nada, así que vuela hasta su sitio real sin haber
-   cambiado nunca de elemento ni de posición en el layout. */
+/* ============ CORTINILLA: EL LOGO APARECE Y CAE AL HERO ============ */
+/* #intro-bg es la cortinilla, como en tesseraservices.com: tapa la web
+   un instante y luego se retira subiendo, no desvaneciéndose.
+   .hero-mark es el mismo elemento todo el rato, no uno distinto: el
+   script de más abajo lo coloca con un transform que lo hace *parecer*
+   grande y centrado sobre la cortinilla, lo trae a la vista, y cuando
+   la cortinilla sube anima ese transform a nada — así que el logo
+   continúa la caída hasta su sitio real en el hero. */
 
 #intro-bg {
   position: fixed;
   inset: 0;
   z-index: 400;
-  background: var(--nube);
+  background: linear-gradient(135deg,var(--nube) 0%,var(--cielo-claro) 55%,var(--sol) 100%);
   pointer-events: none;
-  transition: opacity .6s ease;
+  transform: translateY(0);
 }
 
 #intro-bg.leaving {
-  opacity: 0;
+  animation: curtainUp .7s cubic-bezier(.76,0,.24,1) forwards;
+}
+
+@keyframes curtainUp {
+  to {
+    transform: translateY(-100%);
+  }
 }
 
 .hero-grid {
@@ -3632,23 +3640,33 @@ footer {
   var startCy = heroRect.top + heroRect.height / 2;
   var startSize = Math.min(160, heroRect.width * .24, heroRect.height * .34);
   var scale = startSize / endRect.width;
-
-  mark.style.transition = 'none';
-  mark.style.transform =
+  var bigCentered =
     'translate(' + (startCx - endCx).toFixed(1) + 'px,' + (startCy - endCy).toFixed(1) + 'px) scale(' + scale.toFixed(3) + ')';
+
+  /* aparece primero sobre la cortinilla, como el texto en tesseraservices.com,
+     y solo entonces continúa la caída hasta su sitio real */
+  mark.style.transition = 'none';
+  mark.style.opacity = '0';
+  mark.style.transform = bigCentered + ' translateY(16px)';
 
   requestAnimationFrame(function(){
     requestAnimationFrame(function(){
-      mark.style.transition = 'transform 1.3s cubic-bezier(.32,1.5,.5,1)';
-      bg.classList.add('leaving');
-      mark.style.transform = '';
+      mark.style.transition = 'opacity .4s ease, transform .4s ease';
+      mark.style.opacity = '1';
+      mark.style.transform = bigCentered;
+
       setTimeout(function(){
-        mark.querySelector('.hm-ripple').classList.add('go');
-      }, 1150);
-      setTimeout(function(){
-        bg.remove();
-        mark.classList.add('floating');
-      }, 1350);
+        mark.style.transition = 'transform 1.2s cubic-bezier(.32,1.5,.5,1)';
+        bg.classList.add('leaving');
+        mark.style.transform = '';
+        setTimeout(function(){
+          mark.querySelector('.hm-ripple').classList.add('go');
+        }, 1050);
+        setTimeout(function(){
+          bg.remove();
+          mark.classList.add('floating');
+        }, 1250);
+      }, 500);
     });
   });
 })();
