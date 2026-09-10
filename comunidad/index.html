@@ -150,13 +150,6 @@ section {
   gap: .6em;
 }
 
-.eyebrow::before {
-  content: "";
-  width: 30px;
-  height: 4px;
-  border-radius: 2px;
-  background: var(--sol);
-}
 
 .section-pad {
   padding: clamp(72px,11vw,140px) 0;
@@ -322,6 +315,7 @@ header.nav.scrolled {
   position: relative;
   overflow: hidden;
   padding: clamp(56px,9vw,104px) 0 clamp(56px,8vw,96px);
+  background: linear-gradient(135deg,var(--nube) 0%,var(--cielo-claro) 55%,var(--sol) 100%);
 }
 
 .sky {
@@ -400,13 +394,12 @@ header.nav.scrolled {
 
 .hero-mark {
   position: absolute;
-  z-index: 401;
+  z-index: 1;
   bottom: clamp(-30px,-3vw,10px);
   right: clamp(-20px,1vw,50px);
   width: clamp(150px,17vw,250px);
   height: clamp(150px,17vw,250px);
   pointer-events: none;
-  transform-origin: 50% 50%;
 }
 
 .hero-mark svg {
@@ -414,43 +407,6 @@ header.nav.scrolled {
   height: 100%;
   display: block;
   filter: drop-shadow(0 24px 48px rgba(16,36,58,.16));
-}
-
-.hero-mark .hm-ripple {
-  fill: none;
-  stroke: #4FB3E8;
-  stroke-width: 3;
-  opacity: 0;
-  transform-origin: 50% 50%;
-}
-
-.hero-mark .hm-ripple.go {
-  animation: heroRipple .7s ease-out forwards;
-}
-
-@keyframes heroRipple {
-  0% {
-    transform: scale(.85);
-    opacity: .8;
-  }
-  100% {
-    transform: scale(1.9);
-    opacity: 0;
-  }
-}
-
-.hero-mark.floating {
-  animation: heroMark 9s ease-in-out infinite;
-}
-
-@keyframes heroMark {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-14px) rotate(4deg);
-  }
 }
 
 @media(max-width:1200px) {
@@ -462,34 +418,6 @@ header.nav.scrolled {
 @media(max-width:980px) {
   .hero-mark {
     display: none;
-  }
-}
-
-/* ============ CORTINILLA: EL LOGO APARECE Y CAE AL HERO ============ */
-/* #intro-bg es la cortinilla, como en tesseraservices.com: tapa la web
-   un instante y luego se retira subiendo, no desvaneciéndose.
-   .hero-mark es el mismo elemento todo el rato, no uno distinto: el
-   script de más abajo lo coloca con un transform que lo hace *parecer*
-   grande y centrado sobre la cortinilla, lo trae a la vista, y cuando
-   la cortinilla sube anima ese transform a nada — así que el logo
-   continúa la caída hasta su sitio real en el hero. */
-
-#intro-bg {
-  position: fixed;
-  inset: 0;
-  z-index: 400;
-  background: var(--nube);
-  pointer-events: none;
-  transform: translateY(0);
-}
-
-#intro-bg.leaving {
-  animation: curtainUp .7s cubic-bezier(.76,0,.24,1) forwards;
-}
-
-@keyframes curtainUp {
-  to {
-    transform: translateY(-100%);
   }
 }
 
@@ -2056,6 +1984,11 @@ input[type=range]::-moz-range-thumb {
   perspective: 560px;
 }
 
+.hero-solo h1 .hw {
+  display: inline-block;
+  white-space: nowrap;
+}
+
 .hero-solo h1 .hc {
   display: inline-block;
   opacity: 0;
@@ -3215,19 +3148,6 @@ footer {
   color: var(--tinta);
 }
 
-.tkband em::after {
-  content: "";
-  width: 60px;
-  height: 6px;
-  border-radius: 3px;
-  background: var(--sol);
-  flex: none;
-}
-
-.tkband.sol em::after {
-  background: var(--tinta);
-}
-
 .tkband:hover .row {
   animation-play-state: paused;
 }
@@ -3553,9 +3473,6 @@ footer {
 </head>
 <body>
 
-<div id="intro-bg" aria-hidden="true"></div>
-<noscript><style>#intro-bg{display:none}</style></noscript>
-
 <!-- ============ NAV ============ -->
 <header class="nav" id="top">
   <div class="nav-inner">
@@ -3589,7 +3506,6 @@ footer {
   </div>
   <div class="hero-mark" aria-hidden="true">
     <svg viewBox="0 0 100 100">
-      <circle class="hm-ripple" cx="50" cy="50" r="48"/>
       <circle cx="50" cy="50" r="48" fill="#4FB3E8"/>
       <rect x="22" y="46.5" width="56" height="7" rx="3.5" fill="#FFD75E"/>
     </svg>
@@ -3606,67 +3522,6 @@ footer {
     </div>
   </div>
 </section>
-<script>
-/* corre justo después de cerrar .hero, no antes: si mide su altura
-   antes de que .wrap (el texto) esté en el DOM, sale solo el relleno
-   vertical y el centro calculado queda mal */
-(function(){
-  var mark = document.querySelector('.hero-mark');
-  var bg = document.getElementById('intro-bg');
-  var hero = document.querySelector('.hero');
-  if(!mark || !bg || !hero) return;
-
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches){
-    bg.remove();
-    mark.classList.add('floating');
-    return;
-  }
-
-  /* el mismo elemento .hero-mark hace de logo del splash: cae en línea
-     recta, siempre en la misma X (la suya propia, no la del centro del
-     hero), así que nunca se desvía al lado — solo baja, hace una
-     pausa a mitad, y sigue bajando hasta su sitio real */
-  var heroRect = hero.getBoundingClientRect();
-  var endRect = mark.getBoundingClientRect();
-  if(!endRect.width){
-    /* .hero-mark está en display:none a este ancho (móvil): no hay
-       nada que hacer caer, así que se retira el fondo sin más */
-    bg.remove();
-    return;
-  }
-  var endCy = endRect.top + endRect.height / 2;
-  var pauseCy = heroRect.top + heroRect.height / 2;
-  var startSize = Math.min(160, heroRect.width * .24, heroRect.height * .34);
-  var scale = startSize / endRect.width;
-  var farDy = -(endCy - heroRect.top) - startSize;
-  var pauseDy = pauseCy - endCy;
-
-  /* arranca muy por encima de .hero, que tiene overflow:hidden, así que
-     no se ve hasta que la propia caída lo mete en el encuadre */
-  mark.style.transition = 'none';
-  mark.style.transform = 'translateY(' + farDy.toFixed(1) + 'px) scale(' + scale.toFixed(3) + ')';
-
-  requestAnimationFrame(function(){
-    requestAnimationFrame(function(){
-      mark.style.transition = 'transform .55s cubic-bezier(.3,.1,.4,1)';
-      mark.style.transform = 'translateY(' + pauseDy.toFixed(1) + 'px) scale(' + scale.toFixed(3) + ')';
-
-      setTimeout(function(){
-        mark.style.transition = 'transform 1.2s cubic-bezier(.32,1.5,.5,1)';
-        bg.classList.add('leaving');
-        mark.style.transform = '';
-        setTimeout(function(){
-          mark.querySelector('.hm-ripple').classList.add('go');
-        }, 1000);
-        setTimeout(function(){
-          bg.remove();
-          mark.classList.add('floating');
-        }, 1200);
-      }, 700);
-    });
-  });
-})();
-</script>
 
 <!-- ============ CÓMO FUNCIONA ============ -->
 <section class="section-pad" id="como" aria-labelledby="como-title">
@@ -4352,11 +4207,25 @@ if(!reduce){
     Array.prototype.slice.call(el.childNodes).forEach(function(n){
       if(n.nodeType === 3){
         var frag = document.createDocumentFragment();
-        n.textContent.split('').forEach(function(ch){
-          var s = document.createElement('span');
-          s.className = 'hc';
-          s.textContent = ch === ' ' ? ' ' : ch;
-          frag.appendChild(s);
+        /* las letras van agrupadas por palabra (.hw, sin wrap) para que
+           el navegador solo pueda partir la linea entre palabras, nunca
+           a mitad de una: si no, cada letra es su propia caja y el
+           texto se corta donde le toque */
+        n.textContent.split(/( )/).forEach(function(part){
+          if(part === '') return;
+          if(part === ' '){
+            frag.appendChild(document.createTextNode(' '));
+            return;
+          }
+          var word = document.createElement('span');
+          word.className = 'hw';
+          part.split('').forEach(function(ch){
+            var s = document.createElement('span');
+            s.className = 'hc';
+            s.textContent = ch;
+            word.appendChild(s);
+          });
+          frag.appendChild(word);
         });
         el.replaceChild(frag, n);
       } else if(n.nodeType === 1 && n.tagName !== 'I'){
