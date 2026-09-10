@@ -478,7 +478,7 @@ header.nav.scrolled {
   position: fixed;
   inset: 0;
   z-index: 400;
-  background: linear-gradient(135deg,var(--nube) 0%,var(--cielo-claro) 55%,var(--sol) 100%);
+  background: var(--nube);
   pointer-events: none;
   transform: translateY(0);
 }
@@ -3622,38 +3622,34 @@ footer {
     return;
   }
 
-  /* el mismo elemento .hero-mark hace de logo del splash: se coloca
-     con un transform que lo hace parecer grande y centrado sobre el
-     hero, y luego ese transform se anima a nada, así que "vuela"
-     hasta su sitio real sin ser nunca un elemento distinto */
+  /* el mismo elemento .hero-mark hace de logo del splash: cae en línea
+     recta, siempre en la misma X (la suya propia, no la del centro del
+     hero), así que nunca se desvía al lado — solo baja, hace una
+     pausa a mitad, y sigue bajando hasta su sitio real */
   var heroRect = hero.getBoundingClientRect();
   var endRect = mark.getBoundingClientRect();
   if(!endRect.width){
     /* .hero-mark está en display:none a este ancho (móvil): no hay
-       nada que hacer volar, así que se retira el fondo sin más */
+       nada que hacer caer, así que se retira el fondo sin más */
     bg.remove();
     return;
   }
-  var endCx = endRect.left + endRect.width / 2;
   var endCy = endRect.top + endRect.height / 2;
-  var startCx = heroRect.left + heroRect.width / 2;
-  var startCy = heroRect.top + heroRect.height / 2;
+  var pauseCy = heroRect.top + heroRect.height / 2;
   var startSize = Math.min(160, heroRect.width * .24, heroRect.height * .34);
   var scale = startSize / endRect.width;
-  var bigCentered =
-    'translate(' + (startCx - endCx).toFixed(1) + 'px,' + (startCy - endCy).toFixed(1) + 'px) scale(' + scale.toFixed(3) + ')';
+  var farDy = -(endCy - heroRect.top) - startSize;
+  var pauseDy = pauseCy - endCy;
 
-  /* aparece primero sobre la cortinilla, como el texto en tesseraservices.com,
-     y solo entonces continúa la caída hasta su sitio real */
+  /* arranca muy por encima de .hero, que tiene overflow:hidden, así que
+     no se ve hasta que la propia caída lo mete en el encuadre */
   mark.style.transition = 'none';
-  mark.style.opacity = '0';
-  mark.style.transform = bigCentered + ' translateY(16px)';
+  mark.style.transform = 'translateY(' + farDy.toFixed(1) + 'px) scale(' + scale.toFixed(3) + ')';
 
   requestAnimationFrame(function(){
     requestAnimationFrame(function(){
-      mark.style.transition = 'opacity .4s ease, transform .4s ease';
-      mark.style.opacity = '1';
-      mark.style.transform = bigCentered;
+      mark.style.transition = 'transform .55s cubic-bezier(.3,.1,.4,1)';
+      mark.style.transform = 'translateY(' + pauseDy.toFixed(1) + 'px) scale(' + scale.toFixed(3) + ')';
 
       setTimeout(function(){
         mark.style.transition = 'transform 1.2s cubic-bezier(.32,1.5,.5,1)';
@@ -3661,12 +3657,12 @@ footer {
         mark.style.transform = '';
         setTimeout(function(){
           mark.querySelector('.hm-ripple').classList.add('go');
-        }, 1050);
+        }, 1000);
         setTimeout(function(){
           bg.remove();
           mark.classList.add('floating');
-        }, 1250);
-      }, 500);
+        }, 1200);
+      }, 700);
     });
   });
 })();
