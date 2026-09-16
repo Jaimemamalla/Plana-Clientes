@@ -7,7 +7,6 @@
 <meta name="description" content="La primera plataforma española de selección de personal a tarifa plana. Sin fees. Sin sorpresas. Packs de precio fijo y público, no un porcentaje del salario. El fee ha muerto." />
 <meta name="theme-color" content="#F8FCFF" />
 
-<!-- Open Graph -->
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Plana" />
 <meta property="og:title" content="Plana — Selección de personal a tarifa plana" />
@@ -566,7 +565,6 @@ header.nav.scrolled {
   white-space: nowrap;
 }
 
-/* electro del hero */
 .ekg {
   margin-top: 24px;
   height: 54px;
@@ -586,8 +584,6 @@ header.nav.scrolled {
   stroke-width: 2;
 }
 
-/* una sola línea: el degradado la pasa de azul a amarillo justo donde deja
-   de tener picos, así el amarillo es la misma línea y no algo encima */
 .ekg .line {
   stroke: url(#ekgGrad);
 }
@@ -597,8 +593,6 @@ header.nav.scrolled {
   stroke-width: 9;
   opacity: 0;
 }
-
-/* social proof */
 
 .proof {
   position: relative;
@@ -641,8 +635,6 @@ header.nav.scrolled {
 .hero .hero-copy .reveal {
   transition: none;
 }
-
-/* reveal animation */
 
 .reveal {
   opacity: 0;
@@ -868,7 +860,6 @@ header.nav.scrolled {
   display: none;
 }
 
-/* con JS la línea sustituye a la barra, que solo es el estado de respaldo */
 .isostack.js .iso-wave {
   display: block;
 }
@@ -1006,9 +997,6 @@ header.nav.scrolled {
   flex: 1;
 }
 
-/* El tick va absoluto, no en flex: con display:flex cada <b> se convertia
-   en un item propio y "Headhunting directo" quedaba en una columna y "a
-   candidatos pasivos" en otra, con el gap de 11px en medio. */
 .pack-feats li {
   position: relative;
   padding-left: 29px;
@@ -1381,8 +1369,6 @@ input[type=range]::-moz-range-thumb {
   margin-top: 8px;
 }
 
-/* results */
-
 .calc-result {
   background: rgba(255,255,255,.05);
   border: 1px solid rgba(255,255,255,.12);
@@ -1540,8 +1526,6 @@ input[type=range]::-moz-range-thumb {
   color: #fff;
 }
 
-/* head */
-
 .px-head {
   text-align: center;
   max-width: 60ch;
@@ -1599,8 +1583,6 @@ input[type=range]::-moz-range-thumb {
   font-size: clamp(1.05rem,2vw,1.25rem);
   margin-top: 18px;
 }
-
-/* stage: live panel + side */
 
 .px-stage {
   display: grid;
@@ -1726,8 +1708,6 @@ input[type=range]::-moz-range-thumb {
   background: linear-gradient(90deg,transparent,rgba(255,215,94,.16),rgba(255,255,255,.10),transparent);
 }
 
-/* panel pulse strip */
-
 .panel-pulse {
   height: 42px;
   margin: 4px 0 18px;
@@ -1763,8 +1743,6 @@ input[type=range]::-moz-range-thumb {
   filter: drop-shadow(0 0 7px rgba(255,215,94,.95));
 }
 
-/* insight chips */
-
 .panel-ins {
   display: flex;
   flex-wrap: wrap;
@@ -1792,8 +1770,6 @@ input[type=range]::-moz-range-thumb {
 .chip-i span {
   color: rgba(255,255,255,.6);
 }
-
-/* candidate rows */
 
 .panel-cands {
   display: flex;
@@ -1847,8 +1823,6 @@ input[type=range]::-moz-range-thumb {
   color: var(--sol);
 }
 
-/* side */
-
 .px-side .anchor {
   font-family: var(--ff-head);
   font-weight: 600;
@@ -1888,8 +1862,6 @@ input[type=range]::-moz-range-thumb {
   width: 1px;
   background: rgba(255,255,255,.14);
 }
-
-/* features */
 
 .planax-feats {
   display: grid;
@@ -2129,8 +2101,6 @@ input[type=range]::-moz-range-thumb {
   background: #fff;
 }
 
-/* modal */
-
 .modal-overlay[hidden] {
   display: none !important;
 }
@@ -2235,8 +2205,6 @@ input[type=range]::-moz-range-thumb {
   margin-bottom: 14px;
 }
 
-/* toast */
-
 .toast {
   position: fixed;
   left: 50%;
@@ -2317,16 +2285,12 @@ input[type=range]::-moz-range-thumb {
   opacity: 1;
 }
 
-/* glass hero card */
-
 .flatcard {
   background: rgba(255,255,255,.62);
   backdrop-filter: blur(16px) saturate(150%);
   -webkit-backdrop-filter: blur(16px) saturate(150%);
   border: 1px solid rgba(255,255,255,.7);
 }
-
-/* living gradient on packs */
 
 #packs {
   background: linear-gradient(160deg,var(--nube),#EAF6FD,#E0F0FB,var(--nube));
@@ -2344,8 +2308,6 @@ input[type=range]::-moz-range-thumb {
   }
 }
 
-/* pricing 3D tilt */
-
 .pack {
   will-change: transform;
 }
@@ -2353,8 +2315,6 @@ input[type=range]::-moz-range-thumb {
 .packs-grid {
   perspective: 1400px;
 }
-
-/* row-by-row comparativa */
 
 .crow {
   opacity: 0;
@@ -2367,8 +2327,6 @@ input[type=range]::-moz-range-thumb {
   transform: none;
 }
 
-/* stronger button hover */
-
 .btn-sol:hover {
   transform: translateY(-3px) scale(1.035);
 }
@@ -2378,8 +2336,6 @@ input[type=range]::-moz-range-thumb {
 .btn-tinta:hover {
   transform: translateY(-3px) scale(1.03);
 }
-
-/* Planax glows float */
 
 .px-bg .glow.y {
   animation: floatGlowY 16s ease-in-out infinite;
@@ -2776,8 +2732,6 @@ footer {
   }
 }
 
-/* mobile nav */
-
 @media(max-width:880px) {
   .nav-links {
     display: none;
@@ -2858,8 +2812,6 @@ footer {
   pointer-events: none;
 }
 
-/* titulares cinéticos */
-
 .kin .w {
   display: inline-block;
   overflow: hidden;
@@ -2879,8 +2831,6 @@ footer {
   transform: none;
 }
 
-/* hero con más fuerza */
-
 .hero h1 {
   font-size: clamp(54px,8.6vw,124px);
   letter-spacing: -.042em;
@@ -2894,8 +2844,6 @@ footer {
 .hero .eyebrow {
   font-size: .92rem;
 }
-
-/* banda ticker */
 
 .tkband {
   background: var(--tinta);
@@ -2946,8 +2894,6 @@ footer {
 }
 
 
-/* foco de luz siguiendo el cursor */
-
 .pack,
 .step,
 .tier {
@@ -2979,8 +2925,6 @@ footer {
   background: radial-gradient(340px circle at var(--mx) var(--my),rgba(255,215,94,.22),transparent 62%);
 }
 
-/* reveal nítido, solo movimiento */
-
 .reveal {
   filter: none;
 }
@@ -2988,8 +2932,6 @@ footer {
 .reveal.in {
   transition: opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);
 }
-
-/* dock flotante */
 
 #dock {
   position: fixed;
@@ -3035,9 +2977,6 @@ footer {
   flex: none;
 }
 
-/* En móvil el dock era una píldora flotante sobre el contenido y tapaba
-   texto, porque nada reservaba su espacio. Pasa a barra de ancho completo
-   pegada abajo, y el body deja hueco para ella. */
 @media(max-width:640px) {
   #dock i,
   #dock .sep {
@@ -3062,8 +3001,6 @@ footer {
     padding-bottom: 68px;
   }
 }
-
-/* botones magnéticos */
 
 .btn {
   will-change: transform;
@@ -3130,7 +3067,6 @@ footer {
   opacity: .22;
 }
 
-/* el pulso: un tramo brillante que recorre la línea */
 .edgepulse .glow {
   stroke: var(--sol);
   stroke-width: 4;
@@ -3355,7 +3291,6 @@ footer {
     </div>
 
     <div class="px-stage">
-      <!-- LIVE PANEL -->
       <div class="panel reveal d1" aria-label="Panel en tiempo real de Planax (ejemplo)">
         <span class="panel-scan" aria-hidden="true"></span>
         <div class="panel-top">
@@ -3373,8 +3308,6 @@ footer {
         <div class="panel-pulse" aria-hidden="true">
           <svg viewBox="0 0 520 42" preserveAspectRatio="none">
             <path class="pl" d="M0,21 L150,21 L162,21 L172,5 L182,37 L192,14 L204,21 L330,21 L342,21 L352,7 L362,35 L372,21 L520,21"/>
-            <!-- el punto es un dash de longitud casi cero recorriendo el mismo path,
-                 así va clavado a la línea y lo conduce anime.js, no SMIL -->
             <path class="ph" d="M0,21 L150,21 L162,21 L172,5 L182,37 L192,14 L204,21 L330,21 L342,21 L352,7 L362,35 L372,21 L520,21"/>
           </svg>
         </div>
@@ -3390,7 +3323,6 @@ footer {
         </div>
       </div>
 
-      <!-- SIDE -->
       <div class="px-side reveal d2">
         <p class="anchor">"Planax no sustituye a las personas que seleccionan. <span class="y">Las hace imparables."</span></p>
         <div class="hl">
@@ -3450,9 +3382,6 @@ footer {
       <p>El precio depende del perfil que buscas, no de lo que cobra. Está aquí escrito, sin "desde" ni asteriscos. La transparencia es el producto.</p>
     </div>
 
-    <!-- Selector de tramo: aplica a los precios de abajo el descuento por
-         volumen que la Escala Plana ya publica. Las etiquetas son las mismas
-         de la escala, no hay copy nuevo. -->
     <div class="tier-switch reveal" role="group" aria-label="Vacantes al año">
       <button type="button" data-disc="0" aria-pressed="true">1 a 2 vacantes / año</button>
       <button type="button" data-disc="10" aria-pressed="false">3 a 5 vacantes / año<span class="off">−10%</span></button>
@@ -3460,7 +3389,6 @@ footer {
     </div>
 
     <div class="packs-grid">
-      <!-- DESPEGUE -->
       <article class="pack reveal d1">
         <div class="pack-name">Despegue</div>
         <p class="pack-for">Perfiles operativos y junior: administración, soporte, customer service, ventas junior, oficina y operaciones.</p>
@@ -3475,7 +3403,6 @@ footer {
         <span class="pack-guar"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5l8-3z" stroke="#4FB3E8" stroke-width="2" stroke-linejoin="round"/></svg>Reposición garantizada 60 días</span>
       </article>
 
-      <!-- ALTITUD -->
       <article class="pack feat reveal d2">
         <span class="pack-badge">⭐ Más popular</span>
         <div class="pack-name">Altitud</div>
@@ -3492,7 +3419,6 @@ footer {
         <span class="pack-guar"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5l8-3z" stroke="#4FB3E8" stroke-width="2" stroke-linejoin="round"/></svg>Reposición garantizada 90 días</span>
       </article>
 
-      <!-- ESTRATOSFERA -->
       <article class="pack reveal d3">
         <div class="pack-name">Estratosfera</div>
         <p class="pack-for">Dirección y perfiles muy escasos: C-level, heads y perfiles nicho de alta competencia.</p>
@@ -3509,7 +3435,6 @@ footer {
       </article>
     </div>
 
-    <!-- ESCALA PLANA -->
     <div class="escala">
       <div class="escala-head reveal">
         <span class="eyebrow" style="justify-content:center">Escala Plana</span>
@@ -3541,7 +3466,6 @@ footer {
       </div>
     </div>
 
-    <!-- CALCULADORA -->
     <div class="calc reveal" id="calc">
       <div class="calc-grid">
         <div class="calc-controls">
@@ -3721,7 +3645,6 @@ footer {
   </div>
 </section>
 
-<!-- modal cliente (elegir plan) -->
 <div class="modal-overlay" id="planModal" hidden>
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="pm-title">
     <button class="modal-x" id="pmClose" aria-label="Cerrar">&times;</button>
@@ -3741,7 +3664,6 @@ footer {
   </div>
 </div>
 
-<!-- toast cliente -->
 <div class="toast" id="toastClient" role="status" aria-live="polite">
   <span class="toast-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
   <span class="toast-txt">Recibido. Te contactamos en menos de 24h.</span>
@@ -3796,7 +3718,6 @@ footer {
 <script src="js/i18n.js"></script>
 <script>
 (function(){
-  /* ---- dynamic favicon (isotype) ---- */
   var fav = 'data:image/svg+xml,' + encodeURIComponent(
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="#4FB3E8"/><rect x="22" y="46.5" width="56" height="7" rx="3.5" fill="#FFD75E"/></svg>'
   );
@@ -3805,7 +3726,6 @@ footer {
   link.href = fav;
   document.head.appendChild(link);
 
-  /* ---- nav scrolled state ---- */
   var nav = document.querySelector('header.nav');
   var onScroll = function(){
     nav.classList.toggle('scrolled', window.scrollY > 12);
@@ -3813,7 +3733,6 @@ footer {
   onScroll();
   window.addEventListener('scroll', onScroll, {passive:true});
 
-  /* ---- mobile nav toggle ---- */
   var toggle = document.querySelector('.nav-toggle');
   var links = document.querySelector('.nav-links');
   if(toggle){
@@ -3830,7 +3749,6 @@ footer {
     });
   }
 
-  /* ---- reveal on scroll ---- */
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(en){
       if(en.isIntersecting){
@@ -3843,7 +3761,6 @@ footer {
     io.observe(el);
   });
 
-  /* ---- FAQ accordion ---- */
   document.querySelectorAll('.faq-item').forEach(function(item){
     var q = item.querySelector('.faq-q');
     var a = item.querySelector('.faq-a');
@@ -3868,7 +3785,6 @@ footer {
     });
   });
 
-  /* ---- selector de tramo de la Escala Plana ---- */
   (function(){
     var sw = document.querySelector('.tier-switch');
     if(!sw) return;
@@ -3882,8 +3798,6 @@ footer {
       euros = new Intl.NumberFormat('es-ES');
     }
 
-    /* El descuento se guarda para que el formulario sepa con que tramo
-       llego el lead, no solo que pack. */
     var descuento = 0;
 
     function aplicar(pct){
@@ -3907,8 +3821,6 @@ footer {
       if(b) aplicar(+b.getAttribute('data-disc'));
     });
 
-    /* Los cuadros de la Escala Plana mueven el selector: estan mas abajo y
-       explican el descuento, asi que tambien tienen que poder activarlo. */
     tramos.forEach(function(t, i){
       t.style.cursor = 'pointer';
       t.addEventListener('click', function(){ aplicar([0,10,20][i]); });
@@ -3919,7 +3831,6 @@ footer {
     aplicar(0);
   })();
 
-  /* ---- savings calculator ---- */
   var PLANA = 4900;
   var salary = document.getElementById('salary');
   var fee = document.getElementById('fee');
@@ -4000,7 +3911,6 @@ footer {
     });
   }
 
-  /* ---- comparativa: entrada fila por fila ---- */
   var compare = document.querySelector('.compare');
   if(compare){
     var rio = new IntersectionObserver(function(entries){
@@ -4017,7 +3927,6 @@ footer {
     rio.observe(compare);
   }
 
-  /* ---- parallax + tilt 3D en precios ---- */
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(!reduce){
     var paraEls = [];
@@ -4065,7 +3974,6 @@ footer {
     });
   }
 
-  /* ---- Cliente: elegir plan -> formulario "te contactamos en 24h" ---- */
   (function(){
     var planModal=document.getElementById('planModal');
     if(!planModal) return;
@@ -4093,8 +4001,6 @@ footer {
     function openPlan(pack){
       pmPack.innerHTML =
         '<span class="live-dot"></span>' + packLabel(pack);
-      /* El tramo elegido viaja con el lead: sin el, un 'Altitud' no dice si
-         venia con descuento por volumen. */
       var d = window.planaDescuento ? window.planaDescuento() : 0;
       pmField.value = d ? pack + ' (-' + d + '%)' : pack;
       planModal.hidden = false;
@@ -4168,8 +4074,6 @@ footer {
         return;
       }
 
-      /* Sin endpoint no se finge que ha llegado: antes esto enseñaba el aviso
-         de "te contactamos en 24h" sin enviar nada a ninguna parte. */
       if(!LISTO){
         fallo(en
           ? 'The form is not connected yet. Please write to hello@beplana.com and we will get back to you.'
@@ -4207,12 +4111,10 @@ footer {
 (function(){
 var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/* barra de progreso */
 var pgs = document.createElement('div');
 pgs.id = 'pgs';
 document.body.appendChild(pgs);
 
-/* dock flotante */
 var dock = document.createElement('div');
 dock.id = 'dock';
 dock.innerHTML =
@@ -4222,8 +4124,6 @@ dock.innerHTML =
   '<a href="#packs" class="btn btn-sol btn-sm">Ver precios</a>';
 document.body.appendChild(dock);
 
-
-/* titulares cinéticos */
 function kinetize(el){
   if(el.dataset.kin) return;
   el.dataset.kin = '1';
@@ -4270,8 +4170,6 @@ if(reduce){
   });
 }
 
-/* al cambiar de idioma el titular se reescribe entero, así que hay que
-   volver a trocearlo en palabras */
 addEventListener('plana:lang', function(){
   heads.forEach(function(h){
     kinetize(h);
@@ -4279,12 +4177,8 @@ addEventListener('plana:lang', function(){
   });
 });
 
-/* Los packs ya no se apilan con sticky: eran 4,8 pantallas de las 14 del
-   sitio y llegaban justo después del scroll fijo de la sección Motor. Dos
-   secuestros de scroll seguidos cansan. Ahora es una rejilla normal. */
 function stackFrame(){}
 
-/* foco de luz en tarjetas */
 if(!reduce){
   document.querySelectorAll('.pack,.step,.tier').forEach(function(c){
     c.addEventListener('pointermove', function(e){
@@ -4295,7 +4189,6 @@ if(!reduce){
     });
   });
 
-  /* botones magnéticos */
   document.querySelectorAll('.btn').forEach(function(b){
     b.addEventListener('pointermove', function(e){
       if(e.pointerType === 'touch') return;
@@ -4311,7 +4204,6 @@ if(!reduce){
   });
 }
 
-/* comparativa: entrada */
 (function(){
   var cmp = document.querySelector('.compare');
   if(!cmp) return;
@@ -4349,7 +4241,6 @@ if(!reduce){
   }, {passive:true});
 })();
 
-/* scroll maestro */
 var cta = document.querySelector('footer');
 var hero = document.querySelector('.hero');
 var raf = false;
