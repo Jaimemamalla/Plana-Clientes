@@ -9,6 +9,7 @@ window.PLANA_I18N = {
     'Precios': 'Pricing',
     'Comparativa': 'Compare',
     'Comunidad': 'Community',
+    'Área clientes': 'Client area',
     'Ver precios': 'See pricing',
     'Selección a tarifa plana': 'Flat-rate recruitment',
     'fee': 'fee',
