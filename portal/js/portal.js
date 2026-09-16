@@ -1082,10 +1082,13 @@
   apiReal = apiSupabase();
   api = apiReal;
 
-  /* Si se llega desde el enlace de "recuperar contraseña", Supabase crea una
-     sesión temporal al leer la URL. Sin esta marca, el portal entraría
-     directo al panel y la persona nunca vería el formulario de contraseña. */
-  var vieneDeRecuperar = /type=recovery/.test(location.hash);
+  /* Si se llega desde el enlace de "recuperar contraseña" o desde la
+     invitación inicial (Add user → Send invitation), Supabase crea una
+     sesión temporal al leer la URL. El enlace de invitación lleva
+     type=invite en vez de type=recovery: sin reconocerlo aquí también, un
+     cliente nuevo entraría directo al panel sin llegar a poner nunca una
+     contraseña. */
+  var vieneDeRecuperar = /type=(recovery|invite)/.test(location.hash);
 
   api.alCambiar(function (evento) {
     if (evento === 'PASSWORD_RECOVERY') {
