@@ -12,7 +12,7 @@
    Mientras sigan los valores de ejemplo, el portal no se conecta y ofrece una
    demostración con datos ficticios. */
 window.PLANA_PORTAL = {
-  supabaseUrl: 'https://TU_PROYECTO.supabase.co',
-  supabaseAnonKey: 'TU_ANON_KEY',
+  supabaseUrl: 'https://bkeublxqdsixzftnsquj.supabase.co',
+  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJrZXVibHhxZHNpeHpmdG5zcXVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1NDk3NDUsImV4cCI6MjEwNTEyNTc0NX0.utGztSzTsUXzhFYPPFJJ-6VTWZuyqcw_A24PgaNbz3w',
   minutosInactividad: 30
 };
