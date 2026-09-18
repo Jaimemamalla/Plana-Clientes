@@ -1,103 +1,90 @@
-# Integración con el CRM propio (roadmap)
+# Conectar el roadmap de Excel (SharePoint) con el área de clientes
 
-Objetivo: que las vacantes del roadmap (pestaña PIPELINE) se vean solas en
-el área de clientes, sin duplicar el trabajo a mano en el Table Editor de
-Supabase.
+Objetivo: que las vacantes del roadmap (Excel de SharePoint, pestaña
+PIPELINE) se vean solas en el área de clientes, sin duplicar el trabajo a
+mano en el Table Editor de Supabase.
 
 ## Cómo funciona, en una frase
 
-Cada cierto tiempo (por defecto cada 15 minutos), una función en Supabase
-llama a un endpoint del CRM, que le devuelve todas las vacantes activas, y
-Supabase las guarda o actualiza. El CRM nunca necesita saber nada de
-Supabase ni de contraseñas de nadie: solo responde a una petición GET con
-una clave secreta.
+Cada 15 minutos, una función de Supabase pide permiso a Microsoft (con las
+credenciales de una aplicación registrada en Azure AD), lee directamente el
+rango de datos de la pestaña PIPELINE por la API de Microsoft Graph, y
+guarda o actualiza las vacantes en Supabase.
 
-## Por qué esto y no lo que se había hablado antes
+No hace falta convertir nada en tabla de Excel ni montar ningún flujo de
+Power Automate — Graph puede leer el rango de celdas directamente.
 
-Al revisar el archivo real (`Roadmap.xlsx`, pestaña PIPELINE) resultó que:
+## 1. Registrar la aplicación en Azure AD
 
-- **No hay datos de empresa** en el roadmap — ni CIF, ni sector, ni plan, ni
-  consultor asignado. Solo el **nombre del cliente** como texto en cada fila.
-- **No hay finalistas ni facturas** en esta hoja.
-- **"Tipo de servicio"** (Headhunting / Outsourcing / Otro / Lead) es una
-  clasificación operativa interna, no tiene relación con los packs
-  comerciales del portal (Despegue / Altitud / Estratosfera / Plana
-  Ilimitada).
-- Las **fases** del roadmap (`Briefing`, `Sourcing`, `Entrevistas`,
-  `Entrevista Cliente`, `Prueba Técnica Cliente`, `2ª Entrevista Cliente`,
-  `3ª Entrevista Cliente`, `Oferta`) no coinciden con las del portal, así
-  que hay que traducirlas (ver más abajo).
+En [portal.azure.com](https://portal.azure.com) (con la cuenta de admin del
+tenant de `tesseraservices.com`, que es donde vive el SharePoint):
 
-Por eso esta integración, en su primera versión, sincroniza **solo
-vacantes**. Si la empresa no existe todavía en Supabase (por su nombre), se
-crea automáticamente con ese nombre y el resto de campos en blanco, para que
-Plana los rellene luego a mano (CIF, sector, plan, consultor...).
+1. **Azure Active Directory → Registros de aplicaciones → Nuevo registro**.
+   - Nombre: por ejemplo `Plana - Sync Roadmap`.
+   - Tipos de cuenta admitidos: **solo este directorio organizativo**.
+   - No hace falta URI de redirección.
+2. Una vez creada, apunta dos valores de la página de resumen:
+   - **Id. de aplicación (cliente)** → `AZURE_CLIENT_ID`
+   - **Id. de directorio (inquilino)** → `AZURE_TENANT_ID`
+3. **Certificados y secretos → Nuevo secreto de cliente**. Ponle una
+   caducidad (por ejemplo 24 meses) y copia el **valor** en cuanto lo
+   genere — solo se muestra una vez. Eso es `AZURE_CLIENT_SECRET`.
+4. **Permisos de API → Agregar un permiso → Microsoft Graph → Permisos de
+   aplicación** (no "delegados": esto corre sin que nadie tenga la sesión
+   abierta) → busca y marca `Sites.Read.All`.
+5. Botón **"Conceder consentimiento de administrador para
+   tesseraservices.com"**. Hace falta un rol de administrador global para
+   este paso.
 
-**Pack y garantía son un placeholder** (`Despegue` / `90` días) hasta que se
-decida de dónde debe salir ese dato — hoy no está en el roadmap. La
-sincronización solo pone ese valor la primera vez que crea una vacante; si
-alguien de Plana lo corrige a mano después, no se vuelve a pisar en la
-siguiente ronda (está resuelto así en
-[migraciones/2026-09-crm-sync.sql](migraciones/2026-09-crm-sync.sql)).
+**Importante sobre el secreto**: caduca en la fecha que elegiste en el
+paso 3. Cuando se acerque esa fecha, hay que generar uno nuevo en Azure y
+actualizarlo en Supabase, o la sincronización dejará de funcionar sin
+avisar de otra forma que con el error en los logs de la función.
 
-## Qué tiene que construir el CRM
+## 2. Desplegar la función de Supabase
 
-Un único endpoint de solo lectura:
+El código ya está en
+[functions/sync-crm/index.ts](functions/sync-crm/index.ts). Se pega en
+**Supabase Dashboard → Edge Functions → sync-crm** (crear la función si no
+existe con ese nombre), o se despliega con la CLI de Supabase si se
+prefiere (`supabase functions deploy sync-crm`).
 
-### `GET /api/plana-sync/vacantes`
+Hacen falta estos secretos configurados en la función (Dashboard → Edge
+Functions → sync-crm → Secrets):
 
-Protegido con esta cabecera (un valor secreto acordado entre los dos lados,
-un texto largo al azar, no una contraseña de persona):
-
-```
-Authorization: Bearer EL_SECRETO_QUE_ACORDÉIS
-```
-
-Devuelve un array con **todas las vacantes activas** (no hace falta que sea
-solo lo cambiado desde la última vez, para la primera versión basta con
-mandarlo todo cada vez):
-
-```json
-[
-  {
-    "crm_id": "TSH_028",
-    "cliente": "Aydep",
-    "titulo": "Técnico electricista",
-    "fase_actual": "Sourcing",
-    "resultado": null,
-    "fecha_inicio": "2026-05-25",
-    "fecha_cierre": null,
-    "candidatos_conocidos": 16,
-    "entrevistas_cliente": 0
-  }
-]
-```
-
-Corresponde 1 a 1 con columnas que ya existen en el roadmap:
-
-| Campo del JSON | Columna del roadmap |
+| Secreto | Valor |
 |---|---|
-| `crm_id` | ID |
-| `cliente` | Cliente |
-| `titulo` | Posición / Cargo |
-| `fase_actual` | Fase actual |
-| `resultado` | Resultado |
-| `fecha_inicio` | Fecha inicio |
-| `fecha_cierre` | Fecha cierre |
-| `candidatos_conocidos` | Candidatos conocidos |
-| `entrevistas_cliente` | Entr. cliente |
+| `AZURE_TENANT_ID` | Del paso 1.2 |
+| `AZURE_CLIENT_ID` | Del paso 1.2 |
+| `AZURE_CLIENT_SECRET` | Del paso 1.3 |
+| `SHAREPOINT_FILE_URL` | El enlace para compartir el `Roadmap.xlsx`, el mismo que ya se usó antes |
 
-- `fase_actual` y `resultado`: mandar el texto tal cual aparece en el
-  roadmap (ej. `"Sourcing"`, `"Colocada"`). La traducción a las fases del
-  portal la hace la función de Supabase, no hace falta tocarla en el CRM.
-- Fechas en formato `YYYY-MM-DD`, o `null` si no aplica todavía.
+(`SUPABASE_URL` y `SUPABASE_SERVICE_ROLE_KEY` los pone Supabase
+automáticamente, no hay que añadirlos.)
 
-**No se envían** (son de trabajo interno de Plana, no para el cliente):
-Responsable, Tipo de servicio, Dificultad, Por qué es difícil, Motivo de no
-avance, Depende de, Próximo paso, Alerta, Antigüedad, ni ninguno de los
-"días entre etapas".
+## 3. Programarla cada 15 minutos
 
-## Traducción de fases (ya hecha en la función, no requiere nada del CRM)
+**Supabase Dashboard → Edge Functions → sync-crm → Cron** (o desde SQL con
+`pg_cron`, si se prefiere), con expresión `*/15 * * * *`.
+
+## Qué hace la función y cómo traduce los datos
+
+Usa estas columnas del roadmap (el resto se ignoran, incluidas las de
+trabajo interno como Responsable, Dificultad, Alerta, etc.):
+
+| Columna del roadmap | Uso |
+|---|---|
+| `ID` | Identifica la vacante entre sincronizaciones (`crm_id`) |
+| `Cliente` | Nombre de la empresa — si no existe en Supabase, se crea con ese nombre y el resto en blanco |
+| `Posición / Cargo` | Título de la vacante |
+| `Fase actual` | Se traduce a la fase del portal (tabla abajo) |
+| `Resultado` | Si dice que el proceso terminó, manda sobre la fase |
+| `Fecha inicio` | Fecha de apertura |
+| `Fecha cierre` | Solo se usa si `Resultado` = "Colocada" |
+| `Candidatos conocidos` | Total de perfiles evaluados (embudo) |
+| `Entr. cliente` | Entrevistas realizadas (embudo) |
+
+### Traducción de fases
 
 | Fase / resultado del roadmap | Fase del portal |
 |---|---|
@@ -109,41 +96,47 @@ avance, Depende de, Próximo paso, Alerta, Antigüedad, ni ninguno de los
 | Fase actual = "Entrevista Cliente" / "Prueba Técnica Cliente" / "2ª Entrevista Cliente" / "3ª Entrevista Cliente" | `entrevistas` |
 | Fase actual = "Oferta" | `oferta` |
 
-## Qué pasa si falla o hay un error
+**Pack y garantía son un placeholder** (`Despegue` / 90 días) hasta que se
+decida de dónde debe salir ese dato — hoy no está en el roadmap. Solo se
+ponen la primera vez que se crea una vacante; si alguien de Plana los
+corrige a mano después en Supabase, no se vuelven a pisar en la siguiente
+sincronización (resuelto en
+[migraciones/2026-09-crm-sync.sql](migraciones/2026-09-crm-sync.sql), función
+`sync_vacantes`).
 
-Si el endpoint del CRM falla o tarda demasiado, esa ronda se salta y se
-reintenta en la siguiente — no se borra ni se toca nada de lo que ya había
-en Supabase. La sincronización nunca borra vacantes automáticamente aunque
-desaparezcan del roadmap.
+## Qué pasa si algo falla
 
-## La parte de Supabase (ya preparada en este repo)
+Si la lectura del Excel falla (token caducado, secreto mal puesto, el
+rango no encuentra alguna columna esperada...), esa ronda no guarda nada y
+se reintenta en la siguiente, cada 15 minutos. La sincronización nunca
+borra vacantes automáticamente aunque desaparezcan del roadmap.
 
-- [supabase/migraciones/2026-09-crm-sync.sql](migraciones/2026-09-crm-sync.sql)
-  añade la columna `crm_id` a `vacantes` y la función `sync_vacantes`, que
-  guarda o actualiza sin pisar `pack`/`garantia_dias` una vez creada la
-  vacante.
-- [supabase/functions/sync-crm/index.ts](functions/sync-crm/index.ts) llama
-  al endpoint del CRM, traduce las fases, resuelve o crea la empresa por
-  nombre, y llama a `sync_vacantes`.
+Si en el roadmap se añaden columnas nuevas después de "Alerta", hay que
+ampliar el rango `A5:AO2000` que usa la función (en la constante `RANGO` de
+`index.ts`) para que las siga incluyendo.
 
-Antes de activarla hace falta:
+## Verificación
 
-1. Ejecutar la migración en el SQL Editor.
-2. Decidir el secreto compartido con el CRM y guardarlo como variable de
-   entorno de la función (`CRM_SYNC_SECRET`), nunca en el código del repo.
-3. Guardar la URL base del CRM como variable de entorno (`CRM_BASE_URL`).
-4. Desplegar la función y programarla cada 15 minutos (Supabase → Edge
-   Functions → Cron, o `pg_cron` si se prefiere desde SQL).
+- Ejecutar la función manualmente una vez desde el Dashboard de Supabase
+  (o con un `curl` a su URL con la clave `anon`) y comprobar en los logs
+  que no da error, y en el Table Editor que las vacantes de Aydep quedan
+  igual que en la prueba manual anterior.
+- Cambiar una celda de una fila en el Excel de SharePoint (por ejemplo,
+  `Fase actual` o `Candidatos conocidos`) y comprobar que, en la siguiente
+  ronda de 15 minutos, el cambio aparece en el área de clientes.
 
-## Pendiente / fuera de esta primera versión
+## Pendiente / fuera de esta versión
 
 - **De dónde sale el pack real y la garantía** de cada vacante — hoy es un
-  placeholder. Hay que decidirlo y, cuando se sepa, ajustar la función para
-  que lo traiga de ahí en vez de un valor fijo.
+  placeholder.
 - **Finalistas y facturas** no están en el roadmap, así que no se
-  sincronizan. Si en el futuro viven en otro sitio del CRM, sería una fase
-  aparte con su propio endpoint.
+  sincronizan.
 - **Vincular quién inicia sesión con qué empresa** sigue siendo manual
   (invitar en Authentication + fila en `miembros`).
 - **Datos de empresa** (CIF, sector, plan, consultor) se rellenan a mano la
   primera vez que aparece un cliente nuevo en el roadmap.
+- **Renovar el secreto de Azure AD** antes de que caduque (ver aviso en el
+  paso 1).
+- **Un panel/CRM propio** que sustituya del todo a este Excel (incluyendo
+  campos internos como Responsable, Dificultad, Alerta) es una idea para
+  más adelante, aparcada por ahora.
