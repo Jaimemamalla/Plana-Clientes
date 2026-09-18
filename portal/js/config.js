@@ -12,7 +12,7 @@
    Mientras sigan los valores de ejemplo, el portal no se conecta y ofrece una
    demostración con datos ficticios. */
 window.PLANA_PORTAL = {
-  supabaseUrl: 'https://bkeublxqdsixzftnsquj.supabase.co',
-  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJrZXVibHhxZHNpeHpmdG5zcXVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1NDk3NDUsImV4cCI6MjEwNTEyNTc0NX0.utGztSzTsUXzhFYPPFJJ-6VTWZuyqcw_A24PgaNbz3w',
+  supabaseUrl: 'https://aupibmqcaksxkwsprvcv.supabase.co',
+  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF1cGlibXFjYWtzeGt3c3BydmN2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0OTYwNjQsImV4cCI6MjA5ODA3MjA2NH0.qjE5SxjRlt5bg0eDmdiMwD58ebC2WBgfD0pyN-RF5Ps',
   minutosInactividad: 30
 };
