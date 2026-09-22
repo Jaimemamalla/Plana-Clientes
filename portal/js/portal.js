@@ -234,7 +234,7 @@
           resultado(sb.from('vacantes').select('*').order('abierta_en', { ascending: false })),
           resultado(sb.from('finalistas').select('*').order('encaje', { ascending: false, nullsFirst: false })),
           resultado(sb.from('eventos').select('*').order('fecha', { ascending: false }).limit(300)),
-          resultado(sb.from('facturas').select('*, finalistas(nombre)').order('emitida_en', { ascending: false })),
+          resultado(sb.from('facturas').select('*').order('emitida_en', { ascending: false })),
           resultado(sb.from('documentos').select('*').order('creado_en', { ascending: false }))
         ]).then(function (r) {
           return {
@@ -749,11 +749,7 @@
             h('tbody', null, fs.map(function (f) {
               var e = estadoFactura(f);
               return h('tr', null,
-                h('td', null,
-                  f.concepto,
-                  f.numero ? h('div', { class: 'f-sub', text: f.numero }) : null,
-                  f.finalistas ? h('div', { class: 'f-sub', text: 'Contratación: ' + f.finalistas.nombre }) : null
-                ),
+                h('td', null, f.concepto, f.numero ? h('div', { class: 'f-sub', text: f.numero }) : null),
                 h('td', { text: fecha(f.emitida_en) }),
                 h('td', { text: f.estado === 'pagada' ? '—' : fecha(f.vence_en) }),
                 h('td', null, h('span', { class: clase[e], text: etiqueta[e] })),
