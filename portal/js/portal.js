@@ -228,24 +228,51 @@
         });
       },
       cargar: function () {
-        return Promise.all([
-          resultado(sb.from('miembros').select('nombre, cargo, empresa_id').maybeSingle()),
-          resultado(sb.from('empresas').select('*').maybeSingle()),
-          resultado(sb.from('vacantes').select('*').order('abierta_en', { ascending: false })),
-          resultado(sb.from('finalistas').select('*').order('encaje', { ascending: false, nullsFirst: false })),
-          resultado(sb.from('eventos').select('*').order('fecha', { ascending: false }).limit(300)),
-          resultado(sb.from('facturas').select('*').order('emitida_en', { ascending: false })),
-          resultado(sb.from('documentos').select('*').order('creado_en', { ascending: false }))
-        ]).then(function (r) {
-          return {
-            miembro: r[0],
-            empresa: r[1],
-            vacantes: r[2] || [],
-            finalistas: r[3] || [],
-            eventos: r[4] || [],
-            facturas: r[5] || [],
-            documentos: r[6] || []
-          };
+        /* Si el usuario tiene ficha en "equipo" (equipo de Tessera), entra en
+           modo maestro: ve todas las empresas, no una sola. RLS ya decide qué
+           filas le corresponden (todas si es interno/maestro, solo las suyas
+           si es externo) sin que este código tenga que saberlo. */
+        return resultado(sb.from('equipo').select('id').maybeSingle()).then(function (miEquipo) {
+          if (miEquipo) {
+            return Promise.all([
+              resultado(sb.from('empresas').select('*').order('nombre')),
+              resultado(sb.from('vacantes').select('*').order('abierta_en', { ascending: false })),
+              resultado(sb.from('finalistas').select('*').order('encaje', { ascending: false, nullsFirst: false })),
+              resultado(sb.from('eventos').select('*').order('fecha', { ascending: false }).limit(1000)),
+              resultado(sb.from('facturas').select('*').order('emitida_en', { ascending: false })),
+              resultado(sb.from('documentos').select('*').order('creado_en', { ascending: false }))
+            ]).then(function (r) {
+              return {
+                modoMaestro: true,
+                empresas: r[0] || [],
+                vacantes: r[1] || [],
+                finalistas: r[2] || [],
+                eventos: r[3] || [],
+                facturas: r[4] || [],
+                documentos: r[5] || []
+              };
+            });
+          }
+
+          return Promise.all([
+            resultado(sb.from('miembros').select('nombre, cargo, empresa_id').maybeSingle()),
+            resultado(sb.from('empresas').select('*').maybeSingle()),
+            resultado(sb.from('vacantes').select('*').order('abierta_en', { ascending: false })),
+            resultado(sb.from('finalistas').select('*').order('encaje', { ascending: false, nullsFirst: false })),
+            resultado(sb.from('eventos').select('*').order('fecha', { ascending: false }).limit(300)),
+            resultado(sb.from('facturas').select('*').order('emitida_en', { ascending: false })),
+            resultado(sb.from('documentos').select('*').order('creado_en', { ascending: false }))
+          ]).then(function (r) {
+            return {
+              miembro: r[0],
+              empresa: r[1],
+              vacantes: r[2] || [],
+              finalistas: r[3] || [],
+              eventos: r[4] || [],
+              facturas: r[5] || [],
+              documentos: r[6] || []
+            };
+          });
         });
       },
       valorar: function (id, decision, comentario) {
@@ -303,6 +330,14 @@
   var emailSesion = '';
   var vacanteSel = null;
 
+  /* Panel maestro: quien esté dado de alta en "equipo" ve todas las
+     empresas en vez de una sola. datosMaestro guarda todo sin filtrar;
+     al elegir una empresa se arma "datos" con su subconjunto y se
+     reutiliza el panel de siempre, en modo solo lectura. */
+  var modoMaestro = false;
+  var datosMaestro = null;
+  var modoSoloLectura = false;
+
   function activas(lista) {
     return lista.filter(function (v) { return v.fase !== 'cubierta' && v.fase !== 'pausada'; });
   }
@@ -333,6 +368,85 @@
     };
   }
 
+  /* ============ PANEL MAESTRO (equipo de Tessera: todas las empresas) ============ */
+
+  function mostrarBotonVolver(mostrar) {
+    var boton = $('b-volver-empresas');
+    if (!boton) {
+      if (!mostrar) return;
+      boton = h('button', {
+        type: 'button',
+        class: 'btn btn-borde btn-sm',
+        id: 'b-volver-empresas',
+        text: 'Volver a empresas',
+        on: { click: function () { pintarSelectorEmpresas(); } }
+      });
+      var salir = $('b-salir');
+      salir.parentNode.insertBefore(boton, salir);
+    }
+    boton.hidden = !mostrar;
+  }
+
+  function pintarSelectorEmpresas() {
+    mostrarBotonVolver(false);
+    $('u-nombre').textContent = emailSesion;
+    $('u-empresa').textContent = 'Panel maestro';
+    $('cinta-demo').hidden = true;
+
+    var enMarcha = {};
+    datosMaestro.vacantes.forEach(function (v) {
+      if (v.fase !== 'cubierta' && v.fase !== 'pausada' && v.fase !== 'cancelada') {
+        enMarcha[v.empresa_id] = (enMarcha[v.empresa_id] || 0) + 1;
+      }
+    });
+
+    $('panel').replaceChildren(
+      h('section', { class: 'saludo' },
+        h('h1', { id: 'saludo-h1', tabindex: '-1', text: 'Panel maestro' }),
+        h('p', { text: 'Elige una empresa para ver su panel, igual que lo ve su cliente.' })
+      ),
+      h('nav', { class: 'lista-vac', 'aria-label': 'Empresas' },
+        datosMaestro.empresas.length
+          ? datosMaestro.empresas.map(function (e) {
+            var n = enMarcha[e.id] || 0;
+            return h('button', {
+              type: 'button',
+              class: 'vac',
+              on: { click: function () { verEmpresaMaestro(e.id); } }
+            },
+              h('div', { class: 'v-top' },
+                h('div', null,
+                  h('div', { class: 'v-tit', text: e.nombre }),
+                  h('div', { class: 'v-meta', text: n + (n === 1 ? ' vacante en marcha' : ' vacantes en marcha') })
+                )
+              )
+            );
+          })
+          : h('p', { class: 'vacio', text: 'Todavía no hay ninguna empresa.' })
+      )
+    );
+  }
+
+  function verEmpresaMaestro(empresaId) {
+    var empresa = datosMaestro.empresas.filter(function (e) { return e.id === empresaId; })[0];
+    var vacantesEmpresa = datosMaestro.vacantes.filter(function (v) { return v.empresa_id === empresaId; });
+    var idsVacantes = {};
+    vacantesEmpresa.forEach(function (v) { idsVacantes[v.id] = true; });
+
+    datos = {
+      miembro: null,
+      empresa: empresa,
+      vacantes: vacantesEmpresa,
+      finalistas: datosMaestro.finalistas.filter(function (f) { return idsVacantes[f.vacante_id]; }),
+      eventos: datosMaestro.eventos.filter(function (ev) { return idsVacantes[ev.vacante_id]; }),
+      facturas: datosMaestro.facturas.filter(function (f) { return f.empresa_id === empresaId; }),
+      documentos: datosMaestro.documentos.filter(function (d) { return d.empresa_id === empresaId; })
+    };
+    vacanteSel = null;
+    pintarPanel();
+    $('saludo-h1').focus({ preventScroll: true });
+  }
+
   /* ============ PANEL ============ */
 
   function pintarPanel() {
@@ -340,6 +454,7 @@
     $('u-nombre').textContent = nombre;
     $('u-empresa').textContent = datos.empresa ? datos.empresa.nombre : '';
     $('cinta-demo').hidden = !modoDemo;
+    mostrarBotonVolver(modoMaestro);
 
     var existe = vacanteSel && datos.vacantes.some(function (v) { return v.id === vacanteSel; });
     if (!existe) {
@@ -593,7 +708,7 @@
   }
 
   function pintarFinalista(f, v) {
-    var editable = v.fase !== 'cubierta' && f.estado !== 'contratado' && f.estado !== 'descartado';
+    var editable = !modoSoloLectura && v.fase !== 'cubierta' && f.estado !== 'contratado' && f.estado !== 'descartado';
     var elegida = f.decision_cliente;
 
     var chipClase = 'chip';
@@ -872,6 +987,16 @@
     ver('v-carga');
     return api.cargar()
       .then(function (d) {
+        if (d.modoMaestro) {
+          modoMaestro = true;
+          modoSoloLectura = true;
+          datosMaestro = d;
+          pintarSelectorEmpresas();
+          ver('v-panel');
+          $('saludo-h1').focus({ preventScroll: true });
+          vigilarInactividad();
+          return;
+        }
         if (!d.miembro || !d.empresa) {
           return api.salir().then(function () {
             ver('v-login');
@@ -896,6 +1021,10 @@
     return api.salir().then(function () {
       datos = null;
       vacanteSel = null;
+      modoMaestro = false;
+      modoSoloLectura = false;
+      datosMaestro = null;
+      mostrarBotonVolver(false);
       $('panel').replaceChildren();
       $('f-login').reset();
       if (modoDemo) {
