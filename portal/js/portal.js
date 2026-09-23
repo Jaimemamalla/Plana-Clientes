@@ -235,8 +235,11 @@
         /* Sin maybeSingle(): un "maestro" ve todas las filas de "equipo" por
            RLS, no solo la suya, así que puede devolver varias. Aquí solo
            importa si ha devuelto alguna. */
-        return resultado(sb.from('equipo').select('id')).then(function (miEquipo) {
+        return resultado(sb.from('equipo').select('nombre, email')).then(function (miEquipo) {
           if (miEquipo && miEquipo.length) {
+            var miFila = miEquipo.filter(function (r) {
+              return r.email && r.email.toLowerCase() === emailSesion.toLowerCase();
+            })[0];
             return Promise.all([
               resultado(sb.from('empresas').select('*').order('nombre')),
               resultado(sb.from('vacantes').select('*').order('abierta_en', { ascending: false })),
@@ -247,6 +250,7 @@
             ]).then(function (r) {
               return {
                 modoMaestro: true,
+                nombreStaff: miFila ? miFila.nombre : '',
                 empresas: r[0] || [],
                 vacantes: r[1] || [],
                 finalistas: r[2] || [],
@@ -340,6 +344,7 @@
   var modoMaestro = false;
   var datosMaestro = null;
   var modoSoloLectura = false;
+  var nombreStaff = '';
 
   function activas(lista) {
     return lista.filter(function (v) { return v.fase !== 'cubierta' && v.fase !== 'pausada'; });
@@ -392,7 +397,7 @@
 
   function pintarSelectorEmpresas() {
     mostrarBotonVolver(false);
-    $('u-nombre').textContent = emailSesion;
+    $('u-nombre').textContent = nombreStaff || emailSesion;
     $('u-empresa').textContent = 'Panel maestro';
     $('cinta-demo').hidden = true;
 
@@ -459,7 +464,7 @@
   /* ============ PANEL ============ */
 
   function pintarPanel() {
-    var nombre = (datos.miembro && datos.miembro.nombre) || emailSesion;
+    var nombre = (datos.miembro && datos.miembro.nombre) || nombreStaff || emailSesion;
     $('u-nombre').textContent = nombre;
     $('u-empresa').textContent = datos.empresa ? datos.empresa.nombre : '';
     $('cinta-demo').hidden = !modoDemo;
@@ -999,6 +1004,7 @@
         if (d.modoMaestro) {
           modoMaestro = true;
           modoSoloLectura = true;
+          nombreStaff = d.nombreStaff || '';
           datosMaestro = d;
           pintarSelectorEmpresas();
           ver('v-panel');
@@ -1033,6 +1039,7 @@
       modoMaestro = false;
       modoSoloLectura = false;
       datosMaestro = null;
+      nombreStaff = '';
       mostrarBotonVolver(false);
       $('panel').replaceChildren();
       $('f-login').reset();
