@@ -396,12 +396,18 @@
     $('u-empresa').textContent = 'Panel maestro';
     $('cinta-demo').hidden = true;
 
+    var total = {};
     var enMarcha = {};
     datosMaestro.vacantes.forEach(function (v) {
+      total[v.empresa_id] = (total[v.empresa_id] || 0) + 1;
       if (v.fase !== 'cubierta' && v.fase !== 'pausada' && v.fase !== 'cancelada') {
         enMarcha[v.empresa_id] = (enMarcha[v.empresa_id] || 0) + 1;
       }
     });
+
+    /* Solo se excluyen las empresas con las que nunca ha habido ninguna
+       vacante — las cubiertas, pausadas o canceladas siguen apareciendo. */
+    var conVacantes = datosMaestro.empresas.filter(function (e) { return total[e.id] > 0; });
 
     $('panel').replaceChildren(
       h('section', { class: 'saludo' },
@@ -409,8 +415,8 @@
         h('p', { text: 'Elige una empresa para ver su panel, igual que lo ve su cliente.' })
       ),
       h('nav', { class: 'lista-vac', 'aria-label': 'Empresas' },
-        datosMaestro.empresas.length
-          ? datosMaestro.empresas.map(function (e) {
+        conVacantes.length
+          ? conVacantes.map(function (e) {
             var n = enMarcha[e.id] || 0;
             return h('button', {
               type: 'button',
@@ -425,7 +431,7 @@
               )
             );
           })
-          : h('p', { class: 'vacio', text: 'Todavía no hay ninguna empresa.' })
+          : h('p', { class: 'vacio', text: 'Todavía no hay ninguna empresa con vacantes.' })
       )
     );
   }
