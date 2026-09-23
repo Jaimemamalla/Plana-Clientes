@@ -232,8 +232,11 @@
            modo maestro: ve todas las empresas, no una sola. RLS ya decide qué
            filas le corresponden (todas si es interno/maestro, solo las suyas
            si es externo) sin que este código tenga que saberlo. */
-        return resultado(sb.from('equipo').select('id').maybeSingle()).then(function (miEquipo) {
-          if (miEquipo) {
+        /* Sin maybeSingle(): un "maestro" ve todas las filas de "equipo" por
+           RLS, no solo la suya, así que puede devolver varias. Aquí solo
+           importa si ha devuelto alguna. */
+        return resultado(sb.from('equipo').select('id')).then(function (miEquipo) {
+          if (miEquipo && miEquipo.length) {
             return Promise.all([
               resultado(sb.from('empresas').select('*').order('nombre')),
               resultado(sb.from('vacantes').select('*').order('abierta_en', { ascending: false })),
