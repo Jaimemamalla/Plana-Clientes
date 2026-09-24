@@ -45,9 +45,6 @@ window.PLANA_I18N = {
     'Precios públicos': 'Public pricing',
     'El precio depende de la franja salarial de la vacante y está aquí escrito, sin "desde" ni asteriscos. Lo que no depende del sueldo es el porcentaje: no hay.':
       'The price depends on the salary band of the role and it is written right here, with no "from" and no asterisks. What does not depend on the salary is the percentage: there is none.',
-    'Franja 1': 'Band 1',
-    'Franja 2': 'Band 2',
-    'Franja 3': 'Band 3',
     'Vacantes con un salario bruto anual de hasta 25.000 €.': 'Roles with a gross annual salary of up to €25,000.',
     'Vacantes con un salario bruto anual de 25.000 € a 35.000 €.': 'Roles with a gross annual salary from €25,000 to €35,000.',
     'Vacantes con un salario bruto anual de 35.000 € a 45.000 €.': 'Roles with a gross annual salary from €35,000 to €45,000.',
