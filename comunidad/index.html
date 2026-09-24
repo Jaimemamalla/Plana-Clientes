@@ -3747,12 +3747,12 @@ footer {
 <section class="section-pad" id="unete" aria-labelledby="unete-title">
   <div class="wrap">
     <div class="unete-inner reveal">
-      <form class="com-form" id="comForm" action="https://formspree.io/f/moevlaqj" method="POST" enctype="multipart/form-data" novalidate>
+      <form class="com-form" id="comForm" action="https://formspree.io/f/moevlaqj" method="POST" novalidate>
         <h3 id="unete-title">Únete a la Comunidad Plana</h3>
         <p class="sub">Sube tu CV. Planax extrae tus datos. Tú no rellenas nada.</p>
 
         <label class="dropzone" id="dropzone" for="c-cv">
-          <input type="file" id="c-cv" name="cv" accept=".pdf,.doc,.docx,.txt" hidden />
+          <input type="file" id="c-cv" accept=".pdf,.doc,.docx,.txt" hidden />
           <div class="dz-state dz-idle">
             <span class="dz-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0l-4 4m4-4l4 4" stroke="#4FB3E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke="#4FB3E8" stroke-width="2" stroke-linecap="round"/></svg></span>
             <span class="dz-title">Arrastra tu CV aquí</span>
@@ -3907,6 +3907,7 @@ footer {
   </div>
 </footer>
 
+<script src="../portal/js/config.js"></script>
 <script src="js/dict-comunidad.js"></script>
 <script src="js/i18n.js"></script>
 <script>
@@ -4069,13 +4070,59 @@ footer {
 
     var comError = document.getElementById('comError');
     var ENDPOINT = form.getAttribute('action') || '';
-    var LISTO    = ENDPOINT && ENDPOINT.indexOf('TU_ENDPOINT') === -1;
+    /* Formspree no acepta adjuntos en el plan gratuito: el CV se sube al
+       bucket "candidaturas" de Supabase (ver supabase/candidaturas.sql) y a
+       Formspree solo le llega la ruta. La clave anon solo puede subir ahí,
+       no leer. */
+    var SB       = window.PLANA_PORTAL || {};
+    var BUCKET   = 'candidaturas';
+    var LISTO    = ENDPOINT && ENDPOINT.indexOf('TU_ENDPOINT') === -1 &&
+                   SB.supabaseUrl && SB.supabaseAnonKey;
 
     if(!LISTO){
       console.error(
-        '[Plana] El formulario de candidatura no tiene endpoint configurado (' + ENDPOINT + '). ' +
-        'Hasta que se ponga uno real, no se envía nada y se avisa al candidato.'
+        '[Plana] El formulario de candidatura no está configurado (Formspree: ' + ENDPOINT +
+        ', Supabase: ' + (SB.supabaseUrl || 'sin config') + '). ' +
+        'Hasta que lo esté, no se envía nada y se avisa al candidato.'
       );
+    }
+
+    var TIPOS = {
+      pdf:  'application/pdf',
+      doc:  'application/msword',
+      docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      txt:  'text/plain'
+    };
+
+    function subirCV(file){
+      var ext  = (file.name.match(/\.([^.]+)$/) || [])[1];
+      ext = ext ? ext.toLowerCase() : '';
+      var tipo = TIPOS[ext] || file.type;
+      var base = file.name.replace(/\.[^.]+$/, '')
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^A-Za-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+        .slice(0, 60) || 'cv';
+      var id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
+             : Date.now().toString(36) + Math.random().toString(36).slice(2);
+      var ruta = new Date().toISOString().slice(0, 10) + '/' + id + '-' + base + (ext ? '.' + ext : '');
+
+      return fetch(SB.supabaseUrl + '/storage/v1/object/' + BUCKET + '/' + ruta, {
+        method: 'POST',
+        headers: {
+          'apikey': SB.supabaseAnonKey,
+          'Authorization': 'Bearer ' + SB.supabaseAnonKey,
+          'Content-Type': tipo,
+          'x-upsert': 'false'
+        },
+        body: file
+      }).then(function(r){
+        if(!r.ok){
+          return r.text().then(function(t){
+            throw new Error('Supabase HTTP ' + r.status + ' ' + t);
+          });
+        }
+        return ruta;
+      });
     }
 
     function fallo(msg){
@@ -4226,12 +4273,19 @@ footer {
       boton.disabled = true;
       boton.textContent = 'Enviando…';
 
-      fetch(ENDPOINT, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
+      var archivo = cv.files[0];
+
+      subirCV(archivo).then(function(ruta){
+        var datos = new FormData(form);
+        datos.append('cv_archivo', archivo.name);
+        datos.append('cv_ruta', BUCKET + '/' + ruta);
+        return fetch(ENDPOINT, {
+          method: 'POST',
+          body: datos,
+          headers: { 'Accept': 'application/json' }
+        });
       }).then(function(r){
-        if(!r.ok) throw new Error('HTTP ' + r.status);
+        if(!r.ok) throw new Error('Formspree HTTP ' + r.status);
         toastUp();
         form.reset();
         setState('idle');
