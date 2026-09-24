@@ -1,0 +1,13 @@
+# Sustituye a las cabeceras que ponía netlify.toml, ahora que la web se
+# sirve directamente desde el hosting de Hostalia (Apache) en vez de Netlify.
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+
+  <FilesMatch "^og\.source\.html$">
+    Header always set X-Robots-Tag "noindex"
+  </FilesMatch>
+</IfModule>
