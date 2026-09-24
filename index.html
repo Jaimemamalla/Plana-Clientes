@@ -3144,8 +3144,10 @@ footer {
 </head>
 <body>
 
+<span id="top" aria-hidden="true"></span>
+
 <!-- ============ NAV ============ -->
-<header class="nav" id="top">
+<header class="nav">
   <div class="nav-inner">
     <a href="#top" class="logo" aria-label="Plana, inicio">
       <svg class="iso" viewBox="0 0 100 100" aria-hidden="true">
@@ -4274,5 +4276,21 @@ onScroll();
 <script src="js/edge-pulse.js"></script>
 <script src="js/tickers.js"></script>
 <script src="js/planax-live.js"></script>
+
+<script>
+/* El logo siempre devuelve al principio de la página. No basta con el ancla:
+   la cabecera es sticky, así que saltar a ella no mueve el scroll. */
+(function () {
+  document.querySelectorAll('a.logo[href="#top"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      var suave = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, left: 0, behavior: suave ? 'smooth' : 'auto' });
+      if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+    });
+  });
+})();
+</script>
 </body>
+
 </html>
