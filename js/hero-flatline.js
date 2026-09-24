@@ -79,8 +79,8 @@
     copy.forEach(function (el) { utils.set(el, { opacity: 1, y: 0 }); });
     money(vacEl, 45000);
     money(agencyEl, 9000);
-    money(planaEl, 4900);
-    money(saveEl, 4100);
+    money(planaEl, 2400);
+    money(saveEl, 6600);
   }
 
   if (reduce) {
@@ -209,7 +209,7 @@
   }, FLAT + 320);
 
   tl.add(n, {
-    plana: 4900,
+    plana: 2400,
     duration: 760,
     ease: 'outExpo',
     onUpdate: function () { money(planaEl, n.plana); }
