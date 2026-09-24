@@ -223,7 +223,7 @@
   }, FLAT + 760);
 
   tl.add(n, {
-    ahorro: 4100,
+    ahorro: 6600,
     duration: 620,
     ease: 'outExpo',
     onUpdate: function () { money(saveEl, n.ahorro); }
