@@ -57,7 +57,7 @@ window.PLANA_I18N = {
     /* Los packs siguen nombrados en el FAQ, así que sus nombres se quedan. */
     'Despegue': 'Takeoff',
     'Altitud': 'Altitude',
-    'Estratosfera': 'Stratosphere',
+    'Crucero': 'Cruise',
 
     /* escala */
     'Escala Plana': 'The Plana scale',
@@ -172,7 +172,7 @@ window.PLANA_I18N = {
     'Bienvenido a la selección a tarifa plana.': 'Welcome to flat-rate recruitment.',
     'Bienvenido a Plana.': 'Welcome to Plana.',
 
-    /* faq. Despegue, Altitud y Estratosfera ya están arriba, en los packs */
+    /* faq. Despegue, Altitud y Crucero ya están arriba, en los packs */
     'FAQ': 'FAQ',
     'Preguntas frecuentes': 'Frequently asked questions',
     '¿De verdad el precio no depende del salario?': 'Does the price really not depend on the salary?',

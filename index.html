@@ -144,14 +144,6 @@ section {
   gap: .6em;
 }
 
-.eyebrow::before {
-  content: "";
-  width: 30px;
-  height: 4px;
-  border-radius: 2px;
-  background: var(--sol);
-}
-
 .section-pad {
   padding: clamp(72px,11vw,140px) 0;
 }
@@ -703,10 +695,6 @@ header.nav.scrolled {
   line-height: 1.55;
 }
 
-.sec-head.center .eyebrow::before {
-  display: none;
-}
-
 /* ============ CÓMO FUNCIONA ============ */
 
 .steps {
@@ -791,10 +779,6 @@ header.nav.scrolled {
 
 #motor .eyebrow {
   color: var(--sol);
-}
-
-#motor .eyebrow::before {
-  background: var(--sol);
 }
 
 .motor-stage {
@@ -1267,10 +1251,6 @@ header.nav.scrolled {
   color: var(--sol);
 }
 
-.calc .eyebrow::before {
-  background: var(--sol);
-}
-
 .calc-sub {
   color: rgba(255,255,255,.7);
   margin: 14px 0 30px;
@@ -1516,10 +1496,6 @@ input[type=range]::-moz-range-thumb {
 
 #planax .eyebrow {
   color: var(--sol);
-}
-
-#planax .eyebrow::before {
-  background: var(--sol);
 }
 
 #planax h2 {
@@ -2420,10 +2396,6 @@ input[type=range]::-moz-range-thumb {
 
 #manifiesto .eyebrow {
   color: var(--sol);
-}
-
-#manifiesto .eyebrow::before {
-  background: var(--sol);
 }
 
 .mani-list {
@@ -3419,7 +3391,7 @@ footer {
       </article>
 
       <article class="pack reveal d3">
-        <div class="pack-name">Estratosfera</div>
+        <div class="pack-name">Crucero</div>
         <p class="pack-for">Vacantes con un salario bruto anual de 35.000 € a 45.000 €.</p>
         <div class="pack-price" data-base="2400"><s aria-hidden="true"></s><span class="amt">2.400 €</span><small>por posición</small></div>
         <hr />
@@ -3428,7 +3400,7 @@ footer {
           <li><svg class="tick" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#4FB3E8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Cribado completo con Planax y entrevistas del equipo</li>
           <li><svg class="tick" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#4FB3E8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Shortlist de 3 a 5 finalistas</b></li>
         </ul>
-        <div class="pack-cta"><button type="button" class="btn btn-ghost" data-plan="Estratosfera">Empezar</button></div>
+        <div class="pack-cta"><button type="button" class="btn btn-ghost" data-plan="Crucero">Empezar</button></div>
         <span class="pack-guar"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5l8-3z" stroke="#4FB3E8" stroke-width="2" stroke-linejoin="round"/></svg>Reposición garantizada</span>
       </article>
     </div>
@@ -3490,7 +3462,7 @@ footer {
             <span class="amt" id="rAgency">9.000 €</span>
           </div>
           <div class="cr-line plana">
-            <span class="lbl" id="rPlanaLbl">Con Plana (Estratosfera)</span>
+            <span class="lbl" id="rPlanaLbl">Con Plana (Crucero)</span>
             <span class="amt" id="rPlana">2.400 €</span>
           </div>
           <div class="cr-save">
@@ -3622,7 +3594,7 @@ footer {
       </div>
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false">¿Qué pack necesito?<span class="faq-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#10243A" stroke-width="2.4" stroke-linecap="round"/></svg></span></button>
-        <div class="faq-a"><div class="faq-a-inner"><b>Despegue</b> para perfiles operativos y junior. <b>Altitud</b> para mandos intermedios y especialistas con escasez media. <b>Estratosfera</b> para dirección y perfiles muy escasos. Si dudas, dínoslo y te lo decimos en una frase, sin reunión de dos horas.</div></div>
+        <div class="faq-a"><div class="faq-a-inner"><b>Despegue</b> para perfiles operativos y junior. <b>Altitud</b> para mandos intermedios y especialistas con escasez media. <b>Crucero</b> para dirección y perfiles muy escasos. Si dudas, dínoslo y te lo decimos en una frase, sin reunión de dos horas.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false">¿Sois una ETT?<span class="faq-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#10243A" stroke-width="2.4" stroke-linecap="round"/></svg></span></button>
@@ -3839,7 +3811,7 @@ footer {
   var FRANJAS = [
     { hasta: 25000, precio: 1500, nombre: 'Despegue' },
     { hasta: 35000, precio: 1900, nombre: 'Altitud' },
-    { hasta: 45000, precio: 2400, nombre: 'Estratosfera' }
+    { hasta: 45000, precio: 2400, nombre: 'Crucero' }
   ];
 
   function franjaDe(salario){
@@ -3898,7 +3870,7 @@ footer {
     rPlana.textContent = eur(precio);
     if(etiquetaPlana){
       var enF = document.documentElement.lang === 'en';
-      var EN_FRANJA = { 'Despegue': 'Takeoff', 'Altitud': 'Altitude', 'Estratosfera': 'Stratosphere' };
+      var EN_FRANJA = { 'Despegue': 'Takeoff', 'Altitud': 'Altitude', 'Crucero': 'Cruise' };
       etiquetaPlana.textContent = (enF ? 'With Plana (' : 'Con Plana (') +
         (enF ? (EN_FRANJA[franja.nombre] || franja.nombre) : franja.nombre) + ')';
     }
@@ -4018,7 +3990,7 @@ footer {
     var EN_PACK = {
       'Despegue': 'Takeoff',
       'Altitud': 'Altitude',
-      'Estratosfera': 'Stratosphere',
+      'Crucero': 'Cruise',
       'Plana Ilimitada': 'Plana Unlimited'
     };
 

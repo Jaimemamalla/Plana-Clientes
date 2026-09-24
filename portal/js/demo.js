@@ -57,7 +57,7 @@ window.PLANA_DEMO = function () {
         modalidad: 'hibrido',
         salario_min: 75000,
         salario_max: 90000,
-        pack: 'Estratosfera',
+        pack: 'Crucero',
         fase: 'entrevistas',
         abierta_en: dia(-12),
         shortlist_prevista: dia(10),
@@ -181,7 +181,7 @@ window.PLANA_DEMO = function () {
       { id: 'e4', vacante_id: 'v1', fecha: momento(-12), titulo: 'Cribado con Planax completado', detalle: '138 perfiles evaluados' },
       { id: 'e5', vacante_id: 'v1', fecha: momento(-19), titulo: 'Vacante abierta', detalle: 'Pack Altitud' },
       { id: 'e6', vacante_id: 'v4', fecha: momento(-3), titulo: 'Seis entrevistas realizadas', detalle: null },
-      { id: 'e7', vacante_id: 'v4', fecha: momento(-12), titulo: 'Vacante abierta', detalle: 'Pack Estratosfera · búsqueda confidencial' },
+      { id: 'e7', vacante_id: 'v4', fecha: momento(-12), titulo: 'Vacante abierta', detalle: 'Pack Crucero · búsqueda confidencial' },
       { id: 'e8', vacante_id: 'v2', fecha: momento(-2), titulo: 'Cribado con Planax en curso', detalle: null },
       { id: 'e9', vacante_id: 'v2', fecha: momento(-6), titulo: 'Vacante abierta', detalle: 'Pack Despegue' },
       { id: 'e10', vacante_id: 'v3', fecha: momento(-31), titulo: 'Contratación cerrada con Marta G.', detalle: 'Empieza la reposición garantizada de 90 días' },
@@ -189,7 +189,7 @@ window.PLANA_DEMO = function () {
       { id: 'e12', vacante_id: 'v3', fecha: momento(-70), titulo: 'Vacante abierta', detalle: 'Pack Altitud' }
     ],
     facturas: [
-      { id: 'fa3', vacante_id: 'v4', numero: 'DEMO-003', concepto: 'Pack Estratosfera · Head of Finance', importe: 7110, emitida_en: dia(-12), vence_en: dia(18), estado: 'pendiente', pdf_ruta: 'demo/fa3.pdf' },
+      { id: 'fa3', vacante_id: 'v4', numero: 'DEMO-003', concepto: 'Pack Crucero · Head of Finance', importe: 7110, emitida_en: dia(-12), vence_en: dia(18), estado: 'pendiente', pdf_ruta: 'demo/fa3.pdf' },
       { id: 'fa2', vacante_id: 'v1', numero: 'DEMO-002', concepto: 'Pack Altitud · Desarrollador/a backend', importe: 4410, emitida_en: dia(-19), vence_en: dia(11), estado: 'pendiente', pdf_ruta: 'demo/fa2.pdf' },
       { id: 'fa1', vacante_id: 'v3', numero: 'DEMO-001', concepto: 'Pack Altitud · Responsable de marketing', importe: 4410, emitida_en: dia(-70), vence_en: dia(-40), estado: 'pagada', pdf_ruta: 'demo/fa1.pdf' }
     ],
