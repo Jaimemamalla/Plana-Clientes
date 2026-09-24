@@ -43,37 +43,24 @@ window.PLANA_I18N = {
 
     /* packs */
     'Precios públicos': 'Public pricing',
-    'El precio depende del perfil que buscas, no de lo que cobra. Está aquí escrito, sin "desde" ni asteriscos. La transparencia es el producto.':
-      'The price depends on the profile you are after, not on what they earn. It is written right here, with no "from" and no asterisks. Transparency is the product.',
-    'Despegue': 'Takeoff',
-    'Perfiles operativos y junior: administración, soporte, customer service, ventas junior, oficina y operaciones.':
-      'Operational and junior roles: admin, support, customer service, junior sales, office and operations.',
-    'por vacante': 'per role',
+    'El precio depende de la franja salarial de la vacante y está aquí escrito, sin "desde" ni asteriscos. Lo que no depende del sueldo es el porcentaje: no hay.':
+      'The price depends on the salary band of the role and it is written right here, with no "from" and no asterisks. What does not depend on the salary is the percentage: there is none.',
+    'Franja 1': 'Band 1',
+    'Franja 2': 'Band 2',
+    'Franja 3': 'Band 3',
+    'Vacantes con un salario bruto anual de hasta 25.000 €.': 'Roles with a gross annual salary of up to €25,000.',
+    'Vacantes con un salario bruto anual de 25.000 € a 35.000 €.': 'Roles with a gross annual salary from €25,000 to €35,000.',
+    'Vacantes con un salario bruto anual de 35.000 € a 45.000 €.': 'Roles with a gross annual salary from €35,000 to €45,000.',
+    'por posición': 'per role',
     'Publicación multicanal y búsqueda activa': 'Multichannel posting and active search',
     'Cribado completo con Planax y entrevistas del equipo': 'Full screening with Planax and interviews by our team',
     'Shortlist de 3 a 5 finalistas': 'A shortlist of 3 to 5 finalists',
-    'en 15 días laborables': 'in 15 working days',
     'Empezar': 'Get started',
-    'Reposición garantizada 60 días': '60-day replacement guarantee',
-    '⭐ Más popular': '⭐ Most popular',
+    'Reposición garantizada': 'Replacement guaranteed',
+    /* Los packs siguen nombrados en el FAQ, así que sus nombres se quedan. */
+    'Despegue': 'Takeoff',
     'Altitud': 'Altitude',
-    'Mandos intermedios y especialistas: tech, finanzas, marketing, ingeniería y perfiles con escasez media.':
-      'Middle management and specialists: tech, finance, marketing, engineering and roles of moderate scarcity.',
-    'Todo lo del Pack Despegue': 'Everything in the Takeoff pack',
-    'Headhunting directo': 'Direct headhunting',
-    'a candidatos pasivos': 'of passive candidates',
-    'Informe de mercado salarial de la posición incluido': 'Salary benchmark report for the role included',
-    'Shortlist en 20 días laborables': 'Shortlist in 20 working days',
-    'Reposición garantizada 90 días': '90-day replacement guarantee',
     'Estratosfera': 'Stratosphere',
-    'Dirección y perfiles muy escasos: C-level, heads y perfiles nicho de alta competencia.':
-      'Leadership and very scarce roles: C-level, heads and highly contested niche profiles.',
-    'Todo lo del Pack Altitud': 'Everything in the Altitude pack',
-    'Búsqueda confidencial': 'Confidential search',
-    'y mapeo completo del mercado': 'and full market mapping',
-    'Evaluación en profundidad de finalistas, referencias incluidas': 'In-depth assessment of finalists, references included',
-    'Acompañamiento en oferta y negociación': 'Support through offer and negotiation',
-    'Reposición garantizada 120 días': '120-day replacement guarantee',
 
     /* escala */
     'Escala Plana': 'The Plana scale',
@@ -96,8 +83,8 @@ window.PLANA_I18N = {
       'Enter the salary for the role and your agency’s typical fee. We will show you the difference. In euros.',
     'Salario bruto anual de la vacante': 'Gross annual salary for the role',
     'Fee típico de agencia': 'Typical agency fee',
-    'Comparamos contra el Pack Altitud (4.900 €), nuestro pack más contratado.':
-      'We compare against the Altitude pack (€4,900), our most popular one.',
+    'El precio de Plana sale de la franja del salario que pongas arriba.':
+      'Plana’s price comes from the band of the salary you enter above.',
     'Con agencia tradicional': 'With a traditional agency',
     'Con Plana (Altitud)': 'With Plana (Altitude)',
 
@@ -245,7 +232,7 @@ window.PLANA_I18N = {
 
   heads: {
     'Tres pasos. Cero teatro.': 'Three steps. Zero theatre.',
-    'Packs por complejidad. No por sueldo.': 'Packs by complexity. Not by salary.',
+    'Precio cerrado. Sin porcentajes.': 'A closed price. No percentages.',
     'Cuantas más contratas, más barato te sale cada una.': 'The more you hire, the less each hire costs you.',
     '¿Cuánto te ahorras con Plana?': 'How much do you save with Plana?',
     'Planax. El motor que lo <span class="y">mueve todo</span>.': 'Planax. The engine behind <span class="y">all of it</span>.',
@@ -290,7 +277,7 @@ window.PLANA_I18N = {
   ],
 
   dock: {
-    es: ['Desde 2.900 € por vacante', 'Sin fees. Sin sorpresas.', 'Ver precios'],
-    en: ['From €2,900 per role', 'No fees. No surprises.', 'See pricing']
+    es: ['Desde 1.500 € por posición', 'Sin fees. Sin sorpresas.', 'Ver precios'],
+    en: ['From €1,500 per role', 'No fees. No surprises.', 'See pricing']
   }
 };

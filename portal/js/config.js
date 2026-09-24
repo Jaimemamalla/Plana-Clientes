@@ -2,9 +2,14 @@
 
    Los dos valores salen de Supabase → Project Settings → API.
 
+   Desde septiembre de 2026 el portal usa la base de datos común de Tessera
+   (proyecto "tessera-crm"), la misma que el CRM interno: lo que el equipo
+   hace en el CRM aparece aquí solo. El esquema y las reglas están en el repo
+   tesserahc-crm, archivo supabase/esquema.sql.
+
    La clave "anon" es pública por diseño: va en el navegador de cualquiera que
-   abra esta página. Lo que protege los datos son las políticas RLS de
-   supabase/schema.sql, no esconder esta clave.
+   abra esta página. Lo que protege los datos son las políticas RLS, no
+   esconder esta clave.
 
    NUNCA pegar aquí la "service_role": esa se salta todas las políticas y daría
    acceso a los datos de todas las empresas.

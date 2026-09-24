@@ -20,8 +20,12 @@
     shortlist: 'Shortlist',
     oferta: 'Oferta',
     cubierta: 'Cubierta',
-    pausada: 'En pausa'
+    pausada: 'En pausa',
+    cancelada: 'Cancelada'
   };
+
+  // Vacantes que ya no están en marcha
+  var CERRADAS = ['cubierta', 'pausada', 'cancelada'];
 
   var MODALIDAD = {
     presencial: 'Presencial',
@@ -347,7 +351,7 @@
   var nombreStaff = '';
 
   function activas(lista) {
-    return lista.filter(function (v) { return v.fase !== 'cubierta' && v.fase !== 'pausada'; });
+    return lista.filter(function (v) { return CERRADAS.indexOf(v.fase) < 0; });
   }
 
   function finalistasDe(v) {
@@ -366,7 +370,8 @@
   }
 
   function garantia(v) {
-    if (v.fase !== 'cubierta' || !v.cubierta_en) return null;
+    // La reposición garantizada es de los packs de Plana: un headhunting a medida no la tiene
+    if (!v.pack || v.fase !== 'cubierta' || !v.cubierta_en) return null;
     var pasados = -diasHasta(v.cubierta_en);
     return {
       total: v.garantia_dias,
@@ -541,7 +546,7 @@
     var clase = 'chip';
     if (fase === 'cubierta') clase += ' ok';
     else if (fase === 'shortlist' || fase === 'oferta') clase += ' sol';
-    else if (fase === 'pausada') clase += ' gris';
+    else if (fase === 'pausada' || fase === 'cancelada') clase += ' gris';
     return h('span', { class: clase, text: ETIQUETA_FASE[fase] || fase });
   }
 
@@ -552,7 +557,7 @@
 
   function pintarRejilla() {
     var orden = activas(datos.vacantes).concat(datos.vacantes.filter(function (v) {
-      return v.fase === 'cubierta' || v.fase === 'pausada';
+      return CERRADAS.indexOf(v.fase) >= 0;
     }));
 
     var lista = h('nav', { class: 'lista-vac', 'aria-label': 'Vacantes' },
@@ -573,7 +578,7 @@
           h('div', { class: 'v-top' },
             h('div', null,
               h('div', { class: 'v-tit', text: v.titulo }),
-              h('div', { class: 'v-meta', text: 'Pack ' + v.pack + (v.ubicacion ? ' · ' + v.ubicacion : '') })
+              h('div', { class: 'v-meta', text: [v.pack ? 'Pack ' + v.pack : null, v.ubicacion].filter(Boolean).join(' · ') })
             ),
             chipFase(v.fase)
           ),
@@ -607,7 +612,7 @@
     if (v.ubicacion) meta.push(v.ubicacion);
     if (v.modalidad) meta.push(MODALIDAD[v.modalidad]);
     if (v.salario_min && v.salario_max) meta.push(euros(v.salario_min) + ' – ' + euros(v.salario_max));
-    meta.push('Pack ' + v.pack);
+    if (v.pack) meta.push('Pack ' + v.pack);
 
     var idx = FASES.indexOf(v.fase);
     var fases = h('ol', { class: 'fases', 'aria-label': 'Fases del proceso' },
@@ -629,6 +634,12 @@
         dato('Abierta', fecha(v.abierta_en)),
         dato('Cubierta', fecha(v.cubierta_en),
           v.cubierta_en ? 'En ' + Math.round((leerFecha(v.cubierta_en) - leerFecha(v.abierta_en)) / 86400000) + ' días' : null),
+        dato('Perfiles evaluados', numero.format(v.candidatos_evaluados))
+      );
+    } else if (v.fase === 'cancelada') {
+      datosV = h('div', { class: 'datos' },
+        dato('Abierta', fecha(v.abierta_en)),
+        dato('Estado', 'Cancelada'),
         dato('Perfiles evaluados', numero.format(v.candidatos_evaluados))
       );
     } else {
@@ -722,7 +733,7 @@
   }
 
   function pintarFinalista(f, v) {
-    var editable = !modoSoloLectura && v.fase !== 'cubierta' && f.estado !== 'contratado' && f.estado !== 'descartado';
+    var editable = v.fase !== 'cubierta' && v.fase !== 'cancelada' && f.estado !== 'contratado' && f.estado !== 'descartado';
     var elegida = f.decision_cliente;
 
     var chipClase = 'chip';
@@ -953,7 +964,7 @@
     var ano = new Date().getFullYear();
     var esteAno = datos.vacantes.filter(function (v) { return leerFecha(v.abierta_en).getFullYear() === ano; }).length;
     var packs = {};
-    datos.vacantes.forEach(function (v) { packs[v.pack] = v.garantia_dias; });
+    datos.vacantes.forEach(function (v) { if (v.pack) packs[v.pack] = v.garantia_dias; });
 
     var filas = [
       h('li', null, h('span', { text: 'Modalidad' }), h('b', { text: e.plana_ilimitada ? 'Plana Ilimitada' : 'Packs por vacante' })),

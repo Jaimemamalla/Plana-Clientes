@@ -5,9 +5,21 @@ fechas, los finalistas con su CV y una valoración que llega a la consultora,
 la garantía de reposición, facturas, informes y su contacto en Plana.
 
 - Web: `portal/` (HTML, CSS y JS estáticos, funciona en GitHub Pages)
-- Base de datos, login y archivos: **Supabase**
-- Esquema y reglas de acceso: `supabase/schema.sql`
+- Base de datos, login y archivos: **Supabase**, proyecto común `tessera-crm`
+- Esquema y reglas de acceso: **`supabase/esquema.sql` del repo `tesserahc-crm`**
 - Datos de prueba: `supabase/demo.sql`
+
+> **Base de datos común con el CRM (septiembre de 2026).** El portal y el CRM
+> interno de Tessera comparten base de datos: las vacantes, fases, finalistas
+> e historial que el equipo trabaja en el CRM aparecen aquí solos. Por eso
+> `supabase/schema.sql` de este repo queda como referencia histórica: el
+> esquema vigente está en `tesserahc-crm`. Diferencias que ya contempla el
+> portal:
+>
+> - La fase **cancelada** (además de cubierta y en pausa).
+> - El **pack es opcional**: un headhunting a medida no tiene pack ni garantía
+>   de reposición, así que no se muestran.
+> - El cliente solo ve las vacantes que el equipo marca como **publicadas**.
 
 Mientras `portal/js/config.js` tenga los valores de ejemplo, el portal no se
 conecta y ofrece una **demostración con datos ficticios**. Se puede enlazar
